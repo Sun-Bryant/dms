@@ -1,6 +1,8 @@
 package com.syd.controller;
 
 
+import com.syd.result.CodeMsg;
+import com.syd.result.Result;
 import com.syd.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -23,32 +25,34 @@ public class LoginController {
     UserService userService;
 
     @RequestMapping(path = {"/register"},method = {RequestMethod.POST})
-    public String register(Model model,
-                           @RequestParam(value = "name") String name,
-                           @RequestParam(value = "password") String password) {
+    @ResponseBody
+    public Result<String> register(Model model,
+                                   @RequestParam(value = "name") String name,
+                                   @RequestParam(value = "password") String password) {
 
         try {
             Map<String, String> map = userService.register(name, password);
             if (map.containsKey("msg")) {
                 model.addAttribute("msg", map.get("msg"));
-                return "login";
+                return Result.error(CodeMsg.MOBILE_EMPTY);
             }
-            return "redirect:/";
+            return Result.success("成功");
         } catch (Exception e) {
             logger.error("注册异常" + e.getMessage());
-            return "register";
+//            return "register";
+
         }
+        return Result.error(CodeMsg.MOBILE_EMPTY);
     }
 
     @RequestMapping(path = {"/", "/to_login"})
     public String toLogin(){
-        return "login";
+        return "frame";
     }
 
     @RequestMapping(path = { "/to_register"})
     public String toRegister(){
         return "register";
     }
-
 
 }

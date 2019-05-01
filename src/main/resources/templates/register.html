@@ -31,7 +31,7 @@
 		}
 	</style>
 
-    </head>
+</head>
 <body>
 
 <form name="loginForm" id="loginForm" method="post"  style="width:30%; margin:0 auto;">
@@ -90,13 +90,16 @@ function doLogin(){
 	    },
 	    success:function(data){
             layer.closeAll();
-	    	alert("注册成功");
-	    	alert(data);
+            alert(data)
+            if(data.code == 0){
+                layer.msg("成功");
+                window.location.href="/login.html";
+            }else{
+                layer.msg(data.msg);
+            }
 	    },
 	    error:function(){
             layer.closeAll();
-            alert("注册失败");
-            alert(data)
 	    }
 	});
 }
