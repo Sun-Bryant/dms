@@ -42,7 +42,7 @@
        	<div class="row">
 	       	<label class="form-label col-md-4">请输入账号</label>
 	        <div class="col-md-8">
-	        	<input id="name" name = "name" class="form-control" type="text" placeholder="手机号码" required="true" />
+	        	<input id="name" name = "name" class="form-control" type="text" placeholder="请输入账号" required="true" />
 	    	</div>
 	    	<div class="col-md-1">
 	    	</div>
@@ -90,10 +90,9 @@ function doLogin(){
 	    },
 	    success:function(data){
             layer.closeAll();
-            alert(data)
             if(data.code == 0){
                 layer.msg("成功");
-                window.location.href="/login.html";
+                window.location.href="/to_login";
             }else{
                 layer.msg(data.msg);
             }

@@ -7,8 +7,6 @@ public class User {
     private String salt;
     private String headUrl;
 
-
-
 //    public User(int id, String name, String password, String salt, String headUrl) {
 //        this.id = id;
 //        this.name = name;
