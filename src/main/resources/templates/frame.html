@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
     <meta charset="UTF-8">
     <title>主框架</title>
@@ -11,7 +11,7 @@
 		<!--左侧菜单-->
         <div class="left">
             <div class="logo">
-                <span> 后台管理系统框架 </span>
+                <span> <p th:text="'管理员:'+${name}" >hhhhhh</p> </span>
                 <i class="toggle-menu-icon icon-sk054" onclick="leftMenuToggleEvent(event)"></i>
             </div>
             <ul class="menu first"></ul>

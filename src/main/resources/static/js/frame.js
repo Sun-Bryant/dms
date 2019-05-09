@@ -14,27 +14,14 @@
         },
         {
             icon:'icon-sk002',
-            title:'报表',
+            title:'账号管理',
             id:'002',
             level:1,
             path:'',
             children:[
-                {id:'003', level:2, icon:'',title:'岗位管理',children:[
-                    {
-                        icon:'',
-                        id:'004',
-                        level:3,
-                        title:'首11111页',
-                        path:'page1.html',
-                        children:[]
-                    }
-                ]},
-                {id:'005',level:2, icon:'',title:'规定管理',path:'page2.html',children:[]},
-                {id:'006',level:2, icon:'',title:'术语管理',path:'page3.html',children:[]},
-                {id:'007',level:2, icon:'',title:'程序管理',path:'page1.html',children:[]},
-                {id:'008',level:2, icon:'',title:'附件管理',path:'page2.html',children:[]},
-                {id:'009',level:2, icon:'',title:'作废审批',path:'page3.html',children:[]},
-                {id:'010',level:2, icon:'',title:'岗位说明书管理',path:'page1.html',children:[]}
+                {id:'003',level:2, icon:'',title:'管理员账号', path:'page1.html', children:[]},
+                {id:'004',level:2, icon:'',title:'学生账号',path:'page2.html',children:[]},
+                {id:'005',level:2, icon:'',title:'维修人员账号',path:'page3.html',children:[]},
             ]
         },
         {
@@ -94,15 +81,16 @@
             level:1,
             children:[
                 {id:'029',level:2,icon:'',title:'SD图管理',path:'page1.html',children:[
-                    {id:'030',level:3,icon:'',title:'SD图一',path:'page1.html',children:[]},
-                    {id:'031',level:3,icon:'',title:'SD图二',path:'page1.html',children:[]},
-                    {id:'032',level:3,icon:'',title:'SD图三',path:'page1.html',children:[]}
-                ]},
+                        {id:'030',level:3,icon:'',title:'SD图一',path:'page1.html',children:[]},
+                        {id:'031',level:3,icon:'',title:'SD图二',path:'page1.html',children:[]},
+                        {id:'032',level:3,icon:'',title:'SD图三',path:'page1.html',children:[]}
+                    ]},
                 {id:'033',level:2,icon:'',title:'SD图审核及记录',path:'page1.html',children:[]},
                 {id:'034',level:2,icon:'',title:'SD图延迟预警',path:'page1.html',children:[]},
                 {id:'035',level:2,icon:'',title:'SD图操作日志',path:'page1.html',children:[]}
             ]
         }
+
     ];
     // 每个菜单id对应的单个数据，children.length == 0 的数据
     var idMapData = {};
@@ -217,7 +205,7 @@
             if(!$(ev.currentTarget).find(".menu-arrow").first().hasClass("hide")) {
                 $(ev.currentTarget).find(".menu-arrow").first().toggleClass('icon-sk039','icon-sk027');
             }
-            if(!expendMenu) return ;
+            if(!expendMenu) return;
             $(ev.currentTarget).find("ul").first().slideToggle(300);
         } else {
             excuteMenuEvent(ev);
@@ -235,6 +223,8 @@
             path:idMapData[id].path
         });
 		// TODO 菜单点击之后的操作
+        // alert("---");
+        // window.location.href = "/test";
 
     }
 

@@ -1,31 +1,32 @@
 package com.syd.controller;
 
 
+import com.syd.model.User;
 import com.syd.result.CodeMsg;
 import com.syd.result.Result;
 import com.syd.service.UserService;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Controller
 public class LoginController {
-
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     UserService userService;
+
+    private String username;
 
     @RequestMapping(path = {"/register"},method = {RequestMethod.POST})
     @ResponseBody
@@ -36,6 +37,7 @@ public class LoginController {
         try {
             Map<String, String> map = userService.register(response, name, password);
             if (map.containsKey("msg")) {
+
                 model.addAttribute("msg", map.get("msg"));
                 return Result.error(CodeMsg.REGISTER_ERROR);
             }
@@ -55,7 +57,9 @@ public class LoginController {
         try {
             Map<String, String> map = userService.login(response, name, password);
             if (map.containsKey("ticket")) {
-                return Result.success("成功");
+                username = name;
+                model.addAttribute("name", name);
+                return Result.success(name);
             }else{
                 model.addAttribute("msg", map.get("msg"));
                 return Result.error(CodeMsg.NAMEPASSWOED_ERROR);
@@ -68,8 +72,15 @@ public class LoginController {
         return Result.error(CodeMsg.LOGIN_ERROR);
     }
 
-    @RequestMapping(path = {"/home"})
-    public String toHome(){
+    @RequestMapping(path = {"/test"})
+    public String test(ModelMap model) {
+        model.addAttribute("name", username);
+        return "home";
+    }
+
+    @RequestMapping(path = {"/frame"})
+    public String toFrame(ModelMap model) {
+        model.addAttribute("name", username);
         return "frame";
     }
 
