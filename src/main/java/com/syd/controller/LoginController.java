@@ -94,9 +94,8 @@ public class LoginController {
         return "register";
     }
 
-
     /**
-     * just for test below
+     * just for test
      * @return
      */
 
