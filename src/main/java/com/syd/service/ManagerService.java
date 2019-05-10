@@ -43,4 +43,14 @@ public class ManagerService {
         return page;
     }
 
+    public int deleteManager(int id) {
+        return managerDAO.deleteManager(id);
+    }
+
+    public int updateStatus(int id, int status) {
+        return managerDAO.updateStatus(id, status);
+    }
+
+
+
 }

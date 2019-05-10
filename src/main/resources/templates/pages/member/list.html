@@ -50,10 +50,11 @@
 				<button class="layui-btn layui-btn-danger" onclick="delAll()">
 					<i class="layui-icon layui-icon-delete"></i>批量删除
 				</button>
-				<button class="layui-btn" onclick="WeAdminShow('添加用户','./add.html',600,400)">
+				<button class="layui-btn" onclick="WeAdminShow('添加用户','/pages/member/add.html',600,400)">
 					<i class="layui-icon layui-icon-add-circle-fine"></i>添加
 				</button>
-				<span class="fr" style="line-height:40px">共有数据：88 条</span>
+				<span class="fr" style="line-height:40px" th:text="'共有数据:'+${page.totalCount}+'条 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'"></span>
+
 			</div>
 			<table class="layui-table" id="memberList">
 				<thead>
@@ -93,20 +94,20 @@
 							<span th:case="1" class="layui-btn layui-btn-normal layui-btn-xs layui-btn-disabled">已禁用</span>
 						</td>
 						<td class="td-manage" th:switch="${manager.status}">
-							<a  th:case="0" th:onclick="'javascript:member_stop(this, '+${manager.status}+');'" href="javascript:;" title="停用">
+							<a  th:case="0" th:onclick="'javascript:member_stop(this, '+${manager.id}+');'" href="javascript:;" title="停用">
 								<i  class="layui-icon layui-icon-download-circle"></i>
 							</a>
-							<a  th:case="1" th:onclick="'javascript:member_stop(this, '+${manager.status}+');'" href="javascript:;" title="启用">
+							<a  th:case="1" th:onclick="'javascript:member_stop(this, '+${manager.id}+');'" href="javascript:;" title="启用">
 								<i class="layui-icon ">&#xe62f;</i>
 							</a>
 
-							<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
+							<a title="编辑" onclick="WeAdminEdit('编辑','/pages/member/edit.html', 1, 600, 400)" href="javascript:;">
 								<i class="layui-icon layui-icon-edit"></i>
 							</a>
-							<a onclick="WeAdminShow('修改密码','./password.html',600,400)" title="修改密码" href="javascript:;">
+							<a onclick="WeAdminShow('修改密码','/pages/member/password.html',600,400)" title="修改密码" href="javascript:;">
 								<i class="layui-icon layui-icon-util"></i>
 							</a>
-							<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+							<a title="删除"  th:onclick="'javascript:member_del(this, '+${manager.id}+');'" href="javascript:;">
 								<i class="layui-icon layui-icon-delete"></i>
 							</a>
 						</td>
@@ -121,7 +122,6 @@
 					<a class="num" th:each=" i : ${#numbers.sequence(start,end,1)}" onclick="replace_class(this,'7')"  th:href="'/manager/list/'+${i}" th:text="${i}">1</a>
 					<a class="next" th:href="${page.pageIndex + 1} > ${page.totalPage} ? ('/manager/list/'+${page.totalPage}) : ('/manager/list/'+${page.pageIndex + 1})">&gt;&gt;</a>
 					<a class="next" th:href="'/manager/list/'+${page.totalPage}">尾页</a>
-
 				</div>
 			</div>
 		</div>
