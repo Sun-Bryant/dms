@@ -71,7 +71,7 @@ public class ManagerService {
             map.put("msg", "用户名已被注册");
             return 0;
         }
-        //正常注册
+        //正常
         manager = new Manager();
         manager.setName(name);
         manager.setSalt(UUID.randomUUID().toString().substring(0, 5));
@@ -94,5 +94,23 @@ public class ManagerService {
 
         return managerDAO.addmanager(manager);
 
+    }
+
+    public int pass(int id, String oldpass, String password) {
+        Manager manager = managerDAO.selectById(id);
+        if (manager == null) {
+            return 0;
+        }
+        //判断旧密码是否正确
+        if (!DmsUtil.MD5(oldpass + manager.getSalt()).equals(manager.getPassword())) {
+            System.out.println("------");
+            return 0;
+        } else {
+            //设置新密码
+            manager.setSalt(UUID.randomUUID().toString().substring(0, 5));
+            manager.setPassword(DmsUtil.MD5(password + manager.getSalt()));
+            int result = managerDAO.updatePass(id, manager.getSalt(), manager.getPassword());
+            return result;
+        }
     }
 }

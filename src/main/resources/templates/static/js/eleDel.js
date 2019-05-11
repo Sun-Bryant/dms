@@ -13,8 +13,10 @@ layui.extend({
 });
 layui.use(['laydate', 'jquery', 'admin'], function () {
     var laydate = layui.laydate,
+        layer = layui.layer,
         $ = layui.jquery,
         form = layui.form;
+
     admin = layui.admin;
     //执行一个laydate实例
     laydate.render({
@@ -31,12 +33,12 @@ layui.use(['laydate', 'jquery', 'admin'], function () {
             if ($(obj).attr('title') == '启用') {
                 $.ajax({
                     url: "/manager/updateStatus",
-                    data:{
-                        id:id,
-                        status:0
+                    data: {
+                        id: id,
+                        status: 0
                     },
                     success: function (result) {
-                        if (result > 0 ) {
+                        if (result > 0) {
                             //发异步把用户状态进行更改
                             $(obj).attr('title', '停用')
                             $(obj).find('i').removeClass('layui-icon-download-circle').html('&#xe601;');
@@ -46,7 +48,7 @@ layui.use(['laydate', 'jquery', 'admin'], function () {
                                 icon: 5,
                                 time: 1000
                             });
-                        }else {
+                        } else {
                             alert("更新错误!!!");
                         }
                     },
@@ -58,12 +60,12 @@ layui.use(['laydate', 'jquery', 'admin'], function () {
             } else {
                 $.ajax({
                     url: "/manager/updateStatus",
-                    data:{
-                        id:id,
-                        status:1
+                    data: {
+                        id: id,
+                        status: 1
                     },
                     success: function (result) {
-                        if (result > 0 ) {
+                        if (result > 0) {
                             $(obj).attr('title', '启用');
                             // $(obj).find('i').html('&#xe601;');
                             $(obj).find('i').removeClass('layui-icon-download-circle').html('&#xe62f;');
@@ -73,7 +75,7 @@ layui.use(['laydate', 'jquery', 'admin'], function () {
                                 icon: 5,
                                 time: 1000
                             });
-                        }else {
+                        } else {
                             alert("更新错误");
                         }
                     },
@@ -92,18 +94,18 @@ layui.use(['laydate', 'jquery', 'admin'], function () {
             //发异步删除数据
             $.ajax({
                 url: "/manager/delete",
-                data:{
-                    id:id
+                data: {
+                    id: id
                 },
                 success: function (result) {
-                    if (result > 0 ) {
+                    if (result > 0) {
                         $(obj).parents("tr").remove();
                         layer.msg('已删除!', {
                             icon: 1,
                             time: 1000
                         });
                         location.replace(location.href);
-                    }else {
+                    } else {
                         alert("删除错误");
                     }
                 },

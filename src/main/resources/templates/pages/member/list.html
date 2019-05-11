@@ -104,7 +104,7 @@
 							<a title="编辑" onclick="WeAdminEdit('编辑','/pages/member/edit.html', 1, 600, 400)" href="javascript:;">
 								<i class="layui-icon layui-icon-edit"></i>
 							</a>
-							<a onclick="WeAdminShow('修改密码','/pages/member/password.html',600,400)" title="修改密码" href="javascript:;">
+							<a th:onclick="'javascript:WeAdminEdit(\''+'修改密码'+'\',\'/pages/member/password.html\','+${manager.id}+',\'600\',\'400\')'" title="修改密码" href="javascript:;">
 								<i class="layui-icon layui-icon-util"></i>
 							</a>
 							<a title="删除"  th:onclick="'javascript:member_del(this, '+${manager.id}+');'" href="javascript:;">

@@ -30,4 +30,11 @@ public interface ManagerDAO {
 
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where name=#{name}"})
     Manager selectByName(String name);
+
+    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where id=#{id}"})
+    Manager selectById(int id);
+
+    @Update({"update ", TABLE_NAME, " set password=#{password},salt=#{salt} where id=#{id}"})
+    int updatePass(@Param("id")int id,@Param("salt")String salt, @Param("password")String password);
+
 }

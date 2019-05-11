@@ -50,6 +50,25 @@ public class ManagerController {
         }
     }
 
+    @RequestMapping(path = {"/manager/pass"}, method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public int pass(Model model,
+                      @RequestParam(value = "id") int id,
+                      @RequestParam(value = "oldpass") String oldpass,
+                      @RequestParam(value = "password") String password) {
+//        if (managerService.getPassByName(name, password, gender, iphone, email) > 0) {
+//            return "1";
+//        }else {
+//            return "0";
+//        }
+        System.out.println(id);
+        System.out.println(oldpass);
+        System.out.println(password);
+        int result = managerService.pass(id, oldpass, password);
+        return result;
+    }
+
+
     @RequestMapping(path = {"/manager/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     private int deleteManager(Model model, @RequestParam(value = "id") int id) {
