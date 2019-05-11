@@ -1,5 +1,6 @@
 package com.syd.service;
 
+import com.alibaba.fastjson.JSON;
 import com.syd.dao.ManagerDAO;
 import com.syd.model.Manager;
 import com.syd.util.DmsUtil;
@@ -112,5 +113,10 @@ public class ManagerService {
             int result = managerDAO.updatePass(id, manager.getSalt(), manager.getPassword());
             return result;
         }
+    }
+
+    public String data(int id) {
+        Manager manager = managerDAO.selectById(id);
+        return  JSON.toJSONString(manager);
     }
 }

@@ -26,13 +26,15 @@ public class ManagerController {
 
     @RequestMapping(path = {"/manager/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getManagerList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
+        System.out.println(pageIndex);
+
         List<Manager> list = managerService.getManagerList_Page(pageIndex, 2);
         Page<Manager> page = managerService.findAllManagerWithPage(pageIndex, 2);
         model.addAttribute("list", list);
         model.addAttribute("page", page);
         model.addAttribute("start", page.getStart());
         model.addAttribute("end", page.getEnd());
-        return "./pages/member/list";
+        return "pages/member/list";
     }
 
     @RequestMapping(path = {"/manager/add"}, method = {RequestMethod.POST,RequestMethod.GET})
@@ -61,9 +63,6 @@ public class ManagerController {
 //        }else {
 //            return "0";
 //        }
-        System.out.println(id);
-        System.out.println(oldpass);
-        System.out.println(password);
         int result = managerService.pass(id, oldpass, password);
         return result;
     }
@@ -81,9 +80,10 @@ public class ManagerController {
         return managerService.updateStatus(id, status);
     }
 
-    @RequestMapping(path = {"/test"}, method = {RequestMethod.GET, RequestMethod.POST})
-    private String test(Model model) {
-        return "./pages/member/add";
+    @RequestMapping(path = {"/manager/data"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private String data(Model model,@RequestParam(value = "id") int id) {
+        return managerService.data(id);
     }
 
 }

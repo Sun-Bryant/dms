@@ -9,13 +9,15 @@
  * +----------------------------------------------------------------------
  */
 
-layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
+layui.define(['jquery', 'form', 'layer', 'element','table'], function(exports) {
     var $ = layui.jquery,
         form = layui.form,
+        table = layui.table,
         layer = layui.layer,
         element = layui.element;
     var menu = [];
     var curMenu;
+
 
     /*
      * @todo 初始化加载完成执行方法
@@ -340,27 +342,57 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
         if(h == null || h == '') {
             h = ($(window).height() - 50);
         };
-        layer.open({
-            type: 2,
-            area: [w + 'px', h + 'px'],
-            fix: false, //不固定
-            maxmin: true,
-            shadeClose: true,
-            shade: 0.4,
-            title: title,
-            content: url,
-            success: function(layero, index) {
-                //向iframe页的id=house的元素传值  // 参考 https://yq.aliyun.com/ziliao/133150
-                var name = parent.layui.$('#test1').val();
-                var body = layer.getChildFrame('body', index);//得到子页面层的BODY
-                body.contents().find("#L_username").val(id);//将本层的窗口索引id传给子页面层的L_username中
-                console.log(id);
+
+        var name = '11111';
+        var gender = 1;
+        var iphone = '13720991624';
+        var email = '1091245120@qq.com';
+        $.ajax({
+            url: "/manager/data",
+            data: {
+                id: id,
             },
-            error: function(layero, index) {
-                alert("aaa");
+            success: function (result) {
+                var jsonObj = JSON.parse(result);
+                name = jsonObj.name;
+                gender = jsonObj.gender;
+                iphone = jsonObj.iphone;
+                email = jsonObj.email;
+                console.log(name + gender + iphone + email);
+                layer.open({
+                    type: 2,
+                    area: [w + 'px', h + 'px'],
+                    fix: false, //不固定
+                    maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,
+                    title: title,
+                    content: url,
+                    success: function(layero, index) {
+                        //向iframe页的id=house的元素传值  // 参考 https://yq.aliyun.com/ziliao/133150
+                        // var name = parent.layui.$('#test1').val();
+                        // var body = layer.getChildFrame('body', index);//得到子页面层的BODY
+                        // body.contents().find("#L_username").val(id);//将本层的窗口索引id传给子页面层的L_username中
+                        console.log(id);
+                    },
+                    error: function(layero, index) {
+                        alert("aaa");
+                    }
+                });
+
+            },
+            error: function () {
+                alert("请求错误");
             }
         });
     }
+
+    window.WeAdminEdit1 = function (id) {
+
+
+
+
+    };
 
     /*弹出层+传递ID参数*/
     window.WeAdminPass = function(title, url, id, w, h) {
@@ -387,7 +419,7 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
             content: url,
             success: function(layero, index) {
                 //向iframe页的id=house的元素传值  // 参考 https://yq.aliyun.com/ziliao/133150
-                var name = parent.layui.$('#test1').val();
+                // var name = parent.layui.$('#test1').val();
                 var body = layer.getChildFrame('body', index);//得到子页面层的BODY
                 body.contents().find("#L_username").val(id);//将本层的窗口索引id传给子页面层的L_username中
                 // console.log(id);

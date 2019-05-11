@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link rel="stylesheet" href="../../static/css/font.css" />
 		<link rel="stylesheet" href="../../static/css/weadmin.css" />
+		<link rel="stylesheet" href="../../lib/layui/css/layui.css"  media="all">
 		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
 		<!--[if lt IE 9]>
 		  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -56,7 +57,7 @@
 				<span class="fr" style="line-height:40px" th:text="'共有数据:'+${page.totalCount}+'条 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'"></span>
 
 			</div>
-			<table class="layui-table" id="memberList">
+			<table lay-filter="demoEvent" class="layui-table" id="memberList">
 				<thead>
 					<tr>
 						<th>
@@ -67,7 +68,7 @@
 						<th>ID</th>
 						<th>用户名</th>
 						<th>性别</th>
-						<th>手机</th>
+						<th lay-data="{event: 'setSign'}">手机</th>
 						<th>邮箱</th>
 						<th>加入时间</th>
 						<!--<th>status</th>-->
@@ -76,7 +77,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr data-id="2" th:each="manager,managerStat : ${list}">
+					<tr data-id="2" th:each="manager,managerStat : ${list}" >
 						<td>
 							<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="1">
 								<i class="layui-icon">&#xe605;</i>
@@ -101,10 +102,16 @@
 								<i class="layui-icon ">&#xe62f;</i>
 							</a>
 
-							<a title="编辑" onclick="WeAdminEdit('编辑','/pages/member/edit.html', 1, 600, 400)" href="javascript:;">
+							<a title="编辑" th:onclick="'javascript:WeAdminEdit(\''+'编辑'+'\',\'/pages/member/edit.html\','+${manager.id}+',\'600\',\'400\')'" href="javascript:;">
 								<i class="layui-icon layui-icon-edit"></i>
 							</a>
-							<a th:onclick="'javascript:WeAdminEdit(\''+'修改密码'+'\',\'/pages/member/password.html\','+${manager.id}+',\'600\',\'400\')'" title="修改密码" href="javascript:;">
+							<!--<a title="编辑" onclick="WeAdminEdit('编辑','/pages/member/edit.html','1514010439',600,400)" href="javascript:;">-->
+								<!--<i class="layui-icon layui-icon-edit"></i>-->
+							<!--</a>-->
+							<!--<a title="编辑"  lay-event="edit" th:onclick="'javascript:WeAdminEdit1(\''+${manager.id}+'\');'" href="javascript:;">-->
+								<!--<i class="layui-icon layui-icon-edit" ></i>-->
+							<!--</a>-->
+							<a th:onclick="'javascript:WeAdminPass(\''+'修改密码'+'\',\'/pages/member/password.html\','+${manager.id}+',\'600\',\'400\')'" title="修改密码" href="javascript:;">
 								<i class="layui-icon layui-icon-util"></i>
 							</a>
 							<a title="删除"  th:onclick="'javascript:member_del(this, '+${manager.id}+');'" href="javascript:;">
@@ -127,6 +134,8 @@
 		</div>
 		<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
 		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+		<script src="../../static/js/admin.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
+
 	</body>
 </html>

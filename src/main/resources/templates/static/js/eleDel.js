@@ -11,11 +11,12 @@
 layui.extend({
     admin: '{/}../../static/js/admin'
 });
-layui.use(['laydate', 'jquery', 'admin'], function () {
+layui.use(['laydate', 'jquery', 'admin','table'], function () {
     var laydate = layui.laydate,
         layer = layui.layer,
         $ = layui.jquery,
         form = layui.form;
+
 
     admin = layui.admin;
     //执行一个laydate实例
