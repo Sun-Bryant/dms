@@ -84,7 +84,7 @@
 						</td>
 						<td th:text="${manager.id}">1</td>
 						<td th:text="${manager.name}">小张</td>
-						<td th:text="${manager.gender} ? '女' : '男'">男</td>
+						<td th:text="${manager.gender} == 0 ? '女' : '男'"></td>
 						<td th:text="${manager.iphone}">17600000000</td>
 						<td th:text="${manager.email}">admin@mail.com</td>
 						<td th:text="${#dates.format(manager.date, 'yyyy-MM-dd HH:mm:ss')}">2017-01-01 11:11:42</td>

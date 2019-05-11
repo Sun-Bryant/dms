@@ -23,4 +23,11 @@ public interface ManagerDAO {
 
     @Update({"update ", TABLE_NAME, " set status=#{status} where id=#{id}"})
     int updateStatus(@Param("id")int id, @Param("status")int status);
+
+    @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,
+            ") values (#{name},#{password},#{salt},#{headUrl},#{gender},#{iphone},#{email},#{date},#{status})"})
+    int addmanager(Manager manager);
+
+    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where name=#{name}"})
+    Manager selectByName(String name);
 }

@@ -2,13 +2,15 @@ package com.syd.service;
 
 import com.syd.dao.ManagerDAO;
 import com.syd.model.Manager;
+import com.syd.util.DmsUtil;
 import com.syd.util.Page;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -52,5 +54,45 @@ public class ManagerService {
     }
 
 
+    public int add(String name, String password, String gender, String iphone, String email) {
+        //先判断是否为空， 即进行格式检查
+        Map<String, Object> map = new HashMap<>();
+        if (StringUtils.isBlank(name)) {
+            map.put("msg", "用户名不能为空");
+            return 0;
+        }
+        if (StringUtils.isBlank(password)) {
+            map.put("msg", "密码不能为空");
+            return 0;
+        }
+        //判断用户名是否注册过
+        Manager  manager= managerDAO.selectByName(name);
+        if (manager != null) {
+            map.put("msg", "用户名已被注册");
+            return 0;
+        }
+        //正常注册
+        manager = new Manager();
+        manager.setName(name);
+        manager.setSalt(UUID.randomUUID().toString().substring(0, 5));
+        String head = String.format("http://images.nowcoder.com/head/%dt.png", new Random().nextInt(1000));
+        manager.setHeadUrl(head);
+        manager.setPassword(DmsUtil.MD5(password + manager.getSalt()));
+        manager.setDate(new Date());
+        manager.setEmail(email);
+        manager.setIphone(iphone);
+        int gender1 = 0;
+        System.out.println(gender);
 
+        if ("男".equals(gender)) {
+            gender1 = 1;
+        }else {
+            gender1 = 0;
+        }
+        manager.setGender(gender1);
+        manager.setStatus(0);
+
+        return managerDAO.addmanager(manager);
+
+    }
 }

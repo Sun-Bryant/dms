@@ -4,6 +4,7 @@ package com.syd.controller;
 import com.syd.model.Manager;
 import com.syd.service.ManagerService;
 import com.syd.util.Page;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ManagerController {
@@ -29,6 +33,21 @@ public class ManagerController {
         model.addAttribute("start", page.getStart());
         model.addAttribute("end", page.getEnd());
         return "./pages/member/list";
+    }
+
+    @RequestMapping(path = {"/manager/add"}, method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public String add(Model model,
+                      @RequestParam(value = "name") String name,
+                      @RequestParam(value = "password") String password,
+                      @RequestParam(value = "gender") String gender,
+                      @RequestParam(value = "iphone") String iphone,
+                      @RequestParam(value = "email") String email) {
+        if (managerService.add(name, password, gender, iphone, email) > 0) {
+            return "1";
+        }else {
+            return "0";
+        }
     }
 
     @RequestMapping(path = {"/manager/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
