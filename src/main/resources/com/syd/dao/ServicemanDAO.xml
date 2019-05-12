@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.syd.dao.ManagerDAO">
-    <sql id="table">manager</sql>
+<mapper namespace="com.syd.dao.ServicemanDAO">
+    <sql id="table">serviceman</sql>
     <sql id="selectFields">id, name, password, salt, head_url, gender, iphone, email, date, status
     </sql>
-    <select id="getManagerList_Page" resultType="com.syd.model.Manager">
+    <select id="getManagerList_Page" resultType="com.syd.model.Serviceman">
         SELECT
         <include refid="selectFields"/>
         FROM
@@ -14,7 +14,7 @@
         LIMIT #{offset},#{limit}
     </select>
 
-    <select id="getManagerList_time" resultType="com.syd.model.Manager">
+    <select id="getManagerList_time" resultType="com.syd.model.Serviceman">
         SELECT
         <include refid="selectFields"/>
         FROM

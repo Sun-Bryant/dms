@@ -302,6 +302,10 @@ layui.define(['jquery', 'form', 'layer', 'element','table'], function(exports) {
         w       弹出层宽度（缺省调默认值）
         h       弹出层高度（缺省调默认值）
     */
+    window.WeAdminSreach = function (obj) {
+        $(obj).parents("form").find()
+        alert()
+    };
 
     window.WeAdminShow = function(title, url, w, h) {
         // alert(url);

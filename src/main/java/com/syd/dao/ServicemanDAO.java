@@ -1,15 +1,14 @@
 package com.syd.dao;
 
 import com.syd.model.Manager;
-import com.syd.model.RootManager;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
-public interface ManagerDAO {
+public interface ServicemanDAO {
     // 注意空格
-    String TABLE_NAME = " manager ";
+    String TABLE_NAME = " serviceman ";
     String INSERT_FIELDS = " name, password, salt, head_url, gender, iphone, email, date, status";
     String SELECT_FIELDS = " id, " + INSERT_FIELDS;
 
@@ -26,7 +25,7 @@ public interface ManagerDAO {
     int deleteManager(int id);
 
     @Update({"update ", TABLE_NAME, " set status=#{status} where id=#{id}"})
-    int updateStatus(@Param("id")int id, @Param("status")int status);
+    int updateStatus(@Param("id") int id, @Param("status") int status);
 
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,
             ") values (#{name},#{password},#{salt},#{headUrl},#{gender},#{iphone},#{email},#{date},#{status})"})
@@ -39,10 +38,10 @@ public interface ManagerDAO {
     Manager selectById(int id);
 
     @Update({"update ", TABLE_NAME, " set password=#{password},salt=#{salt} where id=#{id}"})
-    int updatePass(@Param("id")int id,@Param("salt")String salt, @Param("password")String password);
+    int updatePass(@Param("id") int id, @Param("salt") String salt, @Param("password") String password);
 
     @Update({"update ", TABLE_NAME, " set name=#{name},gender=#{gender1},iphone=#{iphone},email=#{email} where id=#{id}"})
-    int update(@Param("id")int id, @Param("name")String name, @Param("gender1")int gender1, @Param("iphone")String iphone, @Param("email")String email);
+    int update(@Param("id") int id, @Param("name") String name, @Param("gender1") int gender1, @Param("iphone") String iphone, @Param("email") String email);
 
 
 }

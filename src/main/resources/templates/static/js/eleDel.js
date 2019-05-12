@@ -11,22 +11,28 @@
 layui.extend({
     admin: '{/}../../static/js/admin'
 });
-layui.use(['laydate', 'jquery', 'admin','table'], function () {
+layui.use(['laydate', 'jquery', 'admin', 'table'], function () {
     var laydate = layui.laydate,
         layer = layui.layer,
         $ = layui.jquery,
+        table = layui.table,
         form = layui.form;
 
 
     admin = layui.admin;
     //执行一个laydate实例
     laydate.render({
-        elem: '#start' //指定元素
+        elem: '#start'//指定元素
+        // id: 'idTest'
     });
     //执行一个laydate实例
     laydate.render({
         elem: '#end' //指定元素
     });
+
+    // var checkStatus = table.checkStatus('idTest');
+    // console.log(checkStatus.data);
+
     /*用户-停用*/
     window.member_stop = function (obj, id) {
         layer.confirm('确认要改变状态吗？', function (index) {
@@ -119,6 +125,11 @@ layui.use(['laydate', 'jquery', 'admin','table'], function () {
     }
 
     window.delAll = function (argument) {
+        var checkStatus = table.checkStatus('demo')
+            ,data = checkStatus.data;
+        alert(JSON.stringify(data));
+
+
         var data = tableCheck.getData();
         layer.confirm('确认要删除吗？' + data, function (index) {
             //捉到所有被选中的，发异步进行删除

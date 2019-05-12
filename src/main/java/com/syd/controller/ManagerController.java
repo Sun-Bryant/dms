@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +29,7 @@ public class ManagerController {
 
     @RequestMapping(path = {"/manager/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getManagerList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
-        System.out.println(pageIndex);
+//        System.out.println(pageIndex);
 
         List<Manager> list = managerService.getManagerList_Page(pageIndex, 2);
         Page<Manager> page = managerService.findAllManagerWithPage(pageIndex, 2);
@@ -35,6 +38,26 @@ public class ManagerController {
         model.addAttribute("start", page.getStart());
         model.addAttribute("end", page.getEnd());
         return "pages/member/list";
+    }
+
+    @RequestMapping(path = {"/manager/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getManagerList_time(Model model,
+                                       @PathVariable("pageIndex") int pageIndex,
+                                       @PathVariable("startDate") String startDate,
+                                       @PathVariable("endDate") String endDate) {
+        System.out.println(startDate);
+        System.out.println(endDate);
+
+        List<Manager> list = managerService.getManagerList_time(pageIndex, 2, startDate, endDate);
+        Page<Manager> page = managerService.findAllManagerWithPageTime(pageIndex, 2, startDate, endDate);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        System.out.println(page.getStart());
+        System.out.println(page.getEnd());
+
+        model.addAttribute("start", page.getStart());
+        model.addAttribute("end", page.getEnd());
+        return "./pages/member/list1";
     }
 
     @RequestMapping(path = {"/manager/add"}, method = {RequestMethod.POST,RequestMethod.GET})
@@ -86,6 +109,30 @@ public class ManagerController {
         return managerService.data(id);
     }
 
+    @RequestMapping(path = {"/manager/time"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String time(Model model,
+                        @RequestParam(value = "start") String start,
+                        @RequestParam(value = "end") String end) {
+
+//        return managerService.data(id);
+//        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd" );
+//        try {
+//            Date dateStart = sdf.parse(start);
+//            Date dateEnd = sdf.parse(end);
+////            System.out.println(dateStart);
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
+//        System.out.println(start);
+//        System.out.println(end);
+//        managerService.time(start, end);
+        return "redirect:/manager/list/1/" + start + "/" + end;
+//        return "login";
+    }
+
+
     @RequestMapping(path = {"/manager/update"}, method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public String update(Model model,
@@ -94,18 +141,11 @@ public class ManagerController {
                       @RequestParam(value = "gender") String gender,
                       @RequestParam(value = "iphone") String iphone,
                       @RequestParam(value = "email") String email) {
-        System.out.println(id);
-        System.out.println(name);
-        System.out.println(gender);
-        System.out.println(iphone);
-        System.out.println(email);
-
         if (managerService.update(id,name, gender, iphone, email) > 0) {
             return "1";
         }else {
             return "0";
         }
-
     }
 
 }
