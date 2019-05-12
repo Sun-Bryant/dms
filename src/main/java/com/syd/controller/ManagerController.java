@@ -86,4 +86,26 @@ public class ManagerController {
         return managerService.data(id);
     }
 
+    @RequestMapping(path = {"/manager/update"}, method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public String update(Model model,
+                      @RequestParam(value = "id") int id,
+                      @RequestParam(value = "name") String name,
+                      @RequestParam(value = "gender") String gender,
+                      @RequestParam(value = "iphone") String iphone,
+                      @RequestParam(value = "email") String email) {
+        System.out.println(id);
+        System.out.println(name);
+        System.out.println(gender);
+        System.out.println(iphone);
+        System.out.println(email);
+
+        if (managerService.update(id,name, gender, iphone, email) > 0) {
+            return "1";
+        }else {
+            return "0";
+        }
+
+    }
+
 }

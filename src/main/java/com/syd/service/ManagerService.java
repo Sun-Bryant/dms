@@ -83,8 +83,6 @@ public class ManagerService {
         manager.setEmail(email);
         manager.setIphone(iphone);
         int gender1 = 0;
-        System.out.println(gender);
-
         if ("男".equals(gender)) {
             gender1 = 1;
         }else {
@@ -118,5 +116,15 @@ public class ManagerService {
     public String data(int id) {
         Manager manager = managerDAO.selectById(id);
         return  JSON.toJSONString(manager);
+    }
+
+    public int update(int id, String name, String gender, String iphone, String email) {
+        int gender1 = 0;
+        if ("男".equals(gender)) {
+            gender1 = 1;
+        }else {
+            gender1 = 0;
+        }
+        return managerDAO.update(id, name, gender1, iphone, email);
     }
 }

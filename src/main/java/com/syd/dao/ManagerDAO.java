@@ -37,4 +37,6 @@ public interface ManagerDAO {
     @Update({"update ", TABLE_NAME, " set password=#{password},salt=#{salt} where id=#{id}"})
     int updatePass(@Param("id")int id,@Param("salt")String salt, @Param("password")String password);
 
+    @Update({"update ", TABLE_NAME, " set name=#{name},gender=#{gender1},iphone=#{iphone},email=#{email} where id=#{id}"})
+    int update(@Param("id")int id, @Param("name")String name, @Param("gender1")int gender1, @Param("iphone")String iphone, @Param("email")String email);
 }

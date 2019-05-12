@@ -25,8 +25,8 @@
                 <span class="we-red"></span>ID
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_Id" name="username" lay-verify="required|nikename" autocomplete="off"
-                       class="layui-input">
+                <input type="text" id="L_Id" name="id" lay-verify="required" autocomplete="off"
+                       class="layui-input" disabled>
             </div>
 
         </div>
@@ -35,18 +35,16 @@
                 <span class="we-red">*</span>登录名
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_username" name="username" lay-verify="required|nikename" autocomplete="off"
-                       class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                请设置至少5个字符，将会成为您唯一的登录名
+                <input type="text" id="L_username" name="name" lay-verify="required|nikename" autocomplete="off"
+                       class="layui-input" disabled>
+
             </div>
         </div>
         <div class="layui-form-item">
             <label for="L_sex" class="layui-form-label">性别</label>
             <div class="layui-input-block" id="L_sex">
-                <input type="radio" name="sex" value="男" title="男" checked>
-                <input type="radio" name="sex" value="女" title="女">
+                <input id="nan" type="radio" name="gender" value="男" title="男" checked="">
+                <input id="nv" type="radio" name="gender" value="女" title="女" checked="">
             </div>
         </div>
 
@@ -55,7 +53,7 @@
                 <span class="we-red">*</span>手机
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_phone" name="phone" lay-verify="required|phone" autocomplete=""
+                <input type="text" id="L_phone" name="iphone" lay-verify="required|phone" autocomplete=""
                        class="layui-input">
             </div>
         </div>
@@ -70,26 +68,7 @@
         </div>
 
         <div class="layui-form-item">
-            <label for="L_pass" class="layui-form-label">
-                <span class="we-red">*</span>密码
-            </label>
-            <div class="layui-input-inline">
-                <input type="password" id="L_pass" name="pass" autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                6到16个字符
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="L_repass" class="layui-form-label">
-                <span class="we-red">*</span>确认密码
-            </label>
-            <div class="layui-input-inline">
-                <input type="password" id="L_repass" name="repass" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="L_repass" class="layui-form-label">
+            <label  class="layui-form-label">
             </label>
             <button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
             <input type="hidden" name="dataId" id="dataId" value=""/>
@@ -145,20 +124,53 @@
         // 	    });
         // 	}
         // 	//监听提交
-        // 	form.on('submit(add)', function(data) {
-        // 		console.log(data);
-        // 		//发异步，把数据提交给php
-        // 		layer.alert("增加成功", {
-        // 			icon: 6
-        // 		}, function() {
-        // 			// 获得frame索引
-        // 			var index = parent.layer.getFrameIndex(window.name);
-        // 			//关闭当前frame
-        // 			parent.layer.close(index);
-        // 		});
-        // 		return false;
-        // 	});
+        //监听提交
+        form.on('submit(add)', function(data) {
+            //console.log(data.field);
+            var f = data.field;
+            //console.log(f.username);
+            // console.log(f.gender);
+            //var sex = $('input:radio[name="sex"]:checked').val();
 
+            //发异步，把数据提交给后台
+            $.ajax({
+                url: "/manager/update",
+                type: "POST",
+                data:{
+                    id: f.id,
+                    name: f.name,
+                    gender: f.gender,
+                    iphone: f.iphone,
+                    email: f.email
+                },
+                success: function (result) {
+                    // alert(result);
+                    if (result == 1) {
+                        layer.alert("成功", {
+                            icon: 6
+                        }, function(index) {
+                            // alert("jjjjj");
+                            //关闭当前frame
+                            parent.layer.closeAll();
+                            // location.replace(location.href);
+                        });
+                    }else {
+                        layer.alert("失败", {
+                            icon: 6
+                        }, function(index) {
+                            // alert("jjjjj");
+                            //关闭当前frame
+                            layer.close(index);
+                        });
+                    }
+                },
+                error: function () {
+                    alert("请求错误");
+                }
+            });
+
+            return false;
+        });
     });
 </script>
 </body>

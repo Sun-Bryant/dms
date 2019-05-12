@@ -371,9 +371,20 @@ layui.define(['jquery', 'form', 'layer', 'element','table'], function(exports) {
                     success: function(layero, index) {
                         //向iframe页的id=house的元素传值  // 参考 https://yq.aliyun.com/ziliao/133150
                         // var name = parent.layui.$('#test1').val();
-                        // var body = layer.getChildFrame('body', index);//得到子页面层的BODY
-                        // body.contents().find("#L_username").val(id);//将本层的窗口索引id传给子页面层的L_username中
-                        console.log(id);
+                        var body = layer.getChildFrame('body', index);//得到子页面层的BODY
+                        body.contents().find("#L_Id").val(id);//将本层的窗口索引id传给子页面层的L_username中
+                        if (gender == 1) {
+                            body.contents().find("#nan").prop("checked","checked");
+                            // body.contents().find("#nv").removeAttr("checked");
+                        }
+                        if (gender == 0) {
+                            body.contents().find("#nv").prop("checked","checked");
+                            // body.contents().find("#nan").removeAttr("checked");
+                        }
+
+                        body.contents().find("#L_username").val(name);//将本层的窗口索引id传给子页面层的L_username中
+                        body.contents().find("#L_phone").val(iphone);//将本层的窗口索引id传给子页面层的L_username中
+                        body.contents().find("#L_email").val(email);//将本层的窗口索引id传给子页面层的L_username中
                     },
                     error: function(layero, index) {
                         alert("aaa");
