@@ -45,7 +45,6 @@ public class LoginController {
         }
     }
 
-
     @RequestMapping(path = {"/", "/to_login"})
     public String toLogin(){
         return "login";

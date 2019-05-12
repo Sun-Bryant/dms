@@ -329,7 +329,10 @@ layui.define(['jquery', 'form', 'layer', 'element','table'], function(exports) {
             shadeClose: true,
             shade: 0.4,
             title: title,
-            content: url
+            content: url,
+            end: function () {
+                location.reload();
+            }
         });
     }
     /*弹出层+传递ID参数*/
@@ -392,6 +395,9 @@ layui.define(['jquery', 'form', 'layer', 'element','table'], function(exports) {
                     },
                     error: function(layero, index) {
                         alert("aaa");
+                    },
+                    end: function () {
+                        location.reload();
                     }
                 });
 
@@ -402,12 +408,79 @@ layui.define(['jquery', 'form', 'layer', 'element','table'], function(exports) {
         });
     }
 
-    window.WeAdminEdit1 = function (id) {
+    /*弹出层+传递ID参数*/
+    window.WeAdminEdit_serviceman = function(title, url, id, w, h) {
+        if(title == null || title == '') {
+            title = false;
+        };
+        if(url == null || url == '') {
+            url = "404.html";
+        };
+        if(w == null || w == '') {
+            w = ($(window).width() * 0.9);
+        };
+        if(h == null || h == '') {
+            h = ($(window).height() - 50);
+        };
 
+        var name = '11111';
+        var gender = 1;
+        var iphone = '13720991624';
+        var email = '1091245120@qq.com';
+        $.ajax({
+            url: "/serviceman/data",
+            data: {
+                id: id,
+            },
+            success: function (result) {
+                var jsonObj = JSON.parse(result);
+                name = jsonObj.name;
+                gender = jsonObj.gender;
+                iphone = jsonObj.iphone;
+                email = jsonObj.email;
+                console.log(name + gender + iphone + email);
+                layer.open({
+                    type: 2,
+                    area: [w + 'px', h + 'px'],
+                    fix: false, //不固定
+                    maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,
+                    title: title,
+                    content: url,
+                    success: function(layero, index) {
+                        //向iframe页的id=house的元素传值  // 参考 https://yq.aliyun.com/ziliao/133150
+                        // var name = parent.layui.$('#test1').val();
+                        var body = layer.getChildFrame('body', index);//得到子页面层的BODY
+                        body.contents().find("#L_Id").val(id);//将本层的窗口索引id传给子页面层的L_username中
+                        if (gender == 1) {
+                            body.contents().find("#nan").prop("checked","checked");
+                            // body.contents().find("#nv").removeAttr("checked");
+                        }
+                        if (gender == 0) {
+                            body.contents().find("#nv").prop("checked","checked");
+                            // body.contents().find("#nan").removeAttr("checked");
+                        }
 
+                        body.contents().find("#L_username").val(name);//将本层的窗口索引id传给子页面层的L_username中
+                        body.contents().find("#L_phone").val(iphone);//将本层的窗口索引id传给子页面层的L_username中
+                        body.contents().find("#L_email").val(email);//将本层的窗口索引id传给子页面层的L_username中
+                    },
+                    error: function(layero, index) {
+                        alert("aaa");
+                    },
+                    end: function () {
+                        location.reload();
+                    }
+                });
 
+            },
+            error: function () {
+                alert("请求错误");
+            }
+        });
+    }
 
-    };
 
     /*弹出层+传递ID参数*/
     window.WeAdminPass = function(title, url, id, w, h) {
@@ -441,6 +514,9 @@ layui.define(['jquery', 'form', 'layer', 'element','table'], function(exports) {
             },
             error: function(layero, index) {
                 alert("aaa");
+            },
+            end: function () {
+                location.reload();
             }
         });
     }

@@ -1,8 +1,9 @@
 package com.syd.service;
 
 import com.alibaba.fastjson.JSON;
-import com.syd.dao.ManagerDAO;
+import com.syd.dao.ServicemanDAO;
 import com.syd.model.Manager;
+import com.syd.model.Serviceman;
 import com.syd.util.DmsUtil;
 import com.syd.util.Page;
 import org.apache.commons.lang.StringUtils;
@@ -19,28 +20,30 @@ public class ServicemanService {
     private static final Logger logger = LoggerFactory.getLogger(ServicemanService.class);
 
     @Autowired
-    private ManagerDAO managerDAO;
+    private ServicemanDAO servicemanDAO;
 
-    public List<Manager> getManagerList() {
-        List<Manager> list = managerDAO.getManagerList();
+    
+    
+    public List<Serviceman> getManagerList() {
+        List<Serviceman> list = servicemanDAO.getManagerList();
         return list;
     }
-    public List<Manager> getManagerList_Page(int pageIndex, int pageSize) {
+    public List<Serviceman> getManagerList_Page(int pageIndex, int pageSize) {
         //分页
-        List<Manager> list = managerDAO.getManagerList_Page((pageIndex - 1) * pageSize, pageSize);
+        List<Serviceman> list = servicemanDAO.getManagerList_Page((pageIndex - 1) * pageSize, pageSize);
         return list;
     }
 
-    public List<Manager> getManagerList_time(int pageIndex, int pageSize, String startDate, String endDate) {
+    public List<Serviceman> getManagerList_time(int pageIndex, int pageSize, String startDate, String endDate) {
         //分页
-        List<Manager> list = managerDAO.getManagerList_time((pageIndex - 1) * pageSize, pageSize, startDate, endDate);
+        List<Serviceman> list = servicemanDAO.getManagerList_time((pageIndex - 1) * pageSize, pageSize, startDate, endDate);
 
         return list;
     }
 
-    public Page<Manager> findAllManagerWithPage(int pageIndex, int pageSize) {
+    public Page<Serviceman> findAllManagerWithPage(int pageIndex, int pageSize) {
         //获取数据库中所有的记录
-        List<Manager> allManager  = managerDAO.getManagerList();
+        List<Serviceman> allManager  = servicemanDAO.getManagerList();
         int totalCount = allManager.size();
 
         //使用这三个参数，创建一个Page对象。
@@ -48,12 +51,12 @@ public class ServicemanService {
         //获取page中的StartRow（数据库起始记录指针）
         int startRow = page.getStartRow();
         //有了startRow和pageSize就可以拿到每页的数据。
-        page.setList(managerDAO.getManagerList_Page(startRow, pageSize));
+        page.setList(servicemanDAO.getManagerList_Page(startRow, pageSize));
 
         return page;
     }
-    public Page<Manager> findAllManagerWithPageTime(int pageIndex, int pageSize, String startDate, String endDate) {
-        List<Manager> allManager = managerDAO.getManagerList_time_all(startDate, endDate);
+    public Page<Serviceman> findAllManagerWithPageTime(int pageIndex, int pageSize, String startDate, String endDate) {
+        List<Serviceman> allManager = servicemanDAO.getManagerList_time_all(startDate, endDate);
         int totalCount = allManager.size();
 
         //使用这三个参数，创建一个Page对象。
@@ -61,17 +64,17 @@ public class ServicemanService {
         //获取page中的StartRow（数据库起始记录指针）
         int startRow = page.getStartRow();
         //有了startRow和pageSize就可以拿到每页的数据。
-        page.setList(managerDAO.getManagerList_time(startRow, pageSize, startDate, endDate));
+        page.setList(servicemanDAO.getManagerList_time(startRow, pageSize, startDate, endDate));
 
         return page;
     }
 
     public int deleteManager(int id) {
-        return managerDAO.deleteManager(id);
+        return servicemanDAO.deleteManager(id);
     }
 
     public int updateStatus(int id, int status) {
-        return managerDAO.updateStatus(id, status);
+        return servicemanDAO.updateStatus(id, status);
     }
 
 
@@ -87,55 +90,55 @@ public class ServicemanService {
             return 0;
         }
         //判断用户名是否注册过
-        Manager  manager= managerDAO.selectByName(name);
-        if (manager != null) {
+         Serviceman serviceman = servicemanDAO.selectByName(name);
+        if (serviceman != null) {
             map.put("msg", "用户名已被注册");
             return 0;
         }
         //正常
-        manager = new Manager();
-        manager.setName(name);
-        manager.setSalt(UUID.randomUUID().toString().substring(0, 5));
+        serviceman = new Serviceman();
+        serviceman.setName(name);
+        serviceman.setSalt(UUID.randomUUID().toString().substring(0, 5));
         String head = String.format("http://images.nowcoder.com/head/%dt.png", new Random().nextInt(1000));
-        manager.setHeadUrl(head);
-        manager.setPassword(DmsUtil.MD5(password + manager.getSalt()));
-        manager.setDate(new Date());
-        manager.setEmail(email);
-        manager.setIphone(iphone);
+        serviceman.setHeadUrl(head);
+        serviceman.setPassword(DmsUtil.MD5(password + serviceman.getSalt()));
+        serviceman.setDate(new Date());
+        serviceman.setEmail(email);
+        serviceman.setIphone(iphone);
         int gender1 = 0;
         if ("男".equals(gender)) {
             gender1 = 1;
         }else {
             gender1 = 0;
         }
-        manager.setGender(gender1);
-        manager.setStatus(0);
-
-        return managerDAO.addmanager(manager);
+        serviceman.setGender(gender1);
+        serviceman.setStatus(0);
+        return servicemanDAO.addmanager(serviceman);
 
     }
 
     public int pass(int id, String oldpass, String password) {
-        Manager manager = managerDAO.selectById(id);
-        if (manager == null) {
+        Serviceman serviceman = servicemanDAO.selectById(id);
+        if (serviceman == null) {
             return 0;
         }
         //判断旧密码是否正确
-        if (!DmsUtil.MD5(oldpass + manager.getSalt()).equals(manager.getPassword())) {
+        if (!DmsUtil.MD5(oldpass + serviceman.getSalt()).equals(serviceman.getPassword())) {
             return 0;
         } else {
             //设置新密码
-            manager.setSalt(UUID.randomUUID().toString().substring(0, 5));
-            manager.setPassword(DmsUtil.MD5(password + manager.getSalt()));
-            int result = managerDAO.updatePass(id, manager.getSalt(), manager.getPassword());
+            serviceman.setSalt(UUID.randomUUID().toString().substring(0, 5));
+            serviceman.setPassword(DmsUtil.MD5(password + serviceman.getSalt()));
+            int result = servicemanDAO.updatePass(id, serviceman.getSalt(), serviceman.getPassword());
             return result;
         }
     }
 
     public String data(int id) {
-        Manager manager = managerDAO.selectById(id);
-        return  JSON.toJSONString(manager);
+        Serviceman serviceman = servicemanDAO.selectById(id);
+        return  JSON.toJSONString(serviceman);
     }
+
 
     public int update(int id, String name, String gender, String iphone, String email) {
         int gender1 = 0;
@@ -144,8 +147,7 @@ public class ServicemanService {
         }else {
             gender1 = 0;
         }
-        return managerDAO.update(id, name, gender1, iphone, email);
+        return servicemanDAO.update(id, name, gender1, iphone, email);
     }
-
 
 }

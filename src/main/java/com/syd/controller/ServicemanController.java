@@ -2,6 +2,7 @@ package com.syd.controller;
 
 
 import com.syd.model.Manager;
+import com.syd.model.Serviceman;
 import com.syd.service.ServicemanService;
 import com.syd.util.Page;
 import org.slf4j.Logger;
@@ -25,8 +26,8 @@ public class ServicemanController {
     private String getManagerList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
 //        System.out.println(pageIndex);
 
-        List<Manager> list = servicemanService.getManagerList_Page(pageIndex, 2);
-        Page<Manager> page = servicemanService.findAllManagerWithPage(pageIndex, 2);
+        List<Serviceman> list = servicemanService.getManagerList_Page(pageIndex, 2);
+        Page<Serviceman> page = servicemanService.findAllManagerWithPage(pageIndex, 2);
         model.addAttribute("list", list);
         model.addAttribute("page", page);
         model.addAttribute("start", page.getStart());
@@ -34,7 +35,7 @@ public class ServicemanController {
         return "pages/member/list_service";
     }
 
-//    @RequestMapping(path = {"/manager/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
+//    @RequestMapping(path = {"/serviceman/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String getManagerList_time(Model model,
 //                                       @PathVariable("pageIndex") int pageIndex,
 //                                       @PathVariable("startDate") String startDate,
@@ -54,54 +55,55 @@ public class ServicemanController {
 //        return "./pages/member/list1";
 //    }
 //
-//    @RequestMapping(path = {"/manager/add"}, method = {RequestMethod.POST,RequestMethod.GET})
-//    @ResponseBody
-//    public String add(Model model,
-//                      @RequestParam(value = "name") String name,
-//                      @RequestParam(value = "password") String password,
-//                      @RequestParam(value = "gender") String gender,
-//                      @RequestParam(value = "iphone") String iphone,
-//                      @RequestParam(value = "email") String email) {
-//        if (servicemanService.add(name, password, gender, iphone, email) > 0) {
+    @RequestMapping(path = {"/serviceman/add"}, method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public String add(Model model,
+                      @RequestParam(value = "name") String name,
+                      @RequestParam(value = "password") String password,
+                      @RequestParam(value = "gender") String gender,
+                      @RequestParam(value = "iphone") String iphone,
+                      @RequestParam(value = "email") String email) {
+        System.out.println("-------");
+        if (servicemanService.add(name, password, gender, iphone, email) > 0) {
+            return "1";
+        }else {
+            return "0";
+        }
+    }
+
+    @RequestMapping(path = {"/serviceman/pass"}, method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public int pass(Model model,
+                      @RequestParam(value = "id") int id,
+                      @RequestParam(value = "oldpass") String oldpass,
+                      @RequestParam(value = "password") String password) {
+//        if (servicemanService.getPassByName(name, password, gender, iphone, email) > 0) {
 //            return "1";
 //        }else {
 //            return "0";
 //        }
-//    }
-//
-//    @RequestMapping(path = {"/manager/pass"}, method = {RequestMethod.POST,RequestMethod.GET})
-//    @ResponseBody
-//    public int pass(Model model,
-//                      @RequestParam(value = "id") int id,
-//                      @RequestParam(value = "oldpass") String oldpass,
-//                      @RequestParam(value = "password") String password) {
-////        if (servicemanService.getPassByName(name, password, gender, iphone, email) > 0) {
-////            return "1";
-////        }else {
-////            return "0";
-////        }
-//        int result = servicemanService.pass(id, oldpass, password);
-//        return result;
-//    }
-//
-//
-//    @RequestMapping(path = {"/manager/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private int deleteManager(Model model, @RequestParam(value = "id") int id) {
-//        return servicemanService.deleteManager(id);
-//    }
-//
-//    @RequestMapping(path = {"/manager/updateStatus"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private int updateStatus(Model model, @RequestParam(value = "id") int id, @RequestParam(value = "status") int status) {
-//        return servicemanService.updateStatus(id, status);
-//    }
-//
-//    @RequestMapping(path = {"/manager/data"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private String data(Model model,@RequestParam(value = "id") int id) {
-//        return servicemanService.data(id);
-//    }
+        int result = servicemanService.pass(id, oldpass, password);
+        return result;
+    }
+
+
+    @RequestMapping(path = {"/serviceman/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private int deleteManager(Model model, @RequestParam(value = "id") int id) {
+        return servicemanService.deleteManager(id);
+    }
+
+    @RequestMapping(path = {"/serviceman/updateStatus"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private int updateStatus(Model model, @RequestParam(value = "id") int id, @RequestParam(value = "status") int status) {
+        return servicemanService.updateStatus(id, status);
+    }
+
+    @RequestMapping(path = {"/serviceman/data"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private String data(Model model,@RequestParam(value = "id") int id) {
+        return servicemanService.data(id);
+    }
 //
 //    @RequestMapping(path = {"/manager/time"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String time(Model model,
@@ -126,20 +128,20 @@ public class ServicemanController {
 ////        return "login";
 //    }
 //
-//
-//    @RequestMapping(path = {"/manager/update"}, method = {RequestMethod.POST,RequestMethod.GET})
-//    @ResponseBody
-//    public String update(Model model,
-//                      @RequestParam(value = "id") int id,
-//                      @RequestParam(value = "name") String name,
-//                      @RequestParam(value = "gender") String gender,
-//                      @RequestParam(value = "iphone") String iphone,
-//                      @RequestParam(value = "email") String email) {
-//        if (servicemanService.update(id,name, gender, iphone, email) > 0) {
-//            return "1";
-//        }else {
-//            return "0";
-//        }
-//    }
+
+    @RequestMapping(path = {"/serviceman/update"}, method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public String update(Model model,
+                      @RequestParam(value = "id") int id,
+                      @RequestParam(value = "name") String name,
+                      @RequestParam(value = "gender") String gender,
+                      @RequestParam(value = "iphone") String iphone,
+                      @RequestParam(value = "email") String email) {
+        if (servicemanService.update(id,name, gender, iphone, email) > 0) {
+            return "1";
+        }else {
+            return "0";
+        }
+    }
 
 }
