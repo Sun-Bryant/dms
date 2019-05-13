@@ -73,40 +73,42 @@ public class StudentController {
         }
     }
 
-//    @RequestMapping(path = {"/manager/pass"}, method = {RequestMethod.POST,RequestMethod.GET})
-//    @ResponseBody
-//    public int pass(Model model,
-//                      @RequestParam(value = "id") int id,
-//                      @RequestParam(value = "oldpass") String oldpass,
-//                      @RequestParam(value = "password") String password) {
-////        if (managerService.getPassByName(name, password, gender, iphone, email) > 0) {
-////            return "1";
-////        }else {
-////            return "0";
-////        }
-//        int result = managerService.pass(id, oldpass, password);
-//        return result;
-//    }
-//
-//
-//    @RequestMapping(path = {"/manager/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private int deleteManager(Model model, @RequestParam(value = "id") int id) {
-//        return managerService.deleteManager(id);
-//    }
-//
-//    @RequestMapping(path = {"/manager/updateStatus"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private int updateStatus(Model model, @RequestParam(value = "id") int id, @RequestParam(value = "status") int status) {
-//        return managerService.updateStatus(id, status);
-//    }
-//
-//    @RequestMapping(path = {"/manager/data"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private String data(Model model,@RequestParam(value = "id") int id) {
-//        return managerService.data(id);
-//    }
-//
+    @RequestMapping(path = {"/student/pass"}, method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public int pass(Model model,
+                      @RequestParam(value = "no") int no,
+                      @RequestParam(value = "oldpass") String oldpass,
+                      @RequestParam(value = "password") String password) {
+//        if (managerService.getPassByName(name, password, gender, iphone, email) > 0) {
+//            return "1";
+//        }else {
+//            return "0";
+//        }
+        int result = studentService.pass(no, oldpass, password);
+        return result;
+    }
+
+
+    @RequestMapping(path = {"/student/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private int deleteManager(Model model, @RequestParam(value = "no") int no) {
+        System.out.println(no);
+        return studentService.deleteManager(no);
+    }
+
+    @RequestMapping(path = {"/student/updateStatus"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private int updateStatus(Model model, @RequestParam(value = "no") int no, @RequestParam(value = "status") int status) {
+        return studentService.updateStatus(no, status);
+    }
+
+    @RequestMapping(path = {"/student/data"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private String data(Model model,@RequestParam(value = "no") int no) {
+//        System.out.println(no);
+        return studentService.data(no);
+    }
+
 //    @RequestMapping(path = {"/manager/time"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String time(Model model,
 //                        @RequestParam(value = "start") String start,
@@ -131,19 +133,22 @@ public class StudentController {
 //    }
 //
 //
-//    @RequestMapping(path = {"/manager/update"}, method = {RequestMethod.POST,RequestMethod.GET})
-//    @ResponseBody
-//    public String update(Model model,
-//                      @RequestParam(value = "id") int id,
-//                      @RequestParam(value = "name") String name,
-//                      @RequestParam(value = "gender") String gender,
-//                      @RequestParam(value = "iphone") String iphone,
-//                      @RequestParam(value = "email") String email) {
-//        if (managerService.update(id,name, gender, iphone, email) > 0) {
-//            return "1";
-//        }else {
-//            return "0";
-//        }
-//    }
+    @RequestMapping(path = {"/student/update"}, method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public String update(Model model,
+                      @RequestParam(value = "no") int no,
+                      @RequestParam(value = "name") String name,
+                      @RequestParam(value = "classname") String classname,
+                      @RequestParam(value = "gender") String gender,
+                      @RequestParam(value = "iphone") String iphone,
+                      @RequestParam(value = "email") String email) {
+        System.out.println(no);
+
+        if (studentService.update(no,name, classname,gender, iphone, email) > 0) {
+            return "1";
+        }else {
+            return "0";
+        }
+    }
 
 }

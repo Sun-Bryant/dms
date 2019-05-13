@@ -25,8 +25,8 @@ public interface StudentDAO {
     @Delete({"delete from ", TABLE_NAME, " where no=#{no}"})
     int deleteManager(int no);
 
-    @Update({"update ", TABLE_NAME, " set status=#{status} where id=#{id}"})
-    int updateStatus(@Param("id") int id, @Param("status") int status);
+    @Update({"update ", TABLE_NAME, " set status=#{status} where no=#{no}"})
+    int updateStatus(@Param("no") int no, @Param("status") int status);
 
     @Insert({"insert into ", TABLE_NAME, "(", SELECT_FIELDS,
             ") values (#{no},#{name},#{classname},#{gender},#{iphone},#{email},#{password},#{salt},#{dorm},#{status})"})
@@ -35,14 +35,14 @@ public interface StudentDAO {
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where no=#{no}"})
     Student selectByNo(int no);
 
-    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where id=#{id}"})
-    Student selectById(int id);
+    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where no=#{no}"})
+    Student selectById(int no);
 
-    @Update({"update ", TABLE_NAME, " set password=#{password},salt=#{salt} where id=#{id}"})
-    int updatePass(@Param("id") int id, @Param("salt") String salt, @Param("password") String password);
+    @Update({"update ", TABLE_NAME, " set password=#{password},salt=#{salt} where no=#{no}"})
+    int updatePass(@Param("no") int no, @Param("salt") String salt, @Param("password") String password);
 
-    @Update({"update ", TABLE_NAME, " set name=#{name},gender=#{gender1},iphone=#{iphone},email=#{email} where id=#{id}"})
-    int update(@Param("id") int id, @Param("name") String name, @Param("gender1") int gender1, @Param("iphone") String iphone, @Param("email") String email);
+    @Update({"update ", TABLE_NAME, " set name=#{name},classname=#{classname},gender=#{gender1},iphone=#{iphone},email=#{email} where no=#{no}"})
+    int update(@Param("no") int no, @Param("name") String name, @Param("classname") String classname, @Param("gender1") int gender1, @Param("iphone") String iphone, @Param("email") String email);
 
 
 }

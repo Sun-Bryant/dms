@@ -73,10 +73,9 @@ public class StudentService {
         return studentDAO.deleteManager(id);
     }
 
-    public int updateStatus(int id, int status) {
-        return studentDAO.updateStatus(id, status);
+    public int updateStatus(int no, int status) {
+        return studentDAO.updateStatus(no, status);
     }
-
 
     public int add(int no, String name, String classname, String password, String gender, String iphone, String email,int dorm) {
         //先判断是否为空， 即进行格式检查
@@ -117,37 +116,37 @@ public class StudentService {
         return studentDAO.addmanager(student);
 
     }
-//
-//    public int pass(int id, String oldpass, String password) {
-//        Student student = studentDAO.selectById(id);
-//        if (student == null) {
-//            return 0;
-//        }
-//        //判断旧密码是否正确
-//        if (!DmsUtil.MD5(oldpass + student.getSalt()).equals(student.getPassword())) {
-//            return 0;
-//        } else {
-//            //设置新密码
-//            student.setSalt(UUID.randomUUID().toString().substring(0, 5));
-//            student.setPassword(DmsUtil.MD5(password + student.getSalt()));
-//            int result = studentDAO.updatePass(id, student.getSalt(), student.getPassword());
-//            return result;
-//        }
-//    }
-//
-//    public String data(int id) {
-//        Student student = studentDAO.selectById(id);
-//        return  JSON.toJSONString(student);
-//    }
-//
-//    public int update(int id, String name, String gender, String iphone, String email) {
-//        int gender1 = 0;
-//        if ("男".equals(gender)) {
-//            gender1 = 1;
-//        }else {
-//            gender1 = 0;
-//        }
-//        return studentDAO.update(id, name, gender1, iphone, email);
-//    }
+
+    public int pass(int no, String oldpass, String password) {
+        Student student = studentDAO.selectById(no);
+        if (student == null) {
+            return 0;
+        }
+        //判断旧密码是否正确
+        if (!DmsUtil.MD5(oldpass + student.getSalt()).equals(student.getPassword())) {
+            return 0;
+        } else {
+            //设置新密码
+            student.setSalt(UUID.randomUUID().toString().substring(0, 5));
+            student.setPassword(DmsUtil.MD5(password + student.getSalt()));
+            int result = studentDAO.updatePass(no, student.getSalt(), student.getPassword());
+            return result;
+        }
+    }
+
+    public String data(int no) {
+        Student student = studentDAO.selectById(no);
+        return  JSON.toJSONString(student);
+    }
+
+    public int update(int no, String name,String classname, String gender, String iphone, String email) {
+        int gender1 = 0;
+        if ("男".equals(gender)) {
+            gender1 = 1;
+        }else {
+            gender1 = 0;
+        }
+        return studentDAO.update(no, name, classname, gender1, iphone, email);
+    }
 
 }
