@@ -1,6 +1,7 @@
 package com.syd.service;
 
 import com.alibaba.fastjson.JSON;
+import com.syd.dao.DormDAO;
 import com.syd.dao.ManagerDAO;
 import com.syd.dao.StudentDAO;
 import com.syd.model.Manager;
@@ -24,6 +25,8 @@ public class StudentService {
     @Autowired
     private StudentDAO studentDAO;
 
+    @Autowired
+    private DormDAO dormDAO;
 
     public List<Student> getManagerList() {
         List<Student> list = studentDAO.getManagerList();
@@ -113,7 +116,9 @@ public class StudentService {
         student.setGender(gender1);
         student.setStatus(0);
 
-        return studentDAO.addmanager(student);
+        int arg1 = studentDAO.addmanager(student);
+//        int arg2 = dormDAO.;
+        return arg1;
 
     }
 

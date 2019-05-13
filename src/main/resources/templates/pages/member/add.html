@@ -145,7 +145,8 @@
                                 }, function(index) {
                                     // alert("jjjjj");
                                     //关闭当前frame
-                                    layer.close(index);
+                                    parent.layer.closeAll();
+                                    // layer.close(index);
                                     // location.replace(location.href);
                                 });
                             }else {
@@ -154,7 +155,8 @@
                                 }, function(index) {
                                     // alert("jjjjj");
                                     //关闭当前frame
-                                    layer.close(index);
+                                    // layer.close(index);////
+                                    parent.layer.closeAll();
                                 });
 							}
                         },

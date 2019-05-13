@@ -32,6 +32,68 @@ layui.use(['laydate', 'jquery', 'admin', 'table'], function () {
     // var checkStatus = table.checkStatus('idTest');
     // console.log(checkStatus.data);
 
+
+    /*用户-删除*/
+    window.member_del = function (obj, id) {
+        layer.confirm('确认要删除吗？', function (index) {
+            //发异步删除数据
+            $.ajax({
+                url: "/manager/delete",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+                    if (result > 0) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', {
+                            icon: 1,
+                            time: 1000
+                        });
+                        location.replace(location.href);
+                    } else {
+                        alert("删除错误");
+                    }
+                },
+                error: function () {
+                    alert("请求错误");
+                }
+            });
+
+        });
+    }
+
+
+    /*维修人员-删除*/
+    window.member_del_serviceman = function (obj, id) {
+        layer.confirm('确认要删除吗？', function (index) {
+            //发异步删除数据
+            $.ajax({
+                url: "/serviceman/delete",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+                    if (result > 0) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', {
+                            icon: 1,
+                            time: 1000
+                        });
+                        location.replace(location.href);
+                    } else {
+                        alert("删除错误");
+                    }
+                },
+                error: function () {
+                    alert("请求错误");
+                }
+            });
+
+        });
+    }
+
+
+
     /*用户-停用*/
     window.member_stop = function (obj, id) {
         layer.confirm('确认要改变状态吗？', function (index) {
@@ -94,7 +156,8 @@ layui.use(['laydate', 'jquery', 'admin', 'table'], function () {
     }
 
 
-    /*用户-停用*/
+
+    /*维修人员-停用*/
     window.member_stop_serviceman = function (obj, id) {
         layer.confirm('确认要改变状态吗？', function (index) {
 
@@ -153,6 +216,8 @@ layui.use(['laydate', 'jquery', 'admin', 'table'], function () {
                 });
             }
         });
+
+
 
         /*用户-停用*/
         window.member_stop_student = function (obj, id) {
@@ -215,92 +280,6 @@ layui.use(['laydate', 'jquery', 'admin', 'table'], function () {
         }
 
 
-        /*用户-删除*/
-        window.member_del = function (obj, id) {
-            layer.confirm('确认要删除吗？', function (index) {
-                //发异步删除数据
-                $.ajax({
-                    url: "/manager/delete",
-                    data: {
-                        id: id
-                    },
-                    success: function (result) {
-                        if (result > 0) {
-                            $(obj).parents("tr").remove();
-                            layer.msg('已删除!', {
-                                icon: 1,
-                                time: 1000
-                            });
-                            location.replace(location.href);
-                        } else {
-                            alert("删除错误");
-                        }
-                    },
-                    error: function () {
-                        alert("请求错误");
-                    }
-                });
-
-            });
-        }
-
-        /*维修人员-删除*/
-        window.member_del_serviceman = function (obj, id) {
-            layer.confirm('确认要删除吗？', function (index) {
-                //发异步删除数据
-                $.ajax({
-                    url: "/serviceman/delete",
-                    data: {
-                        id: id
-                    },
-                    success: function (result) {
-                        if (result > 0) {
-                            $(obj).parents("tr").remove();
-                            layer.msg('已删除!', {
-                                icon: 1,
-                                time: 1000
-                            });
-                            location.replace(location.href);
-                        } else {
-                            alert("删除错误");
-                        }
-                    },
-                    error: function () {
-                        alert("请求错误");
-                    }
-                });
-
-            });
-        }
-
-        // /*学生-删除*/
-        // window.member_del_student = function (obj, no) {
-        //     layer.confirm('确认要删除吗？', function (index) {
-        //         //发异步删除数据
-        //         $.ajax({
-        //             url: "/student/delete",
-        //             data: {
-        //                 no: no
-        //             },
-        //             success: function (result) {
-        //                 if (result > 0) {
-        //                     $(obj).parents("tr").remove();
-        //                     layer.msg('已删除!', {
-        //                         icon: 1,
-        //                         time: 1000
-        //                     });
-        //                     location.replace(location.href);
-        //                 } else {
-        //                     alert("删除错误");
-        //                 }
-        //             },
-        //             error: function () {
-        //                 alert("请求错误");
-        //             }
-        //         });
-        //
-        //     });
-        // }
 
         window.delAll = function (argument) {
             var checkStatus = table.checkStatus('demo')
