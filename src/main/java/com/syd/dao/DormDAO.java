@@ -23,27 +23,23 @@ public interface DormDAO {
 
     List<Dorm> getDormList_time_all(@Param("startDate") String startDate, @Param("endDate") String endDate);
 
-    @Delete({"delete from ", TABLE_NAME, " where id=#{id}"})
-    int deleteDorm(int id);
+    @Delete({"delete from ", TABLE_NAME, " where dorm=#{dorm}"})
+    int deleteDorm(int dorm);
 
     @Update({"update ", TABLE_NAME, " set status=#{status} where id=#{id}"})
     int updateStatus(@Param("id") int id, @Param("status") int status);
 
-    @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,
-            ") values (#{name},#{password},#{salt},#{headUrl},#{gender},#{iphone},#{email},#{date},#{status})"})
+    @Insert({"insert into ", TABLE_NAME, "(", SELECT_FIELDS, ") values (#{dorm},#{capacity},#{utilities})"})
     int addDorm(Dorm Dorm);
 
-    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where name=#{name}"})
-    Dorm selectByName(String name);
+    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where dorm=#{dorm}"})
+    Dorm selectByName(int dorm);
 
-    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where id=#{id}"})
-    Dorm selectById(int id);
+    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where dorm=#{dorm}"})
+    Dorm selectById(int dorm);
 
-    @Update({"update ", TABLE_NAME, " set password=#{password},salt=#{salt} where id=#{id}"})
-    int updatePass(@Param("id") int id, @Param("salt") String salt, @Param("password") String password);
-
-    @Update({"update ", TABLE_NAME, " set name=#{name},gender=#{gender1},iphone=#{iphone},email=#{email} where id=#{id}"})
-    int update(@Param("id") int id, @Param("name") String name, @Param("gender1") int gender1, @Param("iphone") String iphone, @Param("email") String email);
+    @Update({"update ", TABLE_NAME, " set capacity=#{capacity},utilities=#{utilities} where dorm=#{dorm}"})
+    int update(@Param("dorm") int dorm, @Param("capacity") int capacity, @Param("utilities") double utilities);
 
 
 }

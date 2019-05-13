@@ -18,21 +18,21 @@ public class DormController {
     private static Logger logger = LoggerFactory.getLogger(DormController.class);
 
     @Autowired
-    private DormService DormService;
-//
-//    @RequestMapping(path = {"/Dorm/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    private String getDormList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
-////        System.out.println(pageIndex);
-//
-//        List<Dorm> list = DormService.getDormList_Page(pageIndex, 2);
-//        Page<Dorm> page = DormService.findAllDormWithPage(pageIndex, 2);
-//        model.addAttribute("list", list);
-//        model.addAttribute("page", page);
-//        model.addAttribute("start", page.getStart());
-//        model.addAttribute("end", page.getEnd());
-//        return "pages/member/list";
-//    }
-//
+    private DormService dormService;
+
+    @RequestMapping(path = {"/dorm/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getDormList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
+//        System.out.println(pageIndex);
+
+        List<Dorm> list = dormService.getDormList_Page(pageIndex, 2);
+        Page<Dorm> page = dormService.findAllDormWithPage(pageIndex, 2);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("start", page.getStart());
+        model.addAttribute("end", page.getEnd());
+        return "pages/member/list_dorm";
+    }
+
 //    @RequestMapping(path = {"/Dorm/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String getDormList_time(Model model,
 //                                       @PathVariable("pageIndex") int pageIndex,
@@ -52,40 +52,41 @@ public class DormController {
 //        model.addAttribute("end", page.getEnd());
 //        return "./pages/member/list1";
 //    }
-//
-//    @RequestMapping(path = {"/Dorm/add"}, method = {RequestMethod.POST,RequestMethod.GET})
-//    @ResponseBody
-//    public String add(Model model,
-//                      @RequestParam(value = "name") String name,
-//                      @RequestParam(value = "password") String password,
-//                      @RequestParam(value = "gender") String gender,
-//                      @RequestParam(value = "iphone") String iphone,
-//                      @RequestParam(value = "email") String email) {
-//        if (DormService.add(name, password, gender, iphone, email) > 0) {
-//            return "1";
-//        }else {
-//            return "0";
-//        }
-//    }
-//
-//
-//    @RequestMapping(path = {"/Dorm/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private int deleteDorm(Model model, @RequestParam(value = "id") int id) {
-//        return DormService.deleteDorm(id);
-//    }
-//
+
+
+    @RequestMapping(path = {"/dorm/add"}, method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public String add(Model model,
+                      @RequestParam(value = "dorm") int dorm,
+                      @RequestParam(value = "capacity") int capacity,
+                      @RequestParam(value = "utilities") double utilities) {
+        System.out.println(dorm);
+        System.out.println(capacity);
+        if (dormService.add(dorm, capacity, utilities) > 0) {
+            return "1";
+        }else {
+            return "0";
+        }
+    }
+
+
+    @RequestMapping(path = {"/dorm/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private int deleteDorm(Model model, @RequestParam(value = "dorm") int dorm) {
+        return dormService.deleteDorm(dorm);
+    }
+
 //    @RequestMapping(path = {"/Dorm/updateStatus"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    @ResponseBody
 //    private int updateStatus(Model model, @RequestParam(value = "id") int id, @RequestParam(value = "status") int status) {
 //        return DormService.updateStatus(id, status);
 //    }
 //
-//    @RequestMapping(path = {"/Dorm/data"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private String data(Model model,@RequestParam(value = "id") int id) {
-//        return DormService.data(id);
-//    }
+    @RequestMapping(path = {"/dorm/data"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private String data(Model model,@RequestParam(value = "dorm") int dorm) {
+        return dormService.data(dorm);
+    }
 //
 //    @RequestMapping(path = {"/Dorm/time"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String time(Model model,
@@ -111,19 +112,17 @@ public class DormController {
 //    }
 //
 //
-//    @RequestMapping(path = {"/Dorm/update"}, method = {RequestMethod.POST,RequestMethod.GET})
-//    @ResponseBody
-//    public String update(Model model,
-//                      @RequestParam(value = "id") int id,
-//                      @RequestParam(value = "name") String name,
-//                      @RequestParam(value = "gender") String gender,
-//                      @RequestParam(value = "iphone") String iphone,
-//                      @RequestParam(value = "email") String email) {
-//        if (DormService.update(id,name, gender, iphone, email) > 0) {
-//            return "1";
-//        }else {
-//            return "0";
-//        }
-//    }
+    @RequestMapping(path = {"/dorm/update"}, method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public String update(Model model,
+                      @RequestParam(value = "dorm") int dorm,
+                      @RequestParam(value = "capacity") int capacity,
+                      @RequestParam(value = "utilities") double utilities) {
+        if (dormService.update(dorm, capacity,utilities) > 0) {
+            return "1";
+        }else {
+            return "0";
+        }
+    }
 
 }

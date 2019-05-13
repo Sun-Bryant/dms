@@ -25,7 +25,6 @@ public class StudentController {
     @RequestMapping(path = {"/student/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getManagerList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
 //        System.out.println(pageIndex);
-
         List<Student> list = studentService.getManagerList_Page(pageIndex, 2);
         Page<Student> page = studentService.findAllManagerWithPage(pageIndex, 2);
         model.addAttribute("list", list);
@@ -34,6 +33,17 @@ public class StudentController {
         model.addAttribute("end", page.getEnd());
         return "pages/member/list_student";
     }
+
+    @RequestMapping(path = {"/student/person"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String person(Model model) {
+        return "pages/member/person";
+    }
+
+    @RequestMapping(path = {"/student/class1"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String class1(Model model) {
+        return "pages/member/class1";
+    }
+
 
 //    @RequestMapping(path = {"/manager/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String getManagerList_time(Model model,

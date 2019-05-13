@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.syd.dao.DormDAO">
+    <sql id="table">dorm</sql>
+    <sql id="selectFields">dorm, capacity, utilities
+    </sql>
+    <select id="getDormList_Page" resultType="com.syd.model.Dorm">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        ORDER BY dorm
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <select id="getDormList_time" resultType="com.syd.model.Dorm">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE
+        date BETWEEN #{startDate} AND #{endDate}
+        ORDER BY dorm
+        LIMIT #{offset},#{limit}
+    </select>
+
+</mapper>
+
+

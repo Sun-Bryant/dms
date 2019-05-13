@@ -194,7 +194,7 @@
                 if ($(obj).attr('title') == '启用') {
                     $.ajax({
                         url: "/student/updateStatus",
-                        type:'post',
+                        type: 'post',
                         data: {
                             no: no,
                             status: 0
@@ -222,7 +222,7 @@
                 } else {
                     $.ajax({
                         url: "/student/updateStatus",
-                        type:'post',
+                        type: 'post',
                         data: {
                             no: no,
                             status: 1

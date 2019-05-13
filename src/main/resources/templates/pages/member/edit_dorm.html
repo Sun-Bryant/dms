@@ -21,59 +21,36 @@
 <div class="weadmin-body">
     <form class="layui-form">
         <div class="layui-form-item">
-            <label for="L_Id" class="layui-form-label">
-                <span class="we-red"></span>学号
+            <label for="L_Dorm" class="layui-form-label">
+                <span class="we-red"></span>宿舍号
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_Id" name="no" lay-verify="required" autocomplete="off"
+                <input type="text" id="L_Dorm" name="dorm" lay-verify="required" autocomplete="off"
                        class="layui-input" disabled>
             </div>
 
         </div>
         <div class="layui-form-item">
-            <label for="L_username" class="layui-form-label">
-                <span class="we-red">*</span>姓名
+            <label for="L_capacity" class="layui-form-label">
+                <span class="we-red">*</span>容量
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_username" name="name" lay-verify="required" autocomplete="off"
+                <input type="text" id="L_capacity" name="capacity" lay-verify="required" autocomplete="off"
                        class="layui-input" >
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label for="L_classname" class="layui-form-label">
-                <span class="we-red">*</span>班级
+            <label for="L_utilities" class="layui-form-label">
+                <span class="we-red">*</span>水电费
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_classname" name="classname" lay-verify="required" autocomplete="off"
+                <input type="text" id="L_utilities" name="utilities" lay-verify="required" autocomplete="off"
                        class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="L_sex" class="layui-form-label">性别</label>
-            <div class="layui-input-block" id="L_sex">
-                <input id="nan" type="radio" name="gender" value="男" title="男" checked="">
-                <input id="nv" type="radio" name="gender" value="女" title="女" checked="">
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <label for="L_email" class="layui-form-label">
-                <span class="we-red">*</span>手机
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="L_phone" name="iphone" lay-verify="required|phone" autocomplete=""
-                       class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="L_email" class="layui-form-label">
-                <span class="we-red">*</span>邮箱
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="L_email" name="email" lay-verify="email" autocomplete="off" class="layui-input">
-            </div>
-        </div>
+
 
         <div class="layui-form-item">
             <label  class="layui-form-label">
@@ -142,15 +119,12 @@
 
             //发异步，把数据提交给后台
             $.ajax({
-                url: "/student/update",
+                url: "/dorm/update",
                 type: "POST",
                 data:{
-                    no: f.no,
-                    name: f.name,
-                    classname:f.classname,
-                    gender: f.gender,
-                    iphone: f.iphone,
-                    email: f.email
+                    dorm: f.dorm,
+                    capacity: f.capacity,
+                    utilities:f.utilities,
                 },
                 success: function (result) {
                     // alert(result);
@@ -158,20 +132,13 @@
                         layer.alert("成功", {
                             icon: 6
                         }, function(index) {
-                            // alert("jjjjj");
                             //关闭当前frame
                             parent.layer.closeAll();
-                            // parent.location.replace(location.href);
-                            // layer.alert('内容', function(){
-                            //     location.reload();
-                            // })
-                            // location.replace(location.href);
                         });
                     }else {
                         layer.alert("失败", {
                             icon: 6
                         }, function(index) {
-                            // alert("jjjjj");
                             //关闭当前frame
                             parent.layer.closeAll();
                         });
