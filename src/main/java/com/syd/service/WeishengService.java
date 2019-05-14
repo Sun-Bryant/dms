@@ -20,29 +20,29 @@ public class WeishengService {
 
 
     @Autowired
-    private WeishengDAO WeishengDAO;
+    private WeishengDAO weishengDAO;
 
 
     public List<Weisheng> getWeishengList() {
-        List<Weisheng> list = WeishengDAO.getWeishengList();
+        List<Weisheng> list = weishengDAO.getWeishengList();
         return list;
     }
     public List<Weisheng> getWeishengList_Page(int pageIndex, int pageSize) {
         //分页
-        List<Weisheng> list = WeishengDAO.getWeishengList_Page((pageIndex - 1) * pageSize, pageSize);
+        List<Weisheng> list = weishengDAO.getWeishengList_Page((pageIndex - 1) * pageSize, pageSize);
         return list;
     }
 
     public List<Weisheng> getWeishengList_time(int pageIndex, int pageSize, String startDate, String endDate) {
         //分页
-        List<Weisheng> list = WeishengDAO.getWeishengList_time((pageIndex - 1) * pageSize, pageSize, startDate, endDate);
+        List<Weisheng> list = weishengDAO.getWeishengList_time((pageIndex - 1) * pageSize, pageSize, startDate, endDate);
 
         return list;
     }
 
     public Page<Weisheng> findAllWeishengWithPage(int pageIndex, int pageSize) {
         //获取数据库中所有的记录
-        List<Weisheng> allWeisheng  = WeishengDAO.getWeishengList();
+        List<Weisheng> allWeisheng  = weishengDAO.getWeishengList();
         int totalCount = allWeisheng.size();
 
         //使用这三个参数，创建一个Page对象。
@@ -50,12 +50,12 @@ public class WeishengService {
         //获取page中的StartRow（数据库起始记录指针）
         int startRow = page.getStartRow();
         //有了startRow和pageSize就可以拿到每页的数据。
-        page.setList(WeishengDAO.getWeishengList_Page(startRow, pageSize));
+        page.setList(weishengDAO.getWeishengList_Page(startRow, pageSize));
 
         return page;
     }
     public Page<Weisheng> findAllWeishengWithPageTime(int pageIndex, int pageSize, String startDate, String endDate) {
-        List<Weisheng> allWeisheng = WeishengDAO.getWeishengList_time_all(startDate, endDate);
+        List<Weisheng> allWeisheng = weishengDAO.getWeishengList_time_all(startDate, endDate);
         int totalCount = allWeisheng.size();
 
         //使用这三个参数，创建一个Page对象。
@@ -63,56 +63,40 @@ public class WeishengService {
         //获取page中的StartRow（数据库起始记录指针）
         int startRow = page.getStartRow();
         //有了startRow和pageSize就可以拿到每页的数据。
-        page.setList(WeishengDAO.getWeishengList_time(startRow, pageSize, startDate, endDate));
+        page.setList(weishengDAO.getWeishengList_time(startRow, pageSize, startDate, endDate));
 
         return page;
     }
 
     public int deleteWeisheng(int id) {
-        return WeishengDAO.deleteWeisheng(id);
+        return weishengDAO.deleteWeisheng(id);
     }
 
     public int updateStatus(int id, int status) {
-        return WeishengDAO.updateStatus(id, status);
+        return weishengDAO.updateStatus(id, status);
     }
 
 
-    public int add(String name, String password, String gender, String iphone, String email) {
-        //先判断是否为空， 即进行格式检查
-        Map<String, Object> map = new HashMap<>();
-        if (StringUtils.isBlank(name)) {
-            map.put("msg", "用户名不能为空");
+    public int add(int dorm, int floor1, int balcony, int bed) {
+        Weisheng  weisheng= weishengDAO.selectByName(dorm);
+        if (weisheng != null) {
             return 0;
         }
-        if (StringUtils.isBlank(password)) {
-            map.put("msg", "密码不能为空");
-            return 0;
-        }
-        //判断用户名是否注册过
-        Weisheng  Weisheng= WeishengDAO.selectByName(name);
-        if (Weisheng != null) {
-            map.put("msg", "用户名已被注册");
-            return 0;
-        }
-
-        return WeishengDAO.addWeisheng(Weisheng);
-
+        weisheng = new Weisheng();
+        weisheng.setDorm(dorm);
+        weisheng.setFloor1(floor1);
+        weisheng.setBalcony(balcony);
+        weisheng.setBed(bed);
+        return weishengDAO.addWeisheng(weisheng);
     }
-
 
     public String data(int id) {
-        Weisheng Weisheng = WeishengDAO.selectById(id);
-        return  JSON.toJSONString(Weisheng);
+        Weisheng weisheng = weishengDAO.selectById(id);
+        return  JSON.toJSONString(weisheng);
     }
 
-    public int update(int id, String name, String gender, String iphone, String email) {
-        int gender1 = 0;
-        if ("男".equals(gender)) {
-            gender1 = 1;
-        }else {
-            gender1 = 0;
-        }
-        return WeishengDAO.update(id, name, gender1, iphone, email);
+    public int update(int id, int dorm, int floor1, int balcony, int bed) {
+        return weishengDAO.update(id, dorm, floor1, balcony, bed);
     }
 
 }

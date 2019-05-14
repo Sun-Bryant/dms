@@ -3,7 +3,7 @@ package com.syd.model;
 public class Weisheng {
     private int id;
     private int dorm;
-    private int floor;
+    private int floor1;
     private int balcony;
     private int bed;
 
@@ -23,12 +23,12 @@ public class Weisheng {
         this.dorm = dorm;
     }
 
-    public int getFloor() {
-        return floor;
+    public int getFloor1() {
+        return floor1;
     }
 
-    public void setFloor(int floor) {
-        this.floor = floor;
+    public void setFloor1(int floor1) {
+        this.floor1 = floor1;
     }
 
     public int getBalcony() {

@@ -17,22 +17,22 @@ import java.util.List;
 public class WeishengController {
     private static Logger logger = LoggerFactory.getLogger(WeishengController.class);
 
-//    @Autowired
-//    private WeishengService WeishengService;
-//
-//    @RequestMapping(path = {"/Weisheng/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    private String getWeishengList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
-////        System.out.println(pageIndex);
-//
-//        List<Weisheng> list = WeishengService.getWeishengList_Page(pageIndex, 2);
-//        Page<Weisheng> page = WeishengService.findAllWeishengWithPage(pageIndex, 2);
-//        model.addAttribute("list", list);
-//        model.addAttribute("page", page);
-//        model.addAttribute("start", page.getStart());
-//        model.addAttribute("end", page.getEnd());
-//        return "pages/member/list";
-//    }
-//
+    @Autowired
+    private WeishengService weishengService;
+
+    @RequestMapping(path = {"/weisheng/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getWeishengList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
+//        System.out.println(pageIndex);
+
+        List<Weisheng> list = weishengService.getWeishengList_Page(pageIndex, 2);
+        Page<Weisheng> page = weishengService.findAllWeishengWithPage(pageIndex, 2);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("start", page.getStart());
+        model.addAttribute("end", page.getEnd());
+        return "pages/member/list_weisheng";
+    }
+
 //    @RequestMapping(path = {"/Weisheng/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String getWeishengList_time(Model model,
 //                                       @PathVariable("pageIndex") int pageIndex,
@@ -52,42 +52,43 @@ public class WeishengController {
 //        model.addAttribute("end", page.getEnd());
 //        return "./pages/member/list1";
 //    }
-//
-//    @RequestMapping(path = {"/Weisheng/add"}, method = {RequestMethod.POST,RequestMethod.GET})
-//    @ResponseBody
-//    public String add(Model model,
-//                      @RequestParam(value = "name") String name,
-//                      @RequestParam(value = "password") String password,
-//                      @RequestParam(value = "gender") String gender,
-//                      @RequestParam(value = "iphone") String iphone,
-//                      @RequestParam(value = "email") String email) {
-//        if (WeishengService.add(name, password, gender, iphone, email) > 0) {
-//            return "1";
-//        }else {
-//            return "0";
-//        }
-//    }
-//
-//
-//    @RequestMapping(path = {"/Weisheng/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private int deleteWeisheng(Model model, @RequestParam(value = "id") int id) {
-//        return WeishengService.deleteWeisheng(id);
-//    }
-//
-//    @RequestMapping(path = {"/Weisheng/updateStatus"}, method = {RequestMethod.GET, RequestMethod.POST})
+
+    @RequestMapping(path = {"/weisheng/add"}, method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public String add(Model model,
+                      @RequestParam(value = "dorm") int dorm,
+                      @RequestParam(value = "floor1") int floor1,
+                      @RequestParam(value = "balcony") int balcony,
+                      @RequestParam(value = "bed") int bed) {
+//        System.out.println(dorm);
+
+        if (weishengService.add(dorm, floor1, balcony, bed) > 0) {
+            return "1";
+        } else {
+            return "0";
+        }
+    }
+
+
+    @RequestMapping(path = {"/weisheng/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private int deleteWeisheng(Model model, @RequestParam(value = "id") int id) {
+        return weishengService.deleteWeisheng(id);
+    }
+
+    //    @RequestMapping(path = {"/Weisheng/updateStatus"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    @ResponseBody
 //    private int updateStatus(Model model, @RequestParam(value = "id") int id, @RequestParam(value = "status") int status) {
 //        return WeishengService.updateStatus(id, status);
 //    }
 //
-//    @RequestMapping(path = {"/Weisheng/data"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private String data(Model model,@RequestParam(value = "id") int id) {
-//        return WeishengService.data(id);
-//    }
-//
-//    @RequestMapping(path = {"/Weisheng/time"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = {"/weisheng/data"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private String data(Model model, @RequestParam(value = "id") int id) {
+        return weishengService.data(id);
+    }
+
+    //    @RequestMapping(path = {"/Weisheng/time"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String time(Model model,
 //                        @RequestParam(value = "start") String start,
 //                        @RequestParam(value = "end") String end) {
@@ -111,19 +112,19 @@ public class WeishengController {
 //    }
 //
 //
-//    @RequestMapping(path = {"/Weisheng/update"}, method = {RequestMethod.POST,RequestMethod.GET})
-//    @ResponseBody
-//    public String update(Model model,
-//                      @RequestParam(value = "id") int id,
-//                      @RequestParam(value = "name") String name,
-//                      @RequestParam(value = "gender") String gender,
-//                      @RequestParam(value = "iphone") String iphone,
-//                      @RequestParam(value = "email") String email) {
-//        if (WeishengService.update(id,name, gender, iphone, email) > 0) {
-//            return "1";
-//        }else {
-//            return "0";
-//        }
-//    }
+    @RequestMapping(path = {"/weisheng/update"}, method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public String update(Model model,
+                         @RequestParam(value = "id") int id,
+                         @RequestParam(value = "dorm") int dorm,
+                         @RequestParam(value = "floor1") int floor1,
+                         @RequestParam(value = "balcony") int balcony,
+                         @RequestParam(value = "bed") int bed) {
+        if (weishengService.update(id, dorm, floor1, balcony, bed) > 0) {
+            return "1";
+        } else {
+            return "0";
+        }
+    }
 
 }
