@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加会员-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../static/css/font.css">
+		<link rel="stylesheet" href="../../static/css/weadmin.css">
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+	</head>
+
+	<body>
+		<div class="weadmin-body">
+			<form class="layui-form">
+				<div class="layui-form-item">
+					<label for="L_dorm" class="layui-form-label">
+		                <span class="we-red">*</span>宿舍号
+		            </label>
+					<div class="layui-input-inline">
+						<input type="text" id="L_dorm" name="dorm" lay-verify="required|" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label for="L_electricity" class="layui-form-label">
+		                <span class="we-red">*</span>使用电器情况
+		            </label>
+					<div class="layui-input-inline">
+						<input type="text" id="L_electricity" name="electricity" lay-verify="required" autocomplete="" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_dangerGood" class="layui-form-label">
+		                <span class="we-red">*</span>危险物品
+		            </label>
+					<div class="layui-input-inline">
+						<input type="text" id="L_dangerGood" name="dangerGood" autocomplete="" class="layui-input">
+					</div>
+
+				</div>
+				<div class="layui-form-item">
+					<label for="L_lockDoor" class="layui-form-label">
+                  <span class="we-red">*</span>是否锁门
+              </label>
+					<div class="layui-input-inline">
+						<input type="text" id="L_lockDoor" name="lockDoor" lay-verify="required" autocomplete="" class="layui-input">
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label  class="layui-form-label">
+              </label>
+					<button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+				</div>
+			</form>
+		</div>
+		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+		
+		<script>
+			layui.extend({
+				admin: '{/}../../static/js/admin'
+			});
+			layui.use(['form', 'jquery','util','admin', 'layer'], function() {
+				var form = layui.form,
+					$ = layui.jquery,
+					util = layui.util,
+					admin = layui.admin,
+					layer = layui.layer;
+
+				//自定义验证规则
+				form.verify({
+					nikename: function(value) {
+						if(value.length < 5) {
+							return '昵称至少得5个字符啊';
+						}
+					},
+					pass: [/(.+){4,12}$/, '密码必须6到12位'],
+					repass: function(value) {
+						if($('#L_pass').val() != $('#L_repass').val()) {
+							return '两次密码不一致';
+						}
+					}
+				});
+				//失去焦点时判断值为空不验证，一旦填写必须验证
+				$('input[name="email"]').blur(function(){
+					//这里是失去焦点时的事件
+					if($('input[name="email"]').val()){
+						$('input[name="email"]').attr('lay-verify','email');
+					}else{
+						$('input[name="email"]').removeAttr('lay-verify');
+					}
+				});
+
+				//监听提交
+				form.on('submit(add)', function(data) {
+					//console.log(data.field);
+					var f = data.field;
+					//console.log(f.username);
+                    console.log(f.dorm);
+					//var sex = $('input:radio[name="sex"]:checked').val();
+
+					//发异步，把数据提交给后台
+                    $.ajax({
+                        url: "/security/add",
+                        type: "POST",
+                        data:{
+                            dorm: f.dorm,
+                            electricity: f.electricity,
+                            dangerGood: f.lockDoor,
+                            lockDoor: f.lockDoor
+                        },
+                        success: function (result) {
+                            // alert(result);
+                            if (result == 1) {
+                                layer.alert("增加成功", {
+                                    icon: 6
+                                }, function(index) {
+                                    // alert("jjjjj");
+                                    //关闭当前frame
+                                    parent.layer.closeAll();
+                                    // location.replace(location.href);
+                                });
+                            }else {
+                                layer.alert("增加失败", {
+                                    icon: 6
+                                }, function(index) {
+                                    // alert("jjjjj");
+                                    //关闭当前frame
+                                    parent.layer.closeAll();
+                                });
+							}
+                        },
+                        error: function () {
+                            alert("请求错误");
+                        }
+                    });
+
+					return false;
+				});
+			});
+		</script>
+	</body>
+
+</html>

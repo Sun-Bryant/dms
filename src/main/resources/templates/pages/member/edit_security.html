@@ -41,30 +41,30 @@
 
         </div>
         <div class="layui-form-item">
-            <label for="L_floor" class="layui-form-label">
-                <span class="we-red">*</span>地板得分
+            <label for="L_electricity" class="layui-form-label">
+                <span class="we-red">*</span>使用电器情况
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_floor" name="floor1" lay-verify="required" autocomplete=""
+                <input type="text" id="L_electricity" name="electricity" lay-verify="required" autocomplete=""
                        class="layui-input" >
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label for="L_balcony" class="layui-form-label">
-                <span class="we-red">*</span>阳台得分
+            <label for="L_dangerGood" class="layui-form-label">
+                <span class="we-red">*</span>危险物品
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_balcony" name="balcony" lay-verify="required" autocomplete=""
+                <input type="text" id="L_dangerGood" name="dangerGood" lay-verify="required" autocomplete=""
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="L_bed" class="layui-form-label">
-                <span class="we-red">*</span>床铺得分
+            <label for="L_lockDoor" class="layui-form-label">
+                <span class="we-red">*</span>是否锁门
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_bed" name="bed" lay-verify="required" autocomplete=""
+                <input type="text" id="L_lockDoor" name="lockDoor" lay-verify="required" autocomplete=""
                        class="layui-input">
             </div>
         </div>
@@ -136,14 +136,14 @@
 
             //发异步，把数据提交给后台
             $.ajax({
-                url: "/weisheng/update",
+                url: "/security/update",
                 type: "POST",
                 data:{
                     id:f.id,
                     dorm: f.dorm,
-                    floor1: f.floor1,
-                    balcony: f.balcony,
-                    bed: f.bed,
+                    electricity: f.electricity,
+                    dangerGood: f.dangerGood,
+                    lockDoor: f.lockDoor,
                 },
                 success: function (result) {
                     // alert(result);

@@ -20,29 +20,29 @@ public class SecurityService {
 
 
     @Autowired
-    private SecurityDAO SecurityDAO;
+    private SecurityDAO securityDAO;
 
 
     public List<Security> getSecurityList() {
-        List<Security> list = SecurityDAO.getSecurityList();
+        List<Security> list = securityDAO.getSecurityList();
         return list;
     }
     public List<Security> getSecurityList_Page(int pageIndex, int pageSize) {
         //分页
-        List<Security> list = SecurityDAO.getSecurityList_Page((pageIndex - 1) * pageSize, pageSize);
+        List<Security> list = securityDAO.getSecurityList_Page((pageIndex - 1) * pageSize, pageSize);
         return list;
     }
 
     public List<Security> getSecurityList_time(int pageIndex, int pageSize, String startDate, String endDate) {
         //分页
-        List<Security> list = SecurityDAO.getSecurityList_time((pageIndex - 1) * pageSize, pageSize, startDate, endDate);
+        List<Security> list = securityDAO.getSecurityList_time((pageIndex - 1) * pageSize, pageSize, startDate, endDate);
 
         return list;
     }
 
     public Page<Security> findAllSecurityWithPage(int pageIndex, int pageSize) {
         //获取数据库中所有的记录
-        List<Security> allSecurity  = SecurityDAO.getSecurityList();
+        List<Security> allSecurity  = securityDAO.getSecurityList();
         int totalCount = allSecurity.size();
 
         //使用这三个参数，创建一个Page对象。
@@ -50,12 +50,12 @@ public class SecurityService {
         //获取page中的StartRow（数据库起始记录指针）
         int startRow = page.getStartRow();
         //有了startRow和pageSize就可以拿到每页的数据。
-        page.setList(SecurityDAO.getSecurityList_Page(startRow, pageSize));
+        page.setList(securityDAO.getSecurityList_Page(startRow, pageSize));
 
         return page;
     }
     public Page<Security> findAllSecurityWithPageTime(int pageIndex, int pageSize, String startDate, String endDate) {
-        List<Security> allSecurity = SecurityDAO.getSecurityList_time_all(startDate, endDate);
+        List<Security> allSecurity = securityDAO.getSecurityList_time_all(startDate, endDate);
         int totalCount = allSecurity.size();
 
         //使用这三个参数，创建一个Page对象。
@@ -63,56 +63,45 @@ public class SecurityService {
         //获取page中的StartRow（数据库起始记录指针）
         int startRow = page.getStartRow();
         //有了startRow和pageSize就可以拿到每页的数据。
-        page.setList(SecurityDAO.getSecurityList_time(startRow, pageSize, startDate, endDate));
+        page.setList(securityDAO.getSecurityList_time(startRow, pageSize, startDate, endDate));
 
         return page;
     }
 
     public int deleteSecurity(int id) {
-        return SecurityDAO.deleteSecurity(id);
+        return securityDAO.deleteSecurity(id);
     }
 
     public int updateStatus(int id, int status) {
-        return SecurityDAO.updateStatus(id, status);
+        return securityDAO.updateStatus(id, status);
     }
 
 
-    public int add(String name, String password, String gender, String iphone, String email) {
-        //先判断是否为空， 即进行格式检查
-        Map<String, Object> map = new HashMap<>();
-        if (StringUtils.isBlank(name)) {
-            map.put("msg", "用户名不能为空");
-            return 0;
-        }
-        if (StringUtils.isBlank(password)) {
-            map.put("msg", "密码不能为空");
-            return 0;
-        }
+    public int add(int dorm, String electricity, String dangerGood, String lockDoor) {
+
         //判断用户名是否注册过
-        Security  Security= SecurityDAO.selectByName(name);
-        if (Security != null) {
-            map.put("msg", "用户名已被注册");
+        Security security = securityDAO.selectByName(dorm);
+        if (security != null) {
             return 0;
         }
-
-        return SecurityDAO.addSecurity(Security);
+        security = new Security();
+        security.setDorm(dorm);
+        security.setDangerGood(dangerGood);
+        security.setElectricity(electricity);
+        security.setLockDoor(lockDoor);
+        security.setDate(new Date());
+        return securityDAO.addSecurity(security);
 
     }
-
 
     public String data(int id) {
-        Security Security = SecurityDAO.selectById(id);
-        return  JSON.toJSONString(Security);
+        Security security = securityDAO.selectById(id);
+        return  JSON.toJSONString(security);
     }
 
-    public int update(int id, String name, String gender, String iphone, String email) {
-        int gender1 = 0;
-        if ("男".equals(gender)) {
-            gender1 = 1;
-        }else {
-            gender1 = 0;
-        }
-        return SecurityDAO.update(id, name, gender1, iphone, email);
+    public int update(int id, int dorm, String electricity, String dangerGood, String lockDoor) {
+
+        return securityDAO.update(id, dorm, electricity, dangerGood, lockDoor);
     }
 
 }
