@@ -23,11 +23,14 @@ public interface BreakdownDAO {
 
     List<Breakdown> getBreakdownList_time(@Param("offset") int offset, @Param("limit") int limit, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
-    @Delete({"delete from ", TABLE_NAME, " where no=#{no}"})
-    int deleteBreakdown(int no);
+    @Delete({"delete from ", TABLE_NAME, " where id=#{id}"})
+    int deleteBreakdown(int id);
+
+    @Update({"update ", TABLE_NAME, " set examine=#{examine} where id=#{id}"})
+    int updateStatus(@Param("id") int id, @Param("examine") int examine);
 
     @Update({"update ", TABLE_NAME, " set status=#{status} where id=#{id}"})
-    int updateStatus(@Param("id") int id, @Param("status") int status);
+    int updateStatus1(@Param("id") int id, @Param("status") int status);
 
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,
             ") values (#{breakContent},#{status},#{examine})"})

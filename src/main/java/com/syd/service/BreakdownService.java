@@ -72,10 +72,12 @@ public class BreakdownService {
         return breakdownDAO.deleteBreakdown(id);
     }
 
-    public int updateStatus(int id, int status) {
-        return breakdownDAO.updateStatus(id, status);
+    public int updateStatus(int id, int examine) {
+        return breakdownDAO.updateStatus(id, examine);
     }
-
+    public int updateStatus1(int id, int status) {
+        return breakdownDAO.updateStatus1(id, status);
+    }
 
     public int add(String breakContent) {
         Breakdown breakdown = new Breakdown();

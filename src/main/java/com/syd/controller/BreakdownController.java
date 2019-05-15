@@ -4,6 +4,7 @@ package com.syd.controller;
 import com.syd.model.Breakdown;
 import com.syd.service.BreakdownService;
 
+import com.syd.util.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +20,31 @@ public class BreakdownController {
 
     @Autowired
     private BreakdownService breakdownService;
-//
-//    @RequestMapping(path = {"/breakdown/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    private String getbreakdownList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
-////        System.out.println(pageIndex);
-//        List<Breakdown> list = breakdownService.getBreakdownList_Page(pageIndex, 2);
-//        Page<Breakdown> page = breakdownService.findAllBreakdownWithPage(pageIndex, 2);
-//        model.addAttribute("list", list);
-//        model.addAttribute("page", page);
-//        model.addAttribute("start", page.getStart());
-//        model.addAttribute("end", page.getEnd());
-//        return "pages/member/list";
-//    }
-////
+
+    @RequestMapping(path = {"/breakdown/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getbreakdownList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
+//        System.out.println(pageIndex);
+        List<Breakdown> list = breakdownService.getBreakdownList_Page(pageIndex, 2);
+        Page<Breakdown> page = breakdownService.findAllBreakdownWithPage(pageIndex, 2);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("start", page.getStart());
+        model.addAttribute("end", page.getEnd());
+        return "pages/breakdown/list";
+    }
+
+    @RequestMapping(path = {"/breakdown/listStatus/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getbreakdownList_Page1(Model model, @PathVariable("pageIndex") int pageIndex) {
+//        System.out.println(pageIndex);
+        List<Breakdown> list = breakdownService.getBreakdownList_Page(pageIndex, 2);
+        Page<Breakdown> page = breakdownService.findAllBreakdownWithPage(pageIndex, 2);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("start", page.getStart());
+        model.addAttribute("end", page.getEnd());
+        return "pages/breakdown/list_handle";
+    }
+
 ////    @RequestMapping(path = {"/breakdown/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
 ////    private String getbreakdownList_time(Model model,
 ////                                       @PathVariable("pageIndex") int pageIndex,
@@ -77,19 +90,26 @@ public class BreakdownController {
 //        return result;
 //    }
 //
-//
-//    @RequestMapping(path = {"/breakdown/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private int deletebreakdown(Model model, @RequestParam(value = "id") int id) {
-//        return breakdownService.deleteBreakdown(id);
-//    }
-//
-//    @RequestMapping(path = {"/breakdown/updateStatus"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    @ResponseBody
-//    private int updateStatus(Model model, @RequestParam(value = "id") int id, @RequestParam(value = "status") int status) {
-//        return breakdownService.updateStatus(id, status);
-//    }
-//
+
+    @RequestMapping(path = {"/breakdown/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private int deletebreakdown(Model model, @RequestParam(value = "id") int id) {
+        return breakdownService.deleteBreakdown(id);
+    }
+
+    @RequestMapping(path = {"/breakdown/updateStatus"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private int updateStatus(Model model, @RequestParam(value = "id") int id, @RequestParam(value = "examine") int examine) {
+        return breakdownService.updateStatus(id, examine);
+    }
+
+    @RequestMapping(path = {"/breakdown/updateStatus1"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    private int updateStatus1(Model model, @RequestParam(value = "id") int id, @RequestParam(value = "status") int status) {
+        return breakdownService.updateStatus1(id, status);
+    }
+
+
 //    @RequestMapping(path = {"/breakdown/data"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    @ResponseBody
 //    private String data(Model model,@RequestParam(value = "id") int id) {

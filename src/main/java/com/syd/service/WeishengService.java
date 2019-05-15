@@ -33,6 +33,12 @@ public class WeishengService {
         return list;
     }
 
+    public List<Weisheng> getAwardList_Page(int pageIndex, int pageSize) {
+        //分页
+        List<Weisheng> list = weishengDAO.getAwardList_Page((pageIndex - 1) * pageSize, pageSize);
+        return list;
+    }
+
     public List<Weisheng> getWeishengList_time(int pageIndex, int pageSize, String startDate, String endDate) {
         //分页
         List<Weisheng> list = weishengDAO.getWeishengList_time((pageIndex - 1) * pageSize, pageSize, startDate, endDate);
@@ -54,6 +60,23 @@ public class WeishengService {
 
         return page;
     }
+
+
+    public Page<Weisheng> findAllAwardWithPage(int pageIndex, int pageSize) {
+        //获取数据库中所有的记录
+        List<Weisheng> allWeisheng  = weishengDAO.getAwardList();
+        int totalCount = allWeisheng.size();
+
+        //使用这三个参数，创建一个Page对象。
+        Page page = new Page(pageIndex, pageSize, totalCount);
+        //获取page中的StartRow（数据库起始记录指针）
+        int startRow = page.getStartRow();
+        //有了startRow和pageSize就可以拿到每页的数据。
+        page.setList(weishengDAO.getWeishengList_Page(startRow, pageSize));
+
+        return page;
+    }
+
     public Page<Weisheng> findAllWeishengWithPageTime(int pageIndex, int pageSize, String startDate, String endDate) {
         List<Weisheng> allWeisheng = weishengDAO.getWeishengList_time_all(startDate, endDate);
         int totalCount = allWeisheng.size();

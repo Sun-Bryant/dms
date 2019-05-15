@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.syd.dao.BreakdownDAO">
+    <sql id="table">breakdown</sql>
+    <sql id="selectFields">id, breakContent, status, examine
+    </sql>
+    <select id="getBreakdownList_Page" resultType="com.syd.model.Breakdown">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        ORDER BY id
+        LIMIT #{offset},#{limit}
+    </select>
+
+</mapper>
+
+

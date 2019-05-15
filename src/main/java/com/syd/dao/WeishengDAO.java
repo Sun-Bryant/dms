@@ -15,7 +15,12 @@ public interface WeishengDAO {
     @Select({"select * from ", TABLE_NAME})
     List<Weisheng> getWeishengList();
 
+    @Select({"select * from ", TABLE_NAME, "where floor1 >=3 and balcony >= 3 and bed >= 3 "})
+    List<Weisheng> getAwardList();
+
     List<Weisheng> getWeishengList_Page(@Param("offset") int offset, @Param("limit") int limit);
+
+    List<Weisheng> getAwardList_Page(@Param("offset") int offset, @Param("limit") int limit);
 
     List<Weisheng> getWeishengList_time(@Param("offset") int offset, @Param("limit") int limit, @Param("startDate") String startDate, @Param("endDate") String endDate);
 

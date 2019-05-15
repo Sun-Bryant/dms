@@ -33,6 +33,19 @@ public class WeishengController {
         return "pages/member/list_weisheng";
     }
 
+    @RequestMapping(path = {"/weisheng/award/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getAwardList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
+//        System.out.println(pageIndex);
+        List<Weisheng> list = weishengService.getAwardList_Page(pageIndex, 2);
+        Page<Weisheng> page = weishengService.findAllAwardWithPage(pageIndex, 2);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("start", page.getStart());
+        model.addAttribute("end", page.getEnd());
+        return "pages/member/list_award";
+    }
+
+
 //    @RequestMapping(path = {"/Weisheng/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String getWeishengList_time(Model model,
 //                                       @PathVariable("pageIndex") int pageIndex,

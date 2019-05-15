@@ -14,6 +14,17 @@
         LIMIT #{offset},#{limit}
     </select>
 
+    <select id="getAwardList_Page" resultType="com.syd.model.Weisheng">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE
+        floor1 >= 3 and balcony >= 3 and bed >= 3
+        ORDER BY id
+        LIMIT #{offset},#{limit}
+    </select>
+
 </mapper>
 
 
