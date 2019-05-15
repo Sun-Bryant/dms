@@ -76,30 +76,15 @@ public class BreakdownService {
         return breakdownDAO.updateStatus(id, status);
     }
 
-//
-//    public int add(String name, String password, String gender, String iphone, String email) {
-//        Breakdown breakdown = new Breakdown();
-//
-//        breakdown.setName(name);
-//        breakdown.setSalt(UUID.randomUUID().toString().substring(0, 5));
-//        String head = String.format("http://images.nowcoder.com/head/%dt.png", new Random().nextInt(1000));
-//        breakdown.setHeadUrl(head);
-//        breakdown.setPassword(DmsUtil.MD5(password + Breakdown.getSalt()));
-//        Breakdown.setDate(new Date());
-//        Breakdown.setEmail(email);
-//        Breakdown.setIphone(iphone);
-//        int gender1 = 0;
-//        if ("男".equals(gender)) {
-//            gender1 = 1;
-//        }else {
-//            gender1 = 0;
-//        }
-//        Breakdown.setGender(gender1);
-//        Breakdown.setStatus(0);
-//
-//        return breakdownDAO.addBreakdown(Breakdown);
-//
-//    }
+
+    public int add(String breakContent) {
+        Breakdown breakdown = new Breakdown();
+        breakdown.setBreakContent(breakContent);
+        breakdown.setStatus(0);
+        breakdown.setExamine(0);
+        return breakdownDAO.addBreakdown(breakdown);
+
+    }
 
 //    public int pass(int id, String oldpass, String password) {
 //        Breakdown breakdown = breakdownDAO.selectById(id);

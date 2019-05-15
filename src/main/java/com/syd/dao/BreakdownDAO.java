@@ -9,9 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface BreakdownDAO {
-    // 注意空格
+    //注意空格
     String TABLE_NAME = " breakdown ";
-    String INSERT_FIELDS = " breakdown, status";
+    String INSERT_FIELDS = " breakContent, status, examine";
     String SELECT_FIELDS = " id, " + INSERT_FIELDS;
 
     @Select({"select * from ", TABLE_NAME})
@@ -29,8 +29,8 @@ public interface BreakdownDAO {
     @Update({"update ", TABLE_NAME, " set status=#{status} where id=#{id}"})
     int updateStatus(@Param("id") int id, @Param("status") int status);
 
-    @Insert({"insert into ", TABLE_NAME, "(", SELECT_FIELDS,
-            ") values (#{no},#{name},#{classname},#{gender},#{iphone},#{email},#{password},#{salt},#{dorm_id},#{status})"})
+    @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,
+            ") values (#{breakContent},#{status},#{examine})"})
     int addBreakdown(Breakdown breakdown);
 
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where no=#{no}"})

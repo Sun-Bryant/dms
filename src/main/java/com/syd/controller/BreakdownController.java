@@ -51,22 +51,17 @@ public class BreakdownController {
 ////        model.addAttribute("end", page.getEnd());
 ////        return "./pages/member/list1";
 ////    }
-//
-////    @RequestMapping(path = {"/breakdown/add"}, method = {RequestMethod.POST,RequestMethod.GET})
-////    @ResponseBody
-////    public String add(Model model,
-////                      @RequestParam(value = "name") String name,
-////                      @RequestParam(value = "password") String password,
-////                      @RequestParam(value = "gender") String gender,
-////                      @RequestParam(value = "iphone") String iphone,
-////                      @RequestParam(value = "email") String email) {
-////        if (breakdownService.add(name, password, gender, iphone, email) > 0) {
-////            return "1";
-////        }else {
-////            return "0";
-////        }
-////    }
-//
+
+    @RequestMapping(path = {"/breakdown/add"}, method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public String add(Model model, @RequestParam(value = "breakContent") String breakContent) {
+        if (breakdownService.add(breakContent) > 0) {
+            return "1";
+        } else {
+            return "0";
+        }
+    }
+
 //    @RequestMapping(path = {"/breakdown/pass"}, method = {RequestMethod.POST,RequestMethod.GET})
 //    @ResponseBody
 //    public int pass(Model model,
