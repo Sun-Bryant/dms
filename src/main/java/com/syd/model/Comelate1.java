@@ -2,12 +2,12 @@ package com.syd.model;
 
 import java.util.Date;
 
-public class Comelate {
+public class Comelate1 {
     private int id;
     private int studentNo;
     private String studentName;
     private String studentClass;
-    private Date latetime;
+    private String latetime;
 
     public int getId() {
         return id;
@@ -41,11 +41,11 @@ public class Comelate {
         this.studentClass = studentClass;
     }
 
-    public Date getLatetime() {
+    public String getLatetime() {
         return latetime;
     }
 
-    public void setLatetime(Date latetime) {
+    public void setLatetime(String latetime) {
         this.latetime = latetime;
     }
 }

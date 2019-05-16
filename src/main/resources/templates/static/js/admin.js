@@ -335,6 +335,72 @@ layui.define(['jquery', 'form', 'layer', 'element','table'], function(exports) {
             }
         });
     }
+
+    /*弹出层+传递ID参数*/
+    window.WeAdminEdit_comelate = function(title, url, id, w, h) {
+        if(title == null || title == '') {
+            title = false;
+        };
+        if(url == null || url == '') {
+            url = "404.html";
+        };
+        if(w == null || w == '') {
+            w = ($(window).width() * 0.9);
+        };
+        if(h == null || h == '') {
+            h = ($(window).height() - 50);
+        };
+
+        var studentNo = '11111';
+        var studentName = '15140104';
+        var studentClass = '15140104';
+        var latetime = '15140104';
+
+
+        $.ajax({
+            url: "/comelate/data",
+            data: {
+                id: id
+            },
+            success: function (result) {
+                var jsonObj = JSON.parse(result);
+                studentNo = jsonObj.studentNo;
+                studentName = jsonObj.studentName;
+                studentClass = jsonObj.studentClass;
+                latetime = jsonObj.latetime;
+                layer.open({
+                    type: 2,
+                    area: [w + 'px', h + 'px'],
+                    fix: false, //不固定
+                    maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,
+                    title: title,
+                    content: url,
+                    success: function(layero, index) {
+                        //向iframe页的id=house的元素传值  // 参考 https://yq.aliyun.com/ziliao/133150
+                        // var name = parent.layui.$('#test1').val();
+                        var body = layer.getChildFrame('body', index);//得到子页面层的BODY
+                        body.contents().find("#L_ID").val(id);//将本层的窗口索引id传给子页面层的L_username中
+                        body.contents().find("#L_studentNo").val(studentNo);//将本层的窗口索引id传给子页面层的L_username中
+                        body.contents().find("#L_studentName").val(studentName);//将本层的窗口索引id传给子页面层的L_username中
+                        body.contents().find("#L_studentClass").val(studentClass);//将本层的窗口索引id传给子页面层的L_username中
+                        body.contents().find("#L_latetime").val(latetime);//将本层的窗口索引id传给子页面层的L_username中
+                    },
+                    error: function(layero, index) {
+                        alert("aaa");
+                    },
+                    end: function () {
+                        location.reload();
+                    }
+                });
+            },
+            error: function () {
+                alert("请求错误");
+            }
+        });
+    }
+
     /*弹出层+传递ID参数*/
     window.WeAdminEdit = function(title, url, id, w, h) {
         if(title == null || title == '') {
@@ -408,7 +474,9 @@ layui.define(['jquery', 'form', 'layer', 'element','table'], function(exports) {
         });
     }
 
-    // WeAdminEdit_security  WeAdminEdit_notice
+    // WeAdminEdit_security  WeAdminEdit_notice latetime
+
+
 
     /*弹出层+传递ID参数*/
     window.WeAdminEdit_notice = function(title, url, id, w, h) {
@@ -427,7 +495,6 @@ layui.define(['jquery', 'form', 'layer', 'element','table'], function(exports) {
 
         var noticetitle = '11111';
         var noticecontent = '15140104';
-
 
         $.ajax({
             url: "/notice/data",
