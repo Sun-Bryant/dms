@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class Notice {
     private int id;
-    private String noticeTitle;
-    private String noticeContent;
-    private String date;
+    private String noticetitle;
+    private String noticecontent;
+    private Date date;
 
     public int getId() {
         return id;
@@ -16,27 +16,27 @@ public class Notice {
         this.id = id;
     }
 
-    public String getNoticeTitle() {
-        return noticeTitle;
+    public String getNoticetitle() {
+        return noticetitle;
     }
 
-    public void setNoticeTitle(String noticeTitle) {
-        this.noticeTitle = noticeTitle;
+    public void setNoticetitle(String noticetitle) {
+        this.noticetitle = noticetitle;
     }
 
-    public String getNoticeContent() {
-        return noticeContent;
+    public String getNoticecontent() {
+        return noticecontent;
     }
 
-    public void setNoticeContent(String noticeContent) {
-        this.noticeContent = noticeContent;
+    public void setNoticecontent(String noticecontent) {
+        this.noticecontent = noticecontent;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

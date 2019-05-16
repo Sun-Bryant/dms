@@ -28,8 +28,8 @@ public interface NoticeDAO {
     int updateStatus(@Param("id") int id, @Param("status") int status);
 
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,
-            ") values (#{name},#{password},#{salt},#{headUrl},#{gender},#{iphone},#{email},#{date},#{status})"})
-    int addNotice(Notice Notice);
+            ") values (#{noticetitle},#{noticecontent},#{date})"})
+    int addNotice(Notice notice);
 
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where name=#{name}"})
     Notice selectByName(String name);
@@ -40,8 +40,8 @@ public interface NoticeDAO {
     @Update({"update ", TABLE_NAME, " set password=#{password},salt=#{salt} where id=#{id}"})
     int updatePass(@Param("id") int id, @Param("salt") String salt, @Param("password") String password);
 
-    @Update({"update ", TABLE_NAME, " set name=#{name},gender=#{gender1},iphone=#{iphone},email=#{email} where id=#{id}"})
-    int update(@Param("id") int id, @Param("name") String name, @Param("gender1") int gender1, @Param("iphone") String iphone, @Param("email") String email);
+    @Update({"update ", TABLE_NAME, " set noticetitle=#{noticetitle},noticecontent=#{noticecontent} where id=#{id}"})
+    int update(@Param("id") int id, @Param("noticetitle") String noticetitle, @Param("noticecontent") String noticecontent);
 
 
 }

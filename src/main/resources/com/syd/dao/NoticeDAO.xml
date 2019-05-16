@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.syd.dao.NoticeDAO">
+    <sql id="table">notice</sql>
+    <sql id="selectFields">id, noticetitle, noticecontent, date
+    </sql>
+    <select id="getNoticeList_Page" resultType="com.syd.model.Notice">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        ORDER BY id
+        LIMIT #{offset},#{limit}
+    </select>
+
+</mapper>
+
+
