@@ -13,6 +13,16 @@
         ORDER BY no
         LIMIT #{offset},#{limit}
     </select>
+    <select id="getManagerList_Page_dorm" resultType="com.syd.model.Student">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE
+        dorm = #{dorm}
+        ORDER BY no
+        LIMIT #{offset},#{limit}
+    </select>
 
     <select id="getManagerList_time" resultType="com.syd.model.Student">
         SELECT

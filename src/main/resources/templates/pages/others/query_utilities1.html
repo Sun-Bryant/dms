@@ -34,123 +34,33 @@
 
 <div class="weadmin-body">
     <div class="layui-row">
-        <!--<form class="layui-form layui-col-md12 we-search" method="post" action="/manager/time">-->
-        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜索：-->
-        <!--<div class="layui-inline">-->
-        <!--<input class="layui-input" placeholder="开始日" name="start" id="start" />-->
-        <!--</div>-->
-        <!-- -&#45;&#45;-->
-        <!--<div class="layui-inline">-->
-        <!--<input class="layui-input" placeholder="截止日" name="end" id="end" />-->
-        <!--</div>-->
-
-        <!--<div class="layui-inline">-->
-            <!--<input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input" />-->
-        <!--</div>-->
-        <!--<button class="layui-btn" lay-submit="" lay-filter="sreach">-->
-        <!--<i class="layui-icon layui-icon-search"></i>-->
-        <!--</button>-->
-        <!--</form>-->
-    </div>
-    <div class="weadmin-block">
-        <!--<button class="layui-btn layui-btn-danger" data-type="getCheckData">-->
-        <!--<i class="layui-icon layui-icon-delete"></i>批量删除-->
-        <!--</button>-->
-        <button class="layui-btn" onclick="WeAdminShow('添加用户','/pages/member/add_student.html',600,400)">
-            <i class="layui-icon layui-icon-add-circle-fine"></i>添加
-        </button>
-        <span class="fr" style="line-height:40px"
-              th:text="'共有数据:'+${page.totalCount}+'条 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'"></span>
-
-    </div>
-    <table lay-filter="demo" class="layui-table">
-        <thead>
-        <tr>
-            <!--<th>-->
-            <!--<div class="layui-unselect header layui-form-checkbox " lay-skin="primary"  >-->
-            <!--<i class="layui-icon">&#xe605;</i>-->
+        <form class="layui-form layui-col-md12 we-search" method="post" action="/dorm/utilities">
+            <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜索：-->
+            <!--<div class="layui-inline">-->
+            <!--<input class="layui-input" placeholder="开始日" name="start" id="start" />-->
             <!--</div>-->
-            <!--</th>-->
-            <th>学号</th>
-            <th>姓名</th>
-            <th>班级</th>
-            <th>性别</th>
-            <th>手机</th>
-            <th>邮箱</th>
-            <th>宿舍</th>
-            <!--<th>status</th>-->
-            <th>状态</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr data-id="2" th:each="student,studentStat : ${list}">
-            <!--<td>-->
-            <!--<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="1">-->
-            <!--<i class="layui-icon">&#xe605;</i>-->
+            <!-- -&#45;&#45;-->
+            <!--<div class="layui-inline">-->
+            <!--<input class="layui-input" placeholder="截止日" name="end" id="end" />-->
             <!--</div>-->
-            <!--</td>-->
-            <td th:text="${student.no}">1</td>
-            <td th:text="${student.name}">小张</td>
-            <td th:text="${student.classname}">1班</td>
-            <td th:text="${student.gender} == 0 ? '女' : '男'"></td>
-            <td th:text="${student.iphone}">17600000000</td>
-            <td th:text="${student.email}">admin@mail.com</td>
-            <td th:text="${student.dorm}">admin@mail.com</td>
-            <!--<td th:text="${manager.status}">1</td>-->
-            <td class="td-status" th:switch="${student.status}">
-                <span th:case="0" class="layui-btn layui-btn-normal layui-btn-xs">已启用</span>
-                <span th:case="1" class="layui-btn layui-btn-normal layui-btn-xs layui-btn-disabled">已禁用</span>
-            </td>
-            <td class="td-manage" th:switch="${student.status}">
-                <a th:case="0" th:onclick="'javascript:member_stop_student(this, '+${student.no}+');'"
-                   href="javascript:;" title="停用">
-                    <i class="layui-icon layui-icon-download-circle"></i>
-                </a>
-                <a th:case="1" th:onclick="'javascript:member_stop_student(this, '+${student.no}+');'"
-                   href="javascript:;" title="启用">
-                    <i class="layui-icon ">&#xe62f;</i>
-                </a>
 
-                <a title="编辑"
-                   th:onclick="'javascript:WeAdminEdit_student(\''+'编辑'+'\',\'/pages/member/edit_student.html\','+${student.no}+',\'600\',\'400\')'"
-                   href="javascript:;">
-                    <i class="layui-icon layui-icon-edit"></i>
-                </a>
-
-                <!--<a title="编辑" onclick="WeAdminEdit('编辑','/pages/member/edit.html','1514010439',600,400)" href="javascript:;">-->
-                <!--<i class="layui-icon layui-icon-edit"></i>-->
-                <!--</a>-->
-                <!--<a title="编辑"  lay-event="edit" th:onclick="'javascript:WeAdminEdit1(\''+${manager.id}+'\');'" href="javascript:;">-->
-                <!--<i class="layui-icon layui-icon-edit" ></i>-->
-                <!--</a>-->
-                <a th:onclick="'javascript:WeAdminPass(\''+'修改密码'+'\',\'/pages/member/password_student.html\','+${student.no}+',\'600\',\'400\')'"
-                   title="修改密码" href="javascript:;">
-                    <i class="layui-icon layui-icon-util"></i>
-                </a>
-                <a title="删除" th:onclick="'javascript:member_del_student(this, '+${student.no}+');'"
-                   href="javascript:;">
-                    <i class="layui-icon layui-icon-delete"></i>
-                </a>
-            </td>
-        </tr>
-
-        </tbody>
-    </table>
-    <div class="page">
-        <div>
-            <a class="prev" href="/student/list/1">首页</a>
-            <a class="prev"
-               th:href="${page.pageIndex - 1} == 0 ? '/student/list/1':('/student/list/'+${page.pageIndex - 1})">&lt;&lt;</a>
-            <a class="num" th:each=" i : ${#numbers.sequence(start,end,1)}" onclick="replace_class(this,'7')"
-               th:href="'/student/list/'+${i}" th:text="${i}">1</a>
-            <a class="next"
-               th:href="${page.pageIndex + 1} > ${page.totalPage} ? ('/student/list/'+${page.totalPage}) : ('/student/list/'+${page.pageIndex + 1})">&gt;&gt;</a>
-            <a class="next" th:href="'/student/list/'+${page.totalPage}">尾页</a>
-        </div>
+            <div class="layui-inline">
+                <input type="text" name="dorm" placeholder="请输入宿舍号" autocomplete="" class="layui-input"/>
+            </div>
+            <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                <i class="layui-icon layui-icon-search"></i>
+            </button>
+        </form>
     </div>
+
 </div>
 
+<div class="weadmin-block">
+    <!--<button class="layui-btn layui-btn-danger" data-type="getCheckData">-->
+    <!--<i class="layui-icon layui-icon-delete"></i>批量删除-->
+    <!--</button>-->
+    <p th:text="${dorm}+'宿舍截止目前的电费为:'+ ${utilities}+'元'"> </p>
+</div>
 <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
 
 <script src="../../lib/layui/layui.js" charset="utf-8"></script>
@@ -187,8 +97,55 @@
         laydate.render({
             elem: '#end' //指定元素
         });
-
-        // var checkStatus = table.checkStatus('idTest');
+        //
+        // //监听提交
+        // form.on('submit(sreach)', function (data) {
+        //     //console.log(data.field);
+        //     var f = data.field;
+        //     //console.log(f.username);
+        //     // console.log(f.gender);
+        //     //var sex = $('input:radio[name="sex"]:checked').val();
+        //
+        //     //发异步，把数据提交给后台
+        //     $.ajax({
+        //         url: "/student/dorm/1",
+        //         type: "POST",
+        //         data: {
+        //             dorm: f.dorm
+        //         },
+        //         success: function (result) {
+        //             alert(result);
+        //             // if (result == 1) {
+        //             //     layer.alert("查找成功", {
+        //             //         icon: 6
+        //             //     }, function (index) {
+        //             //         // alert("jjjjj");
+        //             //         //关闭当前frame
+        //             //         layer.close(index);
+        //             //         // parent.layer.closeAll();
+        //             //         // location.replace(location.href);
+        //             //     });
+        //             // } else {
+        //             //     layer.alert("查找失败", {
+        //             //         icon: 6
+        //             //     }, function (index) {
+        //             //         // alert("jjjjj");
+        //             //         //关闭当前frame
+        //             //         layer.close(index);
+        //             //         // parent.layer.closeAll();
+        //             //     });
+        //             // }
+        //             // alert("成功")
+        //             window.href="./"
+        //         },
+        //         error: function () {
+        //             alert("请求错误");
+        //         }
+        //     });
+        //
+        //     return false;
+        // });
+        // // var checkStatus = table.checkStatus('idTest');
         // console.log(checkStatus.data);
 
         /*用户-停用*/

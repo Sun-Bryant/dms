@@ -49,7 +49,6 @@ public class DormService {
         return page;
     }
 
-
 //    public Page<Dorm> findAllDormWithPageTime(int pageIndex, int pageSize, String startDate, String endDate) {
 //        List<Dorm> allDorm = DormDAO.getDormList_time_all(startDate, endDate);
 //        int totalCount = allDorm.size();
@@ -89,7 +88,6 @@ public class DormService {
 
     }
 
-
     public String data(int dorm) {
         Dorm dorm1 = dormDAO.selectById(dorm);
         return  JSON.toJSONString(dorm1);
@@ -99,4 +97,7 @@ public class DormService {
         return dormDAO.update(dorm, capacity, utilities);
     }
 
+    public double getUtilities(int dorm) {
+        return dormDAO.getUtilities(dorm);
+    }
 }

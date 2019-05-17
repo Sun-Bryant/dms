@@ -2,6 +2,7 @@ package com.syd.controller;
 
 
 import com.syd.model.Dorm;
+import com.syd.model.Student;
 import com.syd.service.DormService;
 import com.syd.util.Page;
 import org.slf4j.Logger;
@@ -32,6 +33,24 @@ public class DormController {
         model.addAttribute("end", page.getEnd());
         return "pages/member/list_dorm";
     }
+
+    @RequestMapping(path = {"/dorm/utilities"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getManagerList_Page_dorm1(Model model, @RequestParam(value = "dorm") int dorm) {
+//        System.out.println(dorm);
+//        List<Student> list = studentService.getManagerList_Page_dorm(1, 2, dorm);
+//        System.out.println(list.size());
+//        Page<Student> page = studentService.findAllManagerWithPage_dorm(1, 2, dorm);
+//        model.addAttribute("list", list);
+//        model.addAttribute("page", page);
+//        model.addAttribute("start", page.getStart());
+//        model.addAttribute("end", page.getEnd());
+        double utilities = dormService.getUtilities(dorm);
+        model.addAttribute("utilities", utilities);
+        model.addAttribute("dorm", dorm);
+        return "pages/others/query_utilities1";
+    }
+
+
 
 //    @RequestMapping(path = {"/Dorm/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String getDormList_time(Model model,

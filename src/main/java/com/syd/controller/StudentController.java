@@ -34,6 +34,38 @@ public class StudentController {
         return "pages/member/list_student";
     }
 
+    @RequestMapping(path = {"/student/dorm"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getManagerList_Page_dorm1(Model model, @RequestParam(value = "dorm") int dorm) {
+//        System.out.println(dorm);
+//        List<Student> list = studentService.getManagerList_Page_dorm(1, 2, dorm);
+//        System.out.println(list.size());
+//        Page<Student> page = studentService.findAllManagerWithPage_dorm(1, 2, dorm);
+//        model.addAttribute("list", list);
+//        model.addAttribute("page", page);
+//        model.addAttribute("start", page.getStart());
+//        model.addAttribute("end", page.getEnd());
+        List<Student> list = studentService.getStudent_List_dorm(dorm);
+        model.addAttribute("list", list);
+        return "pages/member/list_student_dorm";
+    }
+
+
+//    @RequestMapping(path = {"/student/dorm/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
+//    private String getManagerList_Page_dorm(Model model, @PathVariable("pageIndex") int pageIndex) {
+//        System.out.println(pageIndex);
+////        System.out.println(dorm);
+//
+//        List<Student> list = studentService.getManagerList_Page_dorm(pageIndex, 2, dorm);
+//        System.out.println(list.size());
+//        Page<Student> page = studentService.findAllManagerWithPage_dorm(pageIndex, 2, dorm);
+//        model.addAttribute("list", list);
+//        model.addAttribute("page", page);
+//        model.addAttribute("start", page.getStart());
+//        model.addAttribute("end", page.getEnd());
+//        return "pages/member/list_student_dorm";
+//    }
+
+
     @RequestMapping(path = {"/student/person"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String person(Model model) {
         return "pages/member/person";
@@ -76,6 +108,8 @@ public class StudentController {
                       @RequestParam(value = "iphone") String iphone,
                       @RequestParam(value = "email") String email,
                       @RequestParam(value = "dorm") int dorm) {
+        System.out.println(dorm);
+
         if (studentService.add(no,name, classname,password, gender, iphone, email,dorm) > 0) {
             return "1";
         }else {

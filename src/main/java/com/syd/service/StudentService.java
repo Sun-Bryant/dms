@@ -37,6 +37,16 @@ public class StudentService {
         List<Student> list = studentDAO.getManagerList_Page((pageIndex - 1) * pageSize, pageSize);
         return list;
     }
+    public List<Student> getStudent_List_dorm(int dorm) {
+        //不分页
+        List<Student> list = studentDAO.getManagerList_dorm(dorm);
+        return list;
+    }
+    public List<Student> getManagerList_Page_dorm(int pageIndex, int pageSize, int dorm) {
+        //分页
+        List<Student> list = studentDAO.getManagerList_Page_dorm((pageIndex - 1) * pageSize, pageSize, dorm);
+        return list;
+    }
 
     public List<Student> getManagerList_time(int pageIndex, int pageSize, String startDate, String endDate) {
         //分页
@@ -58,6 +68,21 @@ public class StudentService {
 
         return page;
     }
+
+    public Page<Student> findAllManagerWithPage_dorm(int pageIndex, int pageSize, int dorm) {
+        //获取数据库中所有的记录
+        List<Student> allStudents  = studentDAO.getManagerList_dorm(dorm);
+        int totalCount = allStudents.size();
+
+        //使用这三个参数，创建一个Page对象。
+        Page page = new Page(pageIndex, pageSize, totalCount);
+        //获取page中的StartRow（数据库起始记录指针）
+        int startRow = page.getStartRow();
+        //有了startRow和pageSize就可以拿到每页的数据。
+        page.setList(studentDAO.getManagerList_Page_dorm(startRow, pageSize,dorm));
+        return page;
+    }
+
     public Page<Student> findAllManagerWithPageTime(int pageIndex, int pageSize, String startDate, String endDate) {
         List<Student> allManager = studentDAO.getManagerList_time_all(startDate, endDate);
         int totalCount = allManager.size();
@@ -72,8 +97,8 @@ public class StudentService {
         return page;
     }
 
-    public int deleteManager(int id) {
-        return studentDAO.deleteManager(id);
+    public int deleteManager(int no) {
+        return studentDAO.deleteManager(no);
     }
 
     public int updateStatus(int no, int status) {
@@ -81,20 +106,9 @@ public class StudentService {
     }
 
     public int add(int no, String name, String classname, String password, String gender, String iphone, String email,int dorm) {
-        //先判断是否为空， 即进行格式检查
-        Map<String, Object> map = new HashMap<>();
-        if (StringUtils.isBlank(name)) {
-            map.put("msg", "用户名不能为空");
-            return 0;
-        }
-        if (StringUtils.isBlank(password)) {
-            map.put("msg", "密码不能为空");
-            return 0;
-        }
         //判断用户名是否注册过
         Student  student= studentDAO.selectByNo(no);
         if (student != null) {
-            map.put("msg", "用户名已被注册");
             return 0;
         }
         //正常
