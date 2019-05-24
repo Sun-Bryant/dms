@@ -17,9 +17,19 @@ public interface BreakdownDAO {
     @Select({"select * from ", TABLE_NAME})
     List<Breakdown> getBreakdownList();
 
+    @Select({"select * from ", TABLE_NAME, "where examine = 1"})
+    List<Breakdown> getBreakdownList_status();
+
+    @Select({"select * from ", TABLE_NAME, "where status = 0 and  examine = 1"})
+    List<Breakdown> getBreakdownList_status1();
+
     List<Breakdown> getBreakdownList_time_all(@Param("startDate") String startDate, @Param("endDate") String endDate);
 
     List<Breakdown> getBreakdownList_Page(@Param("offset") int offset, @Param("limit") int limit);
+
+    List<Breakdown> getBreakdownList_Page_Status(@Param("offset") int offset, @Param("limit") int limit);
+
+    List<Breakdown> getBreakdownList_Page_allHandle(@Param("offset") int offset, @Param("limit") int limit);
 
     List<Breakdown> getBreakdownList_time(@Param("offset") int offset, @Param("limit") int limit, @Param("startDate") String startDate, @Param("endDate") String endDate);
 

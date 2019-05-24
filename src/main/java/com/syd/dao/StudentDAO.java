@@ -19,6 +19,9 @@ public interface StudentDAO {
     @Select({"select * from ", TABLE_NAME," where dorm= #{dorm}"})
     List<Student> getManagerList_dorm(int dorm);
 
+    @Select({"select * from ", TABLE_NAME," where classname= #{classname}"})
+    List<Student> getManagerList_class(String classname);
+
     List<Student> getManagerList_Page(@Param("offset") int offset, @Param("limit") int limit);
 
     List<Student> getManagerList_Page_dorm(@Param("offset") int offset, @Param("limit") int limit, @Param("dorm") int dorm);

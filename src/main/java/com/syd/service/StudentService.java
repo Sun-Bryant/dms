@@ -42,6 +42,11 @@ public class StudentService {
         List<Student> list = studentDAO.getManagerList_dorm(dorm);
         return list;
     }
+    public List<Student> getStudent_List_class(String classname) {
+        //不分页
+        List<Student> list = studentDAO.getManagerList_class(classname);
+        return list;
+    }
     public List<Student> getManagerList_Page_dorm(int pageIndex, int pageSize, int dorm) {
         //分页
         List<Student> list = studentDAO.getManagerList_Page_dorm((pageIndex - 1) * pageSize, pageSize, dorm);

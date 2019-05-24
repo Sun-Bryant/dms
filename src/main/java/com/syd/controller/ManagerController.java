@@ -132,6 +132,29 @@ public class ManagerController {
 //        return "login";
     }
 
+    @RequestMapping(path = {"/manager/name"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String name(Model model,
+                        @RequestParam(value = "name") String name) {
+
+//        return managerService.data(id);
+//        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd" );
+//        try {
+//            Date dateStart = sdf.parse(start);
+//            Date dateEnd = sdf.parse(end);
+////            System.out.println(dateStart);
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
+        System.out.println(name);
+//        System.out.println(end);
+        Manager manager = managerService.name(name);
+        model.addAttribute("manager", manager);
+        return "pages/member/list_name";
+//        return "login";
+    }
+
 
     @RequestMapping(path = {"/manager/update"}, method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody

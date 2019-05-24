@@ -35,7 +35,16 @@ public class ServicemanController {
         return "pages/member/list_service";
     }
 
-//    @RequestMapping(path = {"/serviceman/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = {"/serviceman/info"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String info(Model model, @RequestParam(value = "name") String name) {
+        System.out.println(name);
+        Serviceman serviceman = servicemanService.info(name);
+        model.addAttribute("serviceman", serviceman);
+        return "pages/breakdown/list_info";
+    }
+
+
+    //    @RequestMapping(path = {"/serviceman/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String getManagerList_time(Model model,
 //                                       @PathVariable("pageIndex") int pageIndex,
 //                                       @PathVariable("startDate") String startDate,

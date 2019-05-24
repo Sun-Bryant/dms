@@ -477,7 +477,6 @@ layui.define(['jquery', 'form', 'layer', 'element','table'], function(exports) {
     // WeAdminEdit_security  WeAdminEdit_notice latetime
 
 
-
     /*弹出层+传递ID参数*/
     window.WeAdminEdit_notice = function(title, url, id, w, h) {
         if(title == null || title == '') {

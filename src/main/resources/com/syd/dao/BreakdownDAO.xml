@@ -14,6 +14,29 @@
         LIMIT #{offset},#{limit}
     </select>
 
+    <select id="getBreakdownList_Page_Status" resultType="com.syd.model.Breakdown">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE
+        examine = 1
+        ORDER BY id
+        LIMIT #{offset},#{limit}
+    </select>
+
+
+
+    <select id="getBreakdownList_Page_allHandle" resultType="com.syd.model.Breakdown">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE
+        status = 0 and  examine = 1
+        ORDER BY id
+        LIMIT #{offset},#{limit}
+    </select>
 </mapper>
 
 

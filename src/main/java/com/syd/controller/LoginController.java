@@ -29,12 +29,18 @@ public class LoginController {
         try {
             Map<String, Object> map = userService.login(username, password);
             //包含ticket信息说明登录成功   返回给用户浏览器一个cookie（包含ticket票）
-            if (map.containsKey("ticket")) {
+            if (map.containsKey("root")) {
                 model.addAttribute("username", username);
-                Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
-                cookie.setPath("/");
-                response.addCookie(cookie);
+//                Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
+//                cookie.setPath("/");
+//                response.addCookie(cookie);
                 return "index";
+            }else if (map.containsKey("wx")) {
+                model.addAttribute("username", username);
+//                Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
+//                cookie.setPath("/");
+//                response.addCookie(cookie);
+                return "index_wx";
             } else {
                 model.addAttribute("msg", map.get("msg"));
                 return "login";

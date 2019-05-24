@@ -108,14 +108,14 @@
     </table>
     <div class="page">
         <div>
-            <a class="prev" href="/breakdown/listStatus/1">首页</a>
+            <a class="prev" href="/breakdown/allHandle/1">首页</a>
             <a class="prev"
-               th:href="${page.pageIndex - 1} == 0 ? '/breakdown/listStatus/1':('/breakdown/listStatus/'+${page.pageIndex - 1})">&lt;&lt;</a>
+               th:href="${page.pageIndex - 1} == 0 ? '/breakdown/allHandle/1':('/breakdown/allHandle/'+${page.pageIndex - 1})">&lt;&lt;</a>
             <a class="num" th:each=" i : ${#numbers.sequence(start,end,1)}" onclick="replace_class(this,'7')"
-               th:href="'/breakdown/listStatus/'+${i}" th:text="${i}">1</a>
+               th:href="'/breakdown/allHandle/'+${i}" th:text="${i}">1</a>
             <a class="next"
-               th:href="${page.pageIndex + 1} > ${page.totalPage} ? ('/breakdown/listStatus/'+${page.totalPage}) : ('/breakdown/listStatus/'+${page.pageIndex + 1})">&gt;&gt;</a>
-            <a class="next" th:href="'/breakdown/listStatus/'+${page.totalPage}">尾页</a>
+               th:href="${page.pageIndex + 1} > ${page.totalPage} ? ('/breakdown/allHandle/'+${page.totalPage}) : ('/breakdown/allHandle/'+${page.pageIndex + 1})">&gt;&gt;</a>
+            <a class="next" th:href="'/breakdown/allHandle/'+${page.totalPage}">尾页</a>
         </div>
     </div>
 </div>

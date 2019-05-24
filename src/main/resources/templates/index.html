@@ -24,23 +24,23 @@
 				<i title="展开左侧栏" class="layui-icon layui-icon-shrink-right"></i>
 				
 			</div>
-			<ul class="layui-nav left fast-add" lay-filter="">
-				<li class="layui-nav-item">
-					<a href="javascript:;">+新增</a>
-					<dl class="layui-nav-child">
-						<!-- 二级菜单 -->
-						<dd>
-							<a onclick="WeAdminShow('资讯','https://www.baidu.com/')"><i class="layui-icon layui-icon-list"></i>资讯</a>
-						</dd>
-						<dd>
-							<a onclick="WeAdminShow('图片','http://www.baidu.com')"><i class="layui-icon layui-icon-picture-fine"></i>图片</a>
-						</dd>
-						<dd>
-							<a onclick="WeAdminShow('用户','https://www.baidu.com/')"><i class="layui-icon layui-icon-user"></i>用户</a>
-						</dd>
-					</dl>
-				</li>
-			</ul>
+			<!--<ul class="layui-nav left fast-add" lay-filter="">-->
+				<!--<li class="layui-nav-item">-->
+					<!--<a href="javascript:;">+新增</a>-->
+					<!--<dl class="layui-nav-child">-->
+						<!--&lt;!&ndash; 二级菜单 &ndash;&gt;-->
+						<!--<dd>-->
+							<!--<a onclick="WeAdminShow('资讯','https://www.baidu.com/')"><i class="layui-icon layui-icon-list"></i>资讯</a>-->
+						<!--</dd>-->
+						<!--<dd>-->
+							<!--<a onclick="WeAdminShow('图片','http://www.baidu.com')"><i class="layui-icon layui-icon-picture-fine"></i>图片</a>-->
+						<!--</dd>-->
+						<!--<dd>-->
+							<!--<a onclick="WeAdminShow('用户','https://www.baidu.com/')"><i class="layui-icon layui-icon-user"></i>用户</a>-->
+						<!--</dd>-->
+					<!--</dl>-->
+				<!--</li>-->
+			<!--</ul>-->
 			<ul class="layui-nav right" lay-filter="">
 				<li class="layui-nav-item">
 					<a href="javascript:;" th:text="${username}">admin</a>
@@ -50,7 +50,7 @@
 							<a onclick="WeAdminShow('个人信息','http://www.baidu.com')">个人信息</a>
 						</dd>
 						<dd>
-							<a onclick="WeAdminShow('切换帐号','./login.html')">切换帐号</a>
+							<a class="loginout" href="./login.html">切换帐号</a>
 						</dd>
 						<dd>
 							<a class="loginout" href="./login.html">退出</a>
@@ -107,12 +107,12 @@
 											<cite>按照宿舍显示</cite>
 										</a>
 									</li>
-									<!--<li>-->
-										<!--<a _href="./pages/404.html">-->
-											<!--<i class="iconfont">&#xe6a7;</i>-->
-											<!--<cite>按照班级显示</cite>-->
-										<!--</a>-->
-									<!--</li>-->
+									<li>
+										<a _href="./pages/member/list_student_class1.html">
+											<i class="iconfont">&#xe6a7;</i>
+											<cite>按照班级显示</cite>
+										</a>
+									</li>
 								</ul>
 							</li>
 						</ul>

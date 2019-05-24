@@ -151,4 +151,7 @@ public class ManagerService {
         return managerDAO.update(id, name, gender1, iphone, email);
     }
 
+    public Manager name(String name) {
+        return managerDAO.selectByName(name);
+    }
 }

@@ -32,6 +32,19 @@ public class BreakdownService {
         return list;
     }
 
+    public List<Breakdown> getBreakdownList_Page_Status(int pageIndex, int pageSize) {
+        //分页
+        List<Breakdown> list = breakdownDAO.getBreakdownList_Page_Status((pageIndex - 1) * pageSize, pageSize);
+        return list;
+    }
+
+//    getBreakdownList_Page_allHandle
+    public List<Breakdown> getBreakdownList_Page_allHandle(int pageIndex, int pageSize) {
+        //分页
+        List<Breakdown> list = breakdownDAO.getBreakdownList_Page_allHandle((pageIndex - 1) * pageSize, pageSize);
+        return list;
+    }
+
 //    public List<Breakdown> getBreakdownList_time(int pageIndex, int pageSize, String startDate, String endDate) {
 //        //分页
 //        List<Breakdown> list = breakdownDAO.getBreakdownList_time((pageIndex - 1) * pageSize, pageSize, startDate, endDate);
@@ -53,6 +66,35 @@ public class BreakdownService {
 
         return page;
     }
+
+    public Page<Breakdown> findAllBreakdownWithPage_Status(int pageIndex, int pageSize) {
+        //获取数据库中所有的记录
+        List<Breakdown> allBreakdown  = breakdownDAO.getBreakdownList_status();
+        int totalCount = allBreakdown.size();
+
+        //使用这三个参数，创建一个Page对象。
+        Page page = new Page(pageIndex, pageSize, totalCount);
+        //获取page中的StartRow（数据库起始记录指针）
+        int startRow = page.getStartRow();
+        //有了startRow和pageSize就可以拿到每页的数据。
+        page.setList(breakdownDAO.getBreakdownList_Page(startRow, pageSize));
+        return page;
+    }
+
+    public Page<Breakdown> findAllBreakdownWithPage_allHandle(int pageIndex, int pageSize) {
+        //获取数据库中所有的记录
+        List<Breakdown> allBreakdown  = breakdownDAO.getBreakdownList_status1();
+        int totalCount = allBreakdown.size();
+
+        //使用这三个参数，创建一个Page对象。
+        Page page = new Page(pageIndex, pageSize, totalCount);
+        //获取page中的StartRow（数据库起始记录指针）
+        int startRow = page.getStartRow();
+        //有了startRow和pageSize就可以拿到每页的数据。
+        page.setList(breakdownDAO.getBreakdownList_Page(startRow, pageSize));
+        return page;
+    }
+
 
     public Page<Breakdown> findAllBreakdownWithPageTime(int pageIndex, int pageSize, String startDate, String endDate) {
         List<Breakdown> allBreakdown = breakdownDAO.getBreakdownList_time_all(startDate, endDate);

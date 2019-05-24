@@ -139,7 +139,6 @@ public class ServicemanService {
         return  JSON.toJSONString(serviceman);
     }
 
-
     public int update(int id, String name, String gender, String iphone, String email) {
         int gender1 = 0;
         if ("男".equals(gender)) {
@@ -150,4 +149,7 @@ public class ServicemanService {
         return servicemanDAO.update(id, name, gender1, iphone, email);
     }
 
+    public Serviceman info(String name) {
+        return servicemanDAO.selectByName(name);
+    }
 }

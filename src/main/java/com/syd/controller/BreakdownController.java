@@ -23,7 +23,7 @@ public class BreakdownController {
 
     @RequestMapping(path = {"/breakdown/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getbreakdownList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
-//        System.out.println(pageIndex);
+        System.out.println(pageIndex);
         List<Breakdown> list = breakdownService.getBreakdownList_Page(pageIndex, 2);
         Page<Breakdown> page = breakdownService.findAllBreakdownWithPage(pageIndex, 2);
         model.addAttribute("list", list);
@@ -34,6 +34,17 @@ public class BreakdownController {
     }
 
     @RequestMapping(path = {"/breakdown/listStatus/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getbreakdownList_Page_Status(Model model, @PathVariable("pageIndex") int pageIndex) {
+        List<Breakdown> list = breakdownService.getBreakdownList_Page_Status(pageIndex, 2);
+        Page<Breakdown> page = breakdownService.findAllBreakdownWithPage_Status(pageIndex, 2);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("start", page.getStart());
+        model.addAttribute("end", page.getEnd());
+        return "pages/breakdown/list_handle";
+    }
+
+    @RequestMapping(path = {"/breakdown/listExamine/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getbreakdownList_Page1(Model model, @PathVariable("pageIndex") int pageIndex) {
 //        System.out.println(pageIndex);
         List<Breakdown> list = breakdownService.getBreakdownList_Page(pageIndex, 2);
@@ -75,21 +86,16 @@ public class BreakdownController {
         }
     }
 
-//    @RequestMapping(path = {"/breakdown/pass"}, method = {RequestMethod.POST,RequestMethod.GET})
-//    @ResponseBody
-//    public int pass(Model model,
-//                      @RequestParam(value = "id") int id,
-//                      @RequestParam(value = "oldpass") String oldpass,
-//                      @RequestParam(value = "password") String password) {
-////        if (breakdownService.getPassByName(name, password, gender, iphone, email) > 0) {
-////            return "1";
-////        }else {
-////            return "0";
-////        }
-//        int result = breakdownService.pass(id, oldpass, password);
-//        return result;
-//    }
-//
+    @RequestMapping(path = {"/breakdown/allHandle/{pageIndex}"}, method = {RequestMethod.POST,RequestMethod.GET})
+    public String allHandle(Model model, @PathVariable("pageIndex") int pageIndex) {
+        List<Breakdown> list = breakdownService.getBreakdownList_Page_allHandle(pageIndex, 2);
+        Page<Breakdown> page = breakdownService.findAllBreakdownWithPage_allHandle(pageIndex, 2);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("start", page.getStart());
+        model.addAttribute("end", page.getEnd());
+        return "pages/breakdown/list_handle1";
+    }
 
     @RequestMapping(path = {"/breakdown/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody

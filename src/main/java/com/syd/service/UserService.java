@@ -2,9 +2,11 @@ package com.syd.service;
 
 
 import com.syd.dao.LoginTicketDAO;
+import com.syd.dao.ServicemanDAO;
 import com.syd.dao.UserDAO;
 import com.syd.model.LoginTicket;
 import com.syd.model.RootManager;
+import com.syd.model.Serviceman;
 import com.syd.util.DmsUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -20,6 +22,8 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private ServicemanDAO servicemanDAO;
 
     @Autowired
     private LoginTicketDAO loginTicketDAO;
@@ -65,6 +69,7 @@ public class UserService {
     }
 
     public Map<String, Object> login(String username, String password) {
+
         Map<String, Object> map = new HashMap<String, Object>();
         if (StringUtils.isBlank(username)) {
             map.put("msg", "用户名不能为空");
@@ -75,21 +80,35 @@ public class UserService {
             map.put("msg", "密码不能为空");
             return map;
         }
+        if ("root".equals(username)) {
+            RootManager rootManager = userDAO.selectByName(username);
+            if (rootManager == null) {
+                map.put("msg", "用户名不存在");
+                return map;
+            }
+            if (!DmsUtil.MD5(password+rootManager.getSalt()).equals(rootManager.getPassword())) {
+                map.put("msg", "密码不正确");
+                return map;
+            }
+//            String ticket = addLoginTicket(rootManager.getId());
+//            map.put("ticket", ticket);
+            map.put("root", "root");
+        } else if ("wx".equals(username.substring(0, 2))) {
+            System.out.println(username);
 
-        RootManager rootManager = userDAO.selectByName(username);
-
-        if (rootManager == null) {
-            map.put("msg", "用户名不存在");
-            return map;
+            Serviceman serviceman = servicemanDAO.selectByName(username);
+            if (serviceman == null) {
+                map.put("msg", "用户名不存在");
+                return map;
+            }
+            if (!DmsUtil.MD5(password+serviceman.getSalt()).equals(serviceman.getPassword())) {
+                map.put("msg", "密码不正确");
+                return map;
+            }
+//            String ticket = addLoginTicket(serviceman.getId());
+//            map.put("ticket", ticket);
+            map.put("wx", "wx");
         }
-
-        if (!DmsUtil.MD5(password+rootManager.getSalt()).equals(rootManager.getPassword())) {
-            map.put("msg", "密码不正确");
-            return map;
-        }
-
-        String ticket = addLoginTicket(rootManager.getId());
-        map.put("ticket", ticket);
         return map;
     }
 
@@ -109,4 +128,5 @@ public class UserService {
     public void logout(String ticket) {
         loginTicketDAO.updateStatus(ticket, 1);
     }
+
 }

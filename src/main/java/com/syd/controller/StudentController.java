@@ -49,6 +49,13 @@ public class StudentController {
         return "pages/member/list_student_dorm";
     }
 
+    @RequestMapping(path = {"/student/class"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getManagerList_Page_class1(Model model, @RequestParam(value = "classname") String classname) {
+        System.out.println(classname);
+        List<Student> list = studentService.getStudent_List_class(classname);
+        model.addAttribute("list", list);
+        return "pages/member/list_student_class";
+    }
 
 //    @RequestMapping(path = {"/student/dorm/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String getManagerList_Page_dorm(Model model, @PathVariable("pageIndex") int pageIndex) {
