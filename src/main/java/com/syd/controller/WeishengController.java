@@ -1,7 +1,9 @@
 package com.syd.controller;
 
 
+import com.syd.model.Student;
 import com.syd.model.Weisheng;
+import com.syd.service.StudentService;
 import com.syd.service.WeishengService;
 import com.syd.util.Page;
 import org.slf4j.Logger;
@@ -20,6 +22,9 @@ public class WeishengController {
     @Autowired
     private WeishengService weishengService;
 
+    @Autowired
+    private StudentService studentService;
+
     @RequestMapping(path = {"/weisheng/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getWeishengList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
 //        System.out.println(pageIndex);
@@ -31,6 +36,19 @@ public class WeishengController {
         model.addAttribute("start", page.getStart());
         model.addAttribute("end", page.getEnd());
         return "pages/member/list_weisheng";
+    }
+
+    @RequestMapping(path = {"/weisheng/list_student"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getWeishengList_Page_student(Model model, @RequestParam("name") String name) {
+
+//        System.out.println(pageIndex);
+
+        int no = Integer.parseInt(name);
+        Student student = studentService.getStudentByNo(no);
+        List<Weisheng> list = weishengService.getWeishengList_student(student.getDorm());
+        model.addAttribute("list", list);
+
+        return "pages/member/list_weisheng_student";
     }
 
     @RequestMapping(path = {"/weisheng/award/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})

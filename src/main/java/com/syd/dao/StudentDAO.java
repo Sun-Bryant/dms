@@ -53,4 +53,5 @@ public interface StudentDAO {
     int update(@Param("no") int no, @Param("name") String name, @Param("classname") String classname, @Param("gender1") int gender1, @Param("iphone") String iphone, @Param("email") String email);
 
 
+    List<Student> getList_dorm(int dorm);
 }

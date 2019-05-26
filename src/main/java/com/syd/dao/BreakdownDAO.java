@@ -20,6 +20,9 @@ public interface BreakdownDAO {
     @Select({"select * from ", TABLE_NAME, "where examine = 1"})
     List<Breakdown> getBreakdownList_status();
 
+    @Select({"select * from ", TABLE_NAME, "where examine = 0"})
+    List<Breakdown> getBreakdownList_examine();
+
     @Select({"select * from ", TABLE_NAME, "where status = 0 and  examine = 1"})
     List<Breakdown> getBreakdownList_status1();
 
@@ -29,6 +32,8 @@ public interface BreakdownDAO {
 
     List<Breakdown> getBreakdownList_Page_Status(@Param("offset") int offset, @Param("limit") int limit);
 
+    List<Breakdown> getBreakdownList_Page_Examine(@Param("offset") int offset, @Param("limit") int limit);
+
     List<Breakdown> getBreakdownList_Page_allHandle(@Param("offset") int offset, @Param("limit") int limit);
 
     List<Breakdown> getBreakdownList_time(@Param("offset") int offset, @Param("limit") int limit, @Param("startDate") String startDate, @Param("endDate") String endDate);
@@ -37,7 +42,7 @@ public interface BreakdownDAO {
     int deleteBreakdown(int id);
 
     @Update({"update ", TABLE_NAME, " set examine=#{examine} where id=#{id}"})
-    int updateStatus(@Param("id") int id, @Param("examine") int examine);
+    int updateExamine(@Param("id") int id, @Param("examine") int examine);
 
     @Update({"update ", TABLE_NAME, " set status=#{status} where id=#{id}"})
     int updateStatus1(@Param("id") int id, @Param("status") int status);

@@ -36,6 +36,18 @@ public class ComelateController {
         return "pages/others/list_comelate";
     }
 
+    @RequestMapping(path = {"/comelate/list1/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getComelateList_Page1(Model model, @PathVariable("pageIndex") int pageIndex) {
+//        System.out.println(pageIndex);
+        List<Comelate> list = comelateService.getComelateList_Page(pageIndex, 2);
+        Page<Comelate> page = comelateService.findAllComelateWithPage(pageIndex, 2);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("start", page.getStart());
+        model.addAttribute("end", page.getEnd());
+        return "pages/others/list_comelate_student";
+    }
+
 //    @RequestMapping(path = {"/Comelate/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String getComelateList_time(Model model,
 //                                       @PathVariable("pageIndex") int pageIndex,

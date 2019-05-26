@@ -100,4 +100,8 @@ public class DormService {
     public double getUtilities(int dorm) {
         return dormDAO.getUtilities(dorm);
     }
+
+    public int updateCapacity(int dorm) {
+        return dormDAO.updateCapacity(dorm);
+    }
 }

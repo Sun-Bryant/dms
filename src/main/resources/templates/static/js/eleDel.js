@@ -63,6 +63,67 @@ layui.use(['laydate', 'jquery', 'admin', 'table'], function () {
     }
 
     /*用户-停用*/
+    window.member_stop_breakdown_examine = function (obj, id) {
+        layer.confirm('确认要改变状态吗？', function (index) {
+            if ($(obj).attr('title') == '暂不审批') {
+                $.ajax({
+                    url: "/breakdown/updateExamine",
+                    data: {
+                        id: id,
+                        examine: 0
+                    },
+                    success: function (result) {
+                        if (result > 0) {
+                            //发异步把用户状态进行更改
+                            $(obj).attr('title', '审批')
+                            $(obj).find('i').removeClass('layui-icon-download-circle').html('&#xe601;');
+
+                            $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('未审批');
+                            layer.msg('已更改状态!', {
+                                icon: 5,
+                                time: 1000
+                            });
+                        } else {
+                            alert("更新错误!!!");
+                        }
+                    },
+                    error: function () {
+                        alert("请求错误");
+                    }
+                });
+
+            } else {
+                $.ajax({
+                    url: "/breakdown/updateExamine",
+                    data: {
+                        id: id,
+                        examine: 1
+                    },
+                    success: function (result) {
+                        if (result > 0) {
+                            $(obj).attr('title', '暂不审批');
+                            // $(obj).find('i').html('&#xe601;');
+                            $(obj).find('i').removeClass('layui-icon-download-circle').html('&#xe62f;');
+
+                            $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已审批');
+                            layer.msg('已更改状态!', {
+                                icon: 5,
+                                time: 1000
+                            });
+                        } else {
+                            alert("更新错误");
+                        }
+                    },
+                    error: function () {
+                        alert("请求错误");
+                    }
+                });
+            }
+        });
+    }
+
+
+    /*用户-停用*/
     window.member_stop_breakdown_status = function (obj, id) {
         layer.confirm('确认要改变处理状态吗？', function (index) {
             if ($(obj).attr('title') == '启用') {

@@ -173,4 +173,15 @@ public class StudentService {
         return studentDAO.update(no, name, classname, gender1, iphone, email);
     }
 
+    public Student info(int no) {
+        return studentDAO.selectByNo(no);
+    }
+
+    public List<Student> dorm_info(int dorm) {
+        return studentDAO.getManagerList_dorm(dorm);
+    }
+
+    public Student getStudentByNo(int no) {
+        return studentDAO.selectByNo(no);
+    }
 }

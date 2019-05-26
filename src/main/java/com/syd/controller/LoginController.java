@@ -41,6 +41,18 @@ public class LoginController {
 //                cookie.setPath("/");
 //                response.addCookie(cookie);
                 return "index_wx";
+            } else if (map.containsKey("g")) {
+                model.addAttribute("username", username);
+//                Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
+//                cookie.setPath("/");
+//                response.addCookie(cookie);
+                return "index_g";
+            } else if (map.containsKey("s")) {
+                model.addAttribute("username", username);
+//                Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
+//                cookie.setPath("/");
+//                response.addCookie(cookie);
+                return "index_s";
             } else {
                 model.addAttribute("msg", map.get("msg"));
                 return "login";

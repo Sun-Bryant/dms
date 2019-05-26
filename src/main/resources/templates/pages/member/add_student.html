@@ -24,7 +24,7 @@
 		                <span class="we-red">*</span>学号
 		            </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_NO" name="no" lay-verify="required" autocomplete="" class="layui-input">
+						<input type="text" id="L_NO" name="no" placeholder="请输入学号" lay-verify="required" autocomplete="" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -32,7 +32,7 @@
 						<span class="we-red">*</span>姓名
 					</label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_username" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+						<input type="text" id="L_username" name="name" placeholder="请输入姓名" lay-verify="required" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -40,7 +40,7 @@
 						<span class="we-red">*</span>班级
 					</label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_classname" name="classname" lay-verify="required" autocomplete="" class="layui-input">
+						<input type="text" id="L_classname" name="classname" placeholder="请输入班级" lay-verify="required" autocomplete="" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -56,7 +56,7 @@
 		                <span class="we-red">*</span>手机
 		            </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_phone" name="iphone" lay-verify="required|phone" autocomplete="" class="layui-input">
+						<input type="text" id="L_phone" name="iphone" placeholder="请输入手机号" lay-verify="required|phone" autocomplete="" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -64,7 +64,7 @@
 		                <span class="we-red">*</span>邮箱
 		            </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_email" name="email" autocomplete="" class="layui-input">
+						<input type="text" id="L_email" name="email" placeholder="请输入邮箱" autocomplete="" class="layui-input">
 					</div>
 
 				</div>
@@ -73,7 +73,7 @@
 						<span class="we-red">*</span>宿舍
 					</label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_dorm" name="dorm" lay-verify="required" autocomplete="" class="layui-input">
+						<input type="text" id="L_dorm" name="dorm" placeholder="请输入所安排的宿舍" lay-verify="required" autocomplete="" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -173,12 +173,13 @@
                                     // location.replace(location.href);
                                 });
                             }else {
-                                layer.alert("增加失败", {
+                                layer.alert("增加失败，该宿舍已满，", {
                                     icon: 6
                                 }, function(index) {
                                     // alert("jjjjj");
                                     //关闭当前frame
-                                    parent.layer.closeAll();
+                                    layer.close(index);
+                                    // parent.layer.closeAll();
                                 });
 							}
                         },

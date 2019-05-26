@@ -9,7 +9,7 @@ import java.util.List;
 public interface WeishengDAO {
     // 注意空格
     String TABLE_NAME = " weisheng ";
-    String INSERT_FIELDS = " dorm, floor1, balcony, bed";
+    String INSERT_FIELDS = " dorm, floor1, balcony, bed, date";
     String SELECT_FIELDS = " id, " + INSERT_FIELDS;
 
     @Select({"select * from ", TABLE_NAME})
@@ -47,5 +47,6 @@ public interface WeishengDAO {
     @Update({"update ", TABLE_NAME, " set dorm=#{dorm},floor1=#{floor1},balcony=#{balcony},bed=#{bed} where id=#{id}"})
     int update(@Param("id") int id, @Param("dorm") int dorm, @Param("floor1") int floor1, @Param("balcony") int balcony, @Param("bed") int bed );
 
-
+    @Select({"select * from ", TABLE_NAME, " where dorm=#{dorm}"})
+    List<Weisheng> getWeishengList_student(int dorm);
 }

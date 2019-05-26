@@ -1,8 +1,11 @@
 package com.syd.controller;
 
 
+import com.syd.dao.DormDAO;
+import com.syd.model.Dorm;
 import com.syd.model.Manager;
 import com.syd.model.Student;
+import com.syd.service.DormService;
 import com.syd.service.ManagerService;
 import com.syd.service.StudentService;
 import com.syd.util.Page;
@@ -21,6 +24,9 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private DormService dormService;
 
     @RequestMapping(path = {"/student/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getManagerList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
@@ -116,8 +122,7 @@ public class StudentController {
                       @RequestParam(value = "email") String email,
                       @RequestParam(value = "dorm") int dorm) {
         System.out.println(dorm);
-
-        if (studentService.add(no,name, classname,password, gender, iphone, email,dorm) > 0) {
+        if (studentService.add(no,name, classname,password, gender, iphone, email,dorm) > 0 && dormService.updateCapacity(dorm)>0) {
             return "1";
         }else {
             return "0";
@@ -145,6 +150,26 @@ public class StudentController {
     private int deleteManager(Model model, @RequestParam(value = "no") int no) {
         System.out.println(no);
         return studentService.deleteManager(no);
+    }
+
+    @RequestMapping(path = {"/student/info"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String  info(Model model, @RequestParam(value = "name") String name) {
+        System.out.println(name);
+        int no = Integer.parseInt(name);
+        Student student = studentService.info(no);
+        model.addAttribute("student", student);
+        return "pages/member/list_student_info";
+    }
+
+    @RequestMapping(path = {"/student/dorm_info"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String  dorm_info(Model model, @RequestParam(value = "name") String name) {
+        System.out.println(name);
+        int no = Integer.parseInt(name);
+        Student student = studentService.info(no);
+        List<Student> list = studentService.dorm_info(student.getDorm());
+        model.addAttribute("student", student);
+        model.addAttribute("list", list);
+        return "pages/member/list_dorm_info";
     }
 
     @RequestMapping(path = {"/student/updateStatus"}, method = {RequestMethod.GET, RequestMethod.POST})

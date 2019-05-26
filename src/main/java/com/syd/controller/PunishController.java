@@ -33,6 +33,19 @@ public class PunishController {
         return "pages/member/list_punish";
     }
 
+
+    @RequestMapping(path = {"/punish/list_student/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getPunishList_Page_student(Model model, @PathVariable("pageIndex") int pageIndex) {
+//        System.out.println(pageIndex);
+        List<Punish> list = punishService.getPunishList_Page(pageIndex, 2);
+        Page<Punish> page = punishService.findAllPunishWithPage(pageIndex, 2);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("start", page.getStart());
+        model.addAttribute("end", page.getEnd());
+        return "pages/member/list_punish_student";
+    }
+
 //    @RequestMapping(path = {"/Security/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String getSecurityList_time(Model model,
 //                                       @PathVariable("pageIndex") int pageIndex,

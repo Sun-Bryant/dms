@@ -104,4 +104,7 @@ public class SecurityService {
         return securityDAO.update(id, dorm, electricity, dangerGood, lockDoor);
     }
 
+    public List<Security> getSecurityList_student(int dorm) {
+        return  securityDAO.getSecurityList_student(dorm);
+    }
 }

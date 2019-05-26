@@ -21,7 +21,7 @@
 			<span class="layui-breadcrumb">
 				<a href="javascript:;">首页</a>
 				<a href="javascript:;">宿舍检查管理</a>
-				<a href="javascript:;">卫生检查</a>
+				<a href="javascript:;">违规宿舍处罚</a>
 			</span>
     <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right"
        href="javascript:location.replace(location.href);"
@@ -52,8 +52,8 @@
         <!--<button class="layui-btn layui-btn-danger" data-type="getCheckData">-->
         <!--<i class="layui-icon layui-icon-delete"></i>批量删除-->
         <!--</button>-->
-        <button class="layui-btn" onclick="WeAdminShow('添加用户','/pages/member/add_weisheng.html',600,400)">
-            <i class="layui-icon layui-icon-add-circle-fine"></i>添加
+        <button class="layui-btn" onclick="WeAdminShow('添加用户','/pages/member/add_punish.html',600,400)">
+            <i class="layui-icon "></i>违规宿舍如下
         </button>
         <span class="fr" style="line-height:40px"
               th:text="'共有数据:'+${page.totalCount}+'条 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'"></span>
@@ -68,11 +68,9 @@
             <!--</th>-->
             <th>ID</th>
             <th>宿舍号</th>
-            <th>地板得分</th>
-            <th>阳台得分</th>
-            <th>床铺</th>
+            <th>惩罚内容</th>
             <th>日期</th>
-            <th>操作</th>
+            <!--<th>操作</th>-->
         </tr>
         </thead>
         <tbody>
@@ -84,35 +82,28 @@
             <!--</td>-->
             <td th:text="${item.id}"></td>
             <td th:text="${item.dorm}"></td>
-            <td th:text="${item.floor1}"></td>
-            <td th:text="${item.balcony}"></td>
+            <td th:text="${item.punishContent}"></td>
             <td th:text="${#dates.format(item.date, 'yyyy-MM-dd')}"></td>
-            <td th:text="${item.bed}"></td>
-            <td class="td-manage">
-                <a title="编辑"
-                   th:onclick="'javascript:WeAdminEdit_weisheng(\''+'编辑'+'\',\'/pages/member/edit_weisheng.html\','+${item.id}+',\'600\',\'400\')'"
-                   href="javascript:;">
-                    <i class="layui-icon layui-icon-edit"></i>
-                </a>
-                <a title="删除" th:onclick="'javascript:member_del_weisheng(this, '+${item.id}+');'"
-                   href="javascript:;">
-                    <i class="layui-icon layui-icon-delete"></i>
-                </a>
-            </td>
+            <!--<td class="td-manage">-->
+                <!--<a title="删除" th:onclick="'javascript:member_del_punish(this, '+${item.id}+');'"-->
+                   <!--href="javascript:;">-->
+                    <!--<i class="layui-icon layui-icon-delete"></i>-->
+                <!--</a>-->
+            <!--</td>-->
         </tr>
 
         </tbody>
     </table>
     <div class="page">
         <div>
-            <a class="prev" href="/weisheng/list/1">首页</a>
+            <a class="prev" href="/punish/list_student/1">首页</a>
             <a class="prev"
-               th:href="${page.pageIndex - 1} == 0 ? '/weisheng/list/1':('/weisheng/list/'+${page.pageIndex - 1})">&lt;&lt;</a>
+               th:href="${page.pageIndex - 1} == 0 ? '/punish/list_student/1':('/punish/list_student/'+${page.pageIndex - 1})">&lt;&lt;</a>
             <a class="num" th:each=" i : ${#numbers.sequence(start,end,1)}" onclick="replace_class(this,'7')"
-               th:href="'/weisheng/list/'+${i}" th:text="${i}">1</a>
+               th:href="'/punish/list_student/'+${i}" th:text="${i}">1</a>
             <a class="next"
-               th:href="${page.pageIndex + 1} > ${page.totalPage} ? ('/weisheng/list/'+${page.totalPage}) : ('/weisheng/list/'+${page.pageIndex + 1})">&gt;&gt;</a>
-            <a class="next" th:href="'/weisheng/list/'+${page.totalPage}">尾页</a>
+               th:href="${page.pageIndex + 1} > ${page.totalPage} ? ('/punish/list_student/'+${page.totalPage}) : ('/punish/list_student/'+${page.pageIndex + 1})">&gt;&gt;</a>
+            <a class="next" th:href="'/punish/list_student/'+${page.totalPage}">尾页</a>
         </div>
     </div>
 </div>
@@ -145,11 +136,11 @@
         });
 
         /*学生-删除*/
-        window.member_del_weisheng = function (obj, id) {
+        window.member_del_punish = function (obj, id) {
             layer.confirm('确认要删除吗？', function (index) {
                 //发异步删除数据
                 $.ajax({
-                    url: "/weisheng/delete",
+                    url: "/punish/delete",
                     data: {
                         id: id
                     },

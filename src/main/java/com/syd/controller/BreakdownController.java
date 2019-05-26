@@ -47,13 +47,13 @@ public class BreakdownController {
     @RequestMapping(path = {"/breakdown/listExamine/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getbreakdownList_Page1(Model model, @PathVariable("pageIndex") int pageIndex) {
 //        System.out.println(pageIndex);
-        List<Breakdown> list = breakdownService.getBreakdownList_Page(pageIndex, 2);
-        Page<Breakdown> page = breakdownService.findAllBreakdownWithPage(pageIndex, 2);
+        List<Breakdown> list = breakdownService.getBreakdownList_Page_Examine(pageIndex, 2);
+        Page<Breakdown> page = breakdownService.findAllBreakdownWithPage_Examine(pageIndex, 2);
         model.addAttribute("list", list);
         model.addAttribute("page", page);
         model.addAttribute("start", page.getStart());
         model.addAttribute("end", page.getEnd());
-        return "pages/breakdown/list_handle";
+        return "pages/breakdown/list_examine";
     }
 
 ////    @RequestMapping(path = {"/breakdown/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
@@ -103,15 +103,18 @@ public class BreakdownController {
         return breakdownService.deleteBreakdown(id);
     }
 
-    @RequestMapping(path = {"/breakdown/updateStatus"}, method = {RequestMethod.GET, RequestMethod.POST})
+
+    @RequestMapping(path = {"/breakdown/updateExamine"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    private int updateStatus(Model model, @RequestParam(value = "id") int id, @RequestParam(value = "examine") int examine) {
-        return breakdownService.updateStatus(id, examine);
+    private int updateExamine(Model model, @RequestParam(value = "id") int id, @RequestParam(value = "examine") int examine) {
+
+        return breakdownService.updateExamine(id, examine);
     }
 
     @RequestMapping(path = {"/breakdown/updateStatus1"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     private int updateStatus1(Model model, @RequestParam(value = "id") int id, @RequestParam(value = "status") int status) {
+        System.out.println(id + "  " + status);
         return breakdownService.updateStatus1(id, status);
     }
 

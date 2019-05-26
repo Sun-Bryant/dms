@@ -122,4 +122,7 @@ public class WeishengService {
         return weishengDAO.update(id, dorm, floor1, balcony, bed);
     }
 
+    public List<Weisheng> getWeishengList_student(int dorm) {
+        return weishengDAO.getWeishengList_student(dorm);
+    }
 }

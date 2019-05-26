@@ -25,7 +25,16 @@
         LIMIT #{offset},#{limit}
     </select>
 
-
+    <select id="getBreakdownList_Page_Examine" resultType="com.syd.model.Breakdown">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE
+        examine = 0
+        ORDER BY id
+        LIMIT #{offset},#{limit}
+    </select>
 
     <select id="getBreakdownList_Page_allHandle" resultType="com.syd.model.Breakdown">
         SELECT

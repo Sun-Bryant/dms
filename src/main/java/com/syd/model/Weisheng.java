@@ -1,11 +1,22 @@
 package com.syd.model;
 
+import java.util.Date;
+
 public class Weisheng {
     private int id;
     private int dorm;
     private int floor1;
     private int balcony;
     private int bed;
+    private Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public int getId() {
         return id;

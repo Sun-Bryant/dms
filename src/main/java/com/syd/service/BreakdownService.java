@@ -38,6 +38,12 @@ public class BreakdownService {
         return list;
     }
 
+    public List<Breakdown> getBreakdownList_Page_Examine(int pageIndex, int pageSize) {
+        //分页
+        List<Breakdown> list = breakdownDAO.getBreakdownList_Page_Examine((pageIndex - 1) * pageSize, pageSize);
+        return list;
+    }
+
 //    getBreakdownList_Page_allHandle
     public List<Breakdown> getBreakdownList_Page_allHandle(int pageIndex, int pageSize) {
         //分页
@@ -70,6 +76,20 @@ public class BreakdownService {
     public Page<Breakdown> findAllBreakdownWithPage_Status(int pageIndex, int pageSize) {
         //获取数据库中所有的记录
         List<Breakdown> allBreakdown  = breakdownDAO.getBreakdownList_status();
+        int totalCount = allBreakdown.size();
+
+        //使用这三个参数，创建一个Page对象。
+        Page page = new Page(pageIndex, pageSize, totalCount);
+        //获取page中的StartRow（数据库起始记录指针）
+        int startRow = page.getStartRow();
+        //有了startRow和pageSize就可以拿到每页的数据。
+        page.setList(breakdownDAO.getBreakdownList_Page(startRow, pageSize));
+        return page;
+    }
+
+    public Page<Breakdown> findAllBreakdownWithPage_Examine(int pageIndex, int pageSize) {
+        //获取数据库中所有的记录
+        List<Breakdown> allBreakdown  = breakdownDAO.getBreakdownList_examine();
         int totalCount = allBreakdown.size();
 
         //使用这三个参数，创建一个Page对象。
@@ -114,8 +134,9 @@ public class BreakdownService {
         return breakdownDAO.deleteBreakdown(id);
     }
 
-    public int updateStatus(int id, int examine) {
-        return breakdownDAO.updateStatus(id, examine);
+
+    public int updateExamine(int id, int examine) {
+        return breakdownDAO.updateExamine(id, examine);
     }
     public int updateStatus1(int id, int status) {
         return breakdownDAO.updateStatus1(id, status);

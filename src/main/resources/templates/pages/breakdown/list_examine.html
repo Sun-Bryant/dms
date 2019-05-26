@@ -108,14 +108,14 @@
     </table>
     <div class="page">
         <div>
-            <a class="prev" href="/breakdown/list/1">首页</a>
+            <a class="prev" href="/breakdown/listExamine/1">首页</a>
             <a class="prev"
-               th:href="${page.pageIndex - 1} == 0 ? '/breakdown/list/1':('/breakdown/list/'+${page.pageIndex - 1})">&lt;&lt;</a>
+               th:href="${page.pageIndex - 1} == 0 ? '/breakdown/listExamine/1':('/breakdown/listExamine/'+${page.pageIndex - 1})">&lt;&lt;</a>
             <a class="num" th:each=" i : ${#numbers.sequence(start,end,1)}" onclick="replace_class(this,'7')"
-               th:href="'/breakdown/list/'+${i}" th:text="${i}">1</a>
+               th:href="'/breakdown/listExamine/'+${i}" th:text="${i}">1</a>
             <a class="next"
-               th:href="${page.pageIndex + 1} > ${page.totalPage} ? ('/breakdown/list/'+${page.totalPage}) : ('/breakdown/list/'+${page.pageIndex + 1})">&gt;&gt;</a>
-            <a class="next" th:href="'/breakdown/list/'+${page.totalPage}">尾页</a>
+               th:href="${page.pageIndex + 1} > ${page.totalPage} ? ('/breakdown/listExamine/'+${page.totalPage}) : ('/breakdown/listExamine/'+${page.pageIndex + 1})">&gt;&gt;</a>
+            <a class="next" th:href="'/breakdown/listExamine/'+${page.totalPage}">尾页</a>
         </div>
     </div>
 </div>
@@ -194,7 +194,7 @@
                                 $(obj).attr('title', '审批')
                                 $(obj).find('i').removeClass('layui-icon-download-circle').html('&#xe601;');
 
-                                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('未审批');
+                                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
                                 layer.msg('已更改状态!', {
                                     icon: 5,
                                     time: 1000
@@ -221,7 +221,7 @@
                                 // $(obj).find('i').html('&#xe601;');
                                 $(obj).find('i').removeClass('layui-icon-download-circle').html('&#xe62f;');
 
-                                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已审批');
+                                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
                                 layer.msg('已更改状态!', {
                                     icon: 5,
                                     time: 1000
@@ -237,7 +237,6 @@
                 }
             });
         }
-
 
 </script>
 </body>

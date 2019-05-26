@@ -1,7 +1,10 @@
 package com.syd.controller;
 
 import com.syd.model.Security;
+import com.syd.model.Student;
+import com.syd.model.Weisheng;
 import com.syd.service.SecurityService;
+import com.syd.service.StudentService;
 import com.syd.util.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +23,9 @@ public class SecurityController {
     @Autowired
     private SecurityService securityService;
 
+    @Autowired
+    private StudentService studentService;
+
     @RequestMapping(path = {"/security/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getSecurityList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
 //        System.out.println(pageIndex);
@@ -30,6 +36,18 @@ public class SecurityController {
         model.addAttribute("start", page.getStart());
         model.addAttribute("end", page.getEnd());
         return "pages/member/list_security";
+    }
+
+    @RequestMapping(path = {"/security/list_student"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getWeishengList_Page_student(Model model, @RequestParam("name") String name) {
+
+//        System.out.println(pageIndex);
+
+        int no = Integer.parseInt(name);
+        Student student = studentService.getStudentByNo(no);
+        List<Security> list = securityService.getSecurityList_student(student.getDorm());
+        model.addAttribute("list", list);
+        return "pages/member/list_security_student";
     }
 
 //    @RequestMapping(path = {"/Security/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})

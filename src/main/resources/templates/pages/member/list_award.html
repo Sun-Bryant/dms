@@ -72,6 +72,7 @@
             <th>阳台得分</th>
             <th>床铺</th>
             <th>奖励</th>
+            <th>日期</th>
         </tr>
         </thead>
         <tbody>
@@ -98,6 +99,7 @@
                 <!--</a>-->
                 颁发一张奖状
             </td>
+            <td th:text="${#dates.format(item.date, 'yyyy-MM-dd ')}"></td>
         </tr>
 
         </tbody>

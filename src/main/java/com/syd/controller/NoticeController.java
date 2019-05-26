@@ -33,6 +33,19 @@ public class NoticeController {
         return "pages/others/list_notice";
     }
 
+    @RequestMapping(path = {"/notice/list_student/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String getNoticeList_Page_student(Model model, @PathVariable("pageIndex") int pageIndex) {
+//        System.out.println(pageIndex);
+
+        List<Notice> list = noticeService.getNoticeList_Page(pageIndex, 2);
+        Page<Notice> page = noticeService.findAllNoticeWithPage(pageIndex, 2);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("start", page.getStart());
+        model.addAttribute("end", page.getEnd());
+        return "pages/others/list_notice_student";
+    }
+
 //    @RequestMapping(path = {"/Notice/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
 //    private String getNoticeList_time(Model model,
 //                                       @PathVariable("pageIndex") int pageIndex,

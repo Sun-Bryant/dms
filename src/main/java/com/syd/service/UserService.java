@@ -1,12 +1,8 @@
 package com.syd.service;
 
 
-import com.syd.dao.LoginTicketDAO;
-import com.syd.dao.ServicemanDAO;
-import com.syd.dao.UserDAO;
-import com.syd.model.LoginTicket;
-import com.syd.model.RootManager;
-import com.syd.model.Serviceman;
+import com.syd.dao.*;
+import com.syd.model.*;
 import com.syd.util.DmsUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -22,8 +18,15 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserDAO userDAO;
+
     @Autowired
     private ServicemanDAO servicemanDAO;
+
+    @Autowired
+    private ManagerDAO managerDAO;
+
+    @Autowired
+    private StudentDAO studentDAO;
 
     @Autowired
     private LoginTicketDAO loginTicketDAO;
@@ -94,8 +97,6 @@ public class UserService {
 //            map.put("ticket", ticket);
             map.put("root", "root");
         } else if ("wx".equals(username.substring(0, 2))) {
-            System.out.println(username);
-
             Serviceman serviceman = servicemanDAO.selectByName(username);
             if (serviceman == null) {
                 map.put("msg", "用户名不存在");
@@ -108,6 +109,40 @@ public class UserService {
 //            String ticket = addLoginTicket(serviceman.getId());
 //            map.put("ticket", ticket);
             map.put("wx", "wx");
+        } else if ("g".equals(username.substring(0, 1))) {
+//            System.out.println(username);
+            Manager manager = managerDAO.selectByName(username);
+            if (manager == null) {
+                map.put("msg", "用户名不存在");
+                return map;
+            }
+            if (!DmsUtil.MD5(password+manager.getSalt()).equals(manager.getPassword())) {
+                map.put("msg", "密码不正确");
+                return map;
+            }
+//            String ticket = addLoginTicket(serviceman.getId());
+//            map.put("ticket", ticket);
+            map.put("g", "g");
+        } else {
+
+            System.out.println(username);
+            int no = Integer.parseInt(username);
+            System.out.println(no);
+            Student student = studentDAO.selectByNo(no);
+            if (student == null) {
+                System.out.println("-------");
+
+                map.put("msg", "用户名不存在");
+                return map;
+            }
+            if (!DmsUtil.MD5(password+student.getSalt()).equals(student.getPassword())) {
+                map.put("msg", "密码不正确");
+                return map;
+            }
+//            String ticket = addLoginTicket(serviceman.getId());
+//            map.put("ticket", ticket);
+            map.put("s", "s");
+
         }
         return map;
     }

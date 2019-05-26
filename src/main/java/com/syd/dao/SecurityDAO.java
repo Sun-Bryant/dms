@@ -40,5 +40,6 @@ public interface SecurityDAO {
     @Update({"update ", TABLE_NAME, " set electricity=#{electricity},dangerGood=#{dangerGood},lockDoor=#{lockDoor},dorm=#{dorm} where id=#{id}"})
     int update(@Param("id") int id, @Param("dorm") int dorm, @Param("electricity") String electricity, @Param("dangerGood") String dangerGood, @Param("lockDoor") String lockDoor);
 
-
+    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where dorm=#{dorm}"})
+    List<Security> getSecurityList_student(int dorm);
 }
