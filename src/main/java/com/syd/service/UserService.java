@@ -66,7 +66,7 @@ public class UserService {
         userDAO.addUser(user);
 
         // 下发t票
-        String ticket = addLoginTicket(user.getId());
+        String ticket = addLoginTicket(user.getId(),1);
         map.put("ticket", ticket);
         return map;
     }
@@ -93,8 +93,8 @@ public class UserService {
                 map.put("msg", "密码不正确");
                 return map;
             }
-//            String ticket = addLoginTicket(rootManager.getId());
-//            map.put("ticket", ticket);
+            String ticket = addLoginTicket(rootManager.getId(), 1);
+            map.put("ticket", ticket);
             map.put("root", "root");
         } else if ("wx".equals(username.substring(0, 2))) {
             Serviceman serviceman = servicemanDAO.selectByName(username);
@@ -106,8 +106,8 @@ public class UserService {
                 map.put("msg", "密码不正确");
                 return map;
             }
-//            String ticket = addLoginTicket(serviceman.getId());
-//            map.put("ticket", ticket);
+            String ticket = addLoginTicket(serviceman.getId(), 2);
+            map.put("ticket", ticket);
             map.put("wx", "wx");
         } else if ("g".equals(username.substring(0, 1))) {
 //            System.out.println(username);
@@ -120,14 +120,11 @@ public class UserService {
                 map.put("msg", "密码不正确");
                 return map;
             }
-//            String ticket = addLoginTicket(serviceman.getId());
-//            map.put("ticket", ticket);
+            String ticket = addLoginTicket(manager.getId(), 3);
+            map.put("ticket", ticket);
             map.put("g", "g");
         } else {
-
-            System.out.println(username);
             int no = Integer.parseInt(username);
-            System.out.println(no);
             Student student = studentDAO.selectByNo(no);
             if (student == null) {
                 System.out.println("-------");
@@ -139,8 +136,8 @@ public class UserService {
                 map.put("msg", "密码不正确");
                 return map;
             }
-//            String ticket = addLoginTicket(serviceman.getId());
-//            map.put("ticket", ticket);
+            String ticket = addLoginTicket(student.getNo(), 4);
+            map.put("ticket", ticket);
             map.put("s", "s");
 
         }
@@ -148,18 +145,20 @@ public class UserService {
     }
 
     //下发（增加）t票
-    private String addLoginTicket(int userId) {
+    private String addLoginTicket(int userId, int type) {
         LoginTicket ticket = new LoginTicket();
         ticket.setUserId(userId);
         Date date = new Date();
         date.setTime(date.getTime() + 1000*3600*24);
         ticket.setExpired(date);
         ticket.setStatus(0);
+        ticket.setType(type);
         ticket.setTicket(UUID.randomUUID().toString().replaceAll("-", ""));
         loginTicketDAO.addTicket(ticket);
+//        System.out.println(result);
+
         return ticket.getTicket();
     }
-
     public void logout(String ticket) {
         loginTicketDAO.updateStatus(ticket, 1);
     }

@@ -9,6 +9,15 @@ public class LoginTicket {
     private Date expired;
     private int status;// 0有效，1无效
     private String ticket;
+    private int type;//用户类型
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getTicket() {
         return ticket;
