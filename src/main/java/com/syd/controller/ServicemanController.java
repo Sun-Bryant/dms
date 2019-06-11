@@ -3,6 +3,7 @@ package com.syd.controller;
 
 import com.syd.model.Manager;
 import com.syd.model.Serviceman;
+import com.syd.service.SensitiveService;
 import com.syd.service.ServicemanService;
 import com.syd.util.Page;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
@@ -18,9 +20,12 @@ import java.util.List;
 public class ServicemanController {
     private static Logger logger = LoggerFactory.getLogger(ServicemanController.class);
 
-
     @Autowired
     private ServicemanService servicemanService;
+
+
+    @Autowired
+    private SensitiveService sensitiveService;
 
     @RequestMapping(path = {"/serviceman/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getManagerList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
@@ -35,35 +40,29 @@ public class ServicemanController {
         return "pages/member/list_service";
     }
 
+    @RequestMapping(path = {"/serviceman/name"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String name(Model model,
+                        @RequestParam(value = "name") String name) {
+        System.out.println(name);
+//        System.out.println(end);
+        Serviceman serviceman = servicemanService.name(name);
+        if (serviceman != null) {
+            model.addAttribute("serviceman", serviceman);
+            return "pages/member/list_name_serviceman";
+        } else {
+            return "pages/member/list_name_serviceman_not";
+        }
+    }
+
     @RequestMapping(path = {"/serviceman/info"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String info(Model model, @RequestParam(value = "name") String name) {
-        System.out.println(name);
+//        System.out.println(name);
         Serviceman serviceman = servicemanService.info(name);
         model.addAttribute("serviceman", serviceman);
         return "pages/breakdown/list_info";
     }
 
 
-    //    @RequestMapping(path = {"/serviceman/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    private String getManagerList_time(Model model,
-//                                       @PathVariable("pageIndex") int pageIndex,
-//                                       @PathVariable("startDate") String startDate,
-//                                       @PathVariable("endDate") String endDate) {
-//        System.out.println(startDate);
-//        System.out.println(endDate);
-//
-//        List<Manager> list = servicemanService.getManagerList_time(pageIndex, 2, startDate, endDate);
-//        Page<Manager> page = servicemanService.findAllManagerWithPageTime(pageIndex, 2, startDate, endDate);
-//        model.addAttribute("list", list);
-//        model.addAttribute("page", page);
-//        System.out.println(page.getStart());
-//        System.out.println(page.getEnd());
-//
-//        model.addAttribute("start", page.getStart());
-//        model.addAttribute("end", page.getEnd());
-//        return "./pages/member/list1";
-//    }
-//
     @RequestMapping(path = {"/serviceman/add"}, method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public String add(Model model,
@@ -72,7 +71,9 @@ public class ServicemanController {
                       @RequestParam(value = "gender") String gender,
                       @RequestParam(value = "iphone") String iphone,
                       @RequestParam(value = "email") String email) {
-        System.out.println("-------");
+        name = HtmlUtils.htmlEscape(name);//html过滤
+        name = sensitiveService.filter(name);//敏感词过滤
+
         if (servicemanService.add(name, password, gender, iphone, email) > 0) {
             return "1";
         }else {

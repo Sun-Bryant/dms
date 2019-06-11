@@ -152,6 +152,10 @@ public class ManagerService {
     }
 
     public Manager name(String name) {
-        return managerDAO.selectByName(name);
+        if (managerDAO.selectByName(name) != null) {
+            return managerDAO.selectByName(name);
+        }else {
+            return null;
+        }
     }
 }

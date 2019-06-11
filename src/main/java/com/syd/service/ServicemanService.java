@@ -152,4 +152,12 @@ public class ServicemanService {
     public Serviceman info(String name) {
         return servicemanDAO.selectByName(name);
     }
+
+    public Serviceman name(String name) {
+        if (servicemanDAO.selectByName(name) != null) {
+            return servicemanDAO.selectByName(name);
+        }else {
+            return null;
+        }
+    }
 }

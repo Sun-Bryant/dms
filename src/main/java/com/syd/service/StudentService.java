@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.jvm.hotspot.debugger.posix.elf.ELFException;
 
 import java.util.*;
 
@@ -103,7 +104,11 @@ public class StudentService {
     }
 
     public int deleteManager(int no) {
-        return studentDAO.deleteManager(no);
+        if (dormDAO.updateCapacity1(studentDAO.selectByNo(no).getDorm()) > 0) {
+            return studentDAO.deleteManager(no);
+        }else {
+            return 0;
+        }
     }
 
     public int updateStatus(int no, int status) {
@@ -182,6 +187,11 @@ public class StudentService {
     }
 
     public Student getStudentByNo(int no) {
-        return studentDAO.selectByNo(no);
+        if (studentDAO.selectByNo(no) != null) {
+            return studentDAO.selectByNo(no);
+        } else {
+            return null;
+        }
+
     }
 }

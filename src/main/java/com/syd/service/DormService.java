@@ -104,4 +104,8 @@ public class DormService {
     public int updateCapacity(int dorm) {
         return dormDAO.updateCapacity(dorm);
     }
+
+    public int getCapacity(int dorm) {
+        return dormDAO.getCapacity(dorm);
+    }
 }

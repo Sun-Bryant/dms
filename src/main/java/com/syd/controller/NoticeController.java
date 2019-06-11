@@ -3,6 +3,7 @@ package com.syd.controller;
 
 import com.syd.model.Notice;
 import com.syd.service.NoticeService;
+import com.syd.service.SensitiveService;
 import com.syd.util.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
@@ -19,6 +21,9 @@ public class NoticeController {
 
     @Autowired
     private NoticeService noticeService;
+
+    @Autowired
+    private SensitiveService sensitiveService;
 
     @RequestMapping(path = {"/notice/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getNoticeList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
@@ -71,6 +76,14 @@ public class NoticeController {
     public String add(Model model,
                       @RequestParam(value = "noticetitle") String noticetitle,
                       @RequestParam(value = "noticecontent") String noticecontent) {
+        noticetitle = HtmlUtils.htmlEscape(noticetitle);//html过滤
+        noticetitle = sensitiveService.filter(noticetitle);//敏感词过滤
+
+        noticecontent = HtmlUtils.htmlEscape(noticecontent);//html过滤
+        noticecontent = sensitiveService.filter(noticecontent);//敏感词过滤
+
+        System.out.println(noticecontent);
+
         if (noticeService.add(noticetitle, noticecontent) > 0) {
             return "1";
         }else {
@@ -126,6 +139,12 @@ public class NoticeController {
                       @RequestParam(value = "id") int id,
                       @RequestParam(value = "noticetitle") String noticetitle,
                       @RequestParam(value = "noticecontent") String noticecontent) {
+        noticetitle = HtmlUtils.htmlEscape(noticetitle);//html过滤
+        noticetitle = sensitiveService.filter(noticetitle);//敏感词过滤
+
+        noticecontent = HtmlUtils.htmlEscape(noticecontent);//html过滤
+        noticecontent = sensitiveService.filter(noticecontent);//敏感词过滤
+
         if (noticeService.update(id,noticetitle, noticecontent) > 0) {
             return "1";
         }else {

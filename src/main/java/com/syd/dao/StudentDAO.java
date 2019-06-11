@@ -52,6 +52,5 @@ public interface StudentDAO {
     @Update({"update ", TABLE_NAME, " set name=#{name},classname=#{classname},gender=#{gender1},iphone=#{iphone},email=#{email} where no=#{no}"})
     int update(@Param("no") int no, @Param("name") String name, @Param("classname") String classname, @Param("gender1") int gender1, @Param("iphone") String iphone, @Param("email") String email);
 
-
     List<Student> getList_dorm(int dorm);
 }

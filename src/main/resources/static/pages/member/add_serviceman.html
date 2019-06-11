@@ -24,10 +24,10 @@
 		                <span class="we-red">*</span>登录名
 		            </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_username" name="name" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+						<input type="text" id="L_username" name="name" lay-verify="required|nikename" autocomplete="" class="layui-input">
 					</div>
 					<div class="layui-form-mid layui-word-aux">
-						请设置至少5个字符，将会成为您唯一的登录名
+						登录名请wx两个字符开头，如wx1001。这将会成为您唯一的登录名
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -51,19 +51,18 @@
 		                <span class="we-red">*</span>邮箱
 		            </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_email" name="email" autocomplete="off" class="layui-input">
+						<input type="text" id="L_email" name="email" autocomplete="" class="layui-input">
 					</div>
-
 				</div>
 				<div class="layui-form-item">
 					<label for="L_pass" class="layui-form-label">
                   <span class="we-red">*</span>密码
               </label>
 					<div class="layui-input-inline">
-						<input type="password" id="L_pass" name="password" lay-verify="required|pass" autocomplete="off" class="layui-input">
+						<input type="password" id="L_pass" name="password" lay-verify="required|pass" autocomplete="" class="layui-input">
 					</div>
 					<div class="layui-form-mid layui-word-aux">
-						6到16个字符
+						4到16个字符
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -96,11 +95,7 @@
 
 				//自定义验证规则
 				form.verify({
-					nikename: function(value) {
-						if(value.length < 5) {
-							return '昵称至少得5个字符啊';
-						}
-					},
+					nikename:[/wx.*/, '请以wx开头，并且不小于5个字符'],
 					pass: [/(.+){4,12}$/, '密码必须6到12位'],
 					repass: function(value) {
 						if($('#L_pass').val() != $('#L_repass').val()) {

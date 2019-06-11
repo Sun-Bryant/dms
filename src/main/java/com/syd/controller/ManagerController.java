@@ -3,6 +3,7 @@ package com.syd.controller;
 
 import com.syd.model.Manager;
 import com.syd.service.ManagerService;
+import com.syd.service.SensitiveService;
 import com.syd.util.Page;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -27,10 +29,12 @@ public class ManagerController {
     @Autowired
     private ManagerService managerService;
 
+    @Autowired
+    private SensitiveService sensitiveService;
+
     @RequestMapping(path = {"/manager/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getManagerList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
 //        System.out.println(pageIndex);
-
         List<Manager> list = managerService.getManagerList_Page(pageIndex, 2);
         Page<Manager> page = managerService.findAllManagerWithPage(pageIndex, 2);
         model.addAttribute("list", list);
@@ -68,6 +72,12 @@ public class ManagerController {
                       @RequestParam(value = "gender") String gender,
                       @RequestParam(value = "iphone") String iphone,
                       @RequestParam(value = "email") String email) {
+        name = HtmlUtils.htmlEscape(name);//html过滤
+        name = sensitiveService.filter(name);//敏感词过滤
+
+        password = HtmlUtils.htmlEscape(password);//html过滤
+        password = sensitiveService.filter(password);//敏感词过滤
+
         if (managerService.add(name, password, gender, iphone, email) > 0) {
             return "1";
         }else {
@@ -136,23 +146,15 @@ public class ManagerController {
     private String name(Model model,
                         @RequestParam(value = "name") String name) {
 
-//        return managerService.data(id);
-//        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd" );
-//        try {
-//            Date dateStart = sdf.parse(start);
-//            Date dateEnd = sdf.parse(end);
-////            System.out.println(dateStart);
-//
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
         System.out.println(name);
 //        System.out.println(end);
         Manager manager = managerService.name(name);
-        model.addAttribute("manager", manager);
-        return "pages/member/list_name";
-//        return "login";
+        if (manager != null) {
+            model.addAttribute("manager", manager);
+            return "pages/member/list_name";
+        } else {
+            return "pages/member/list_name_not";
+        }
     }
 
 

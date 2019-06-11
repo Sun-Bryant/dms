@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>管理员列表-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+    <title>学生列表-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport"
@@ -20,46 +20,36 @@
 <div class="weadmin-nav">
 			<span class="layui-breadcrumb">
 				<a href="javascript:;">首页</a>
-				<a href="javascript:;">故障管理</a>
-				<a href="javascript:;"> <cite>故障处理</cite></a>
+				<a href="javascript:;">账号管理</a>
+				<a href="javascript:;">学生管理</a>
+				<a href="javascript:;"> <cite>学生列表</cite></a>
 			</span>
-    <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right"
-       href="javascript:location.replace(location.href);"
-       title="刷新">
-        <i class="layui-icon layui-icon-refresh"></i>
+    <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right" href="/student/list/1"
+       title="返回">
+        <i class="layui-icon layui-icon-return"></i>
         <!-- <i class="layui-icon" style="line-height:30px">&#x1002;</i> -->
     </a>
 </div>
 
 <div class="weadmin-body">
     <div class="layui-row">
-        <!--<form class="layui-form layui-col-md12 we-search" method="post" action="/manager/time">-->
-        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜索：-->
-        <!--<div class="layui-inline">-->
-        <!--<input class="layui-input" placeholder="开始日" name="start" id="start" />-->
-        <!--</div>-->
-        <!-- -&#45;&#45;-->
-        <!--<div class="layui-inline">-->
-        <!--<input class="layui-input" placeholder="截止日" name="end" id="end" />-->
-        <!--</div>-->
-
-        <!--<button class="layui-btn" lay-submit="" lay-filter="sreach">-->
-        <!--<i class="layui-icon layui-icon-search"></i>-->
-        <!--</button>-->
-        <!--</form>-->
+        <form class="layui-form layui-col-md12 we-search" method="post" action="/student/no">
+        <div class="layui-inline">
+            <input type="text" name="no" placeholder="请输入学号" autocomplete="" class="layui-input" lay-verify="required|number"/>
+        </div>
+        <button class="layui-btn" lay-submit="" lay-filter="sreach">
+        <i class="layui-icon layui-icon-search"></i>
+        </button>
+        </form>
     </div>
     <div class="weadmin-block">
         <!--<button class="layui-btn layui-btn-danger" data-type="getCheckData">-->
         <!--<i class="layui-icon layui-icon-delete"></i>批量删除-->
         <!--</button>-->
-        <form method="post" action="/breakdown/allHandle/1">
-            <button class="layui-btn">
-                <i class="layui-icon layui-icon-search"></i>查看未处理
-            </button>
-        </form>
+        <button class="layui-btn" onclick="WeAdminShow('添加学生','/pages/member/add_student.html',600,400)">
+            <i class="layui-icon layui-icon-add-circle-fine"></i>添加
+        </button>
 
-        <span class="fr" style="line-height:40px"
-              th:text="'共有数据:'+${page.totalCount}+'条 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'"></span>
     </div>
     <table lay-filter="demo" class="layui-table">
         <thead>
@@ -69,61 +59,39 @@
             <!--<i class="layui-icon">&#xe605;</i>-->
             <!--</div>-->
             <!--</th>-->
-            <th>ID</th>
-            <th>故障内容</th>
-            <th>处理状态</th>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>班级</th>
+            <th>性别</th>
+            <th>手机</th>
+            <th>邮箱</th>
+            <th>宿舍</th>
+            <!--<th>status</th>-->
+            <th>状态</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        <tr data-id="2" th:each="item,itemStat : ${list}">
-            <!--<td>-->
-            <!--<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="1">-->
-            <!--<i class="layui-icon">&#xe605;</i>-->
-            <!--</div>-->
-            <!--</td>-->
-            <td th:text="${item.id}">1</td>
-            <td th:text="${item.breakContent}">小张</td>
-            <td class="td-status" th:switch="${item.status}">
-                <span th:case="0" class="layui-btn layui-btn-normal layui-btn-xs">未处理</span>
-                <span th:case="1" class="layui-btn layui-btn-normal layui-btn-xs layui-btn-disabled">已处理</span>
-            </td>
-
-            <td class="td-manage" th:switch="${item.status}">
-                <a th:case="0" th:onclick="'javascript:member_stop_breakdown_status(this, '+${item.id}+');'"
-                   href="javascript:;" title="处理">
-                    <i class="layui-icon layui-icon-download-circle"></i>
-                </a>
-                <a th:case="1" th:onclick="'javascript:member_stop_breakdown_status(this, '+${item.id}+');'"
-                   href="javascript:;" title="暂不处理">
-                    <i class="layui-icon ">&#xe62f;</i>
-                </a>
-                <!--<a title="删除"  th:onclick="'javascript:member_del_breakdown(this, '+${item.id}+');'" href="javascript:;">-->
-                <!--<i class="layui-icon layui-icon-delete"></i>-->
-                <!--</a>-->
-            </td>
-        </tr>
-
         </tbody>
     </table>
-    <div class="page">
-        <div>
-            <a class="prev" href="/breakdown/listStatus/1">首页</a>
-            <a class="prev"
-               th:href="${page.pageIndex - 1} == 0 ? '/breakdown/listStatus/1':('/breakdown/listStatus/'+${page.pageIndex - 1})">&lt;&lt;</a>
-            <a class="num" th:each=" i : ${#numbers.sequence(start,end,1)}" onclick="replace_class(this,'7')"
-               th:href="'/breakdown/listStatus/'+${i}" th:text="${i}">1</a>
-            <a class="next"
-               th:href="${page.pageIndex + 1} > ${page.totalPage} ? ('/breakdown/listStatus/'+${page.totalPage}) : ('/breakdown/listStatus/'+${page.pageIndex + 1})">&gt;&gt;</a>
-            <a class="next" th:href="'/breakdown/listStatus/'+${page.totalPage}">尾页</a>
-        </div>
-    </div>
 </div>
-<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
-<script src="../../lib/layui/layui.js" charset="utf-8"></script>
-<script src="../../static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
 
+<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
+
+<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+
+<!--<script src="../../static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>-->
 <script type="text/javascript">
+    /*
+* @Author: https://github.com/WangEn
+* @Author: https://gitee.com/lovetime/
+* @Date:   2018-03-27
+* @lastModify 2018-3-28
+* +----------------------------------------------------------------------
+* | WeAdmin 表格table中多个删除等操作公用js
+* | 有改用时直接复制到对应页面也不影响使用
+* +----------------------------------------------------------------------
+*/
     layui.extend({
         admin: '{/}../../static/js/admin'
     });
@@ -133,6 +101,11 @@
             $ = layui.jquery,
             table = layui.table,
             form = layui.form;
+
+        //自定义验证规则
+        form.verify({
+            number: [/^[0-9]{10}$/, '请输入正确的学号']
+        });
 
         admin = layui.admin;
         //执行一个laydate实例
@@ -149,23 +122,24 @@
         // console.log(checkStatus.data);
 
         /*用户-停用*/
-        window.member_stop_breakdown_status = function (obj, id) {
+        window.member_stop_student = function (obj, no) {
             layer.confirm('确认要改变状态吗？', function (index) {
-                if ($(obj).attr('title') == '暂不处理') {
+                if ($(obj).attr('title') == '启用') {
                     $.ajax({
-                        url: "/breakdown/updateStatus",
+                        url: "/student/updateStatus",
+                        type: 'post',
                         data: {
-                            id: id,
+                            no: no,
                             status: 0
                         },
                         success: function (result) {
                             if (result > 0) {
                                 //发异步把用户状态进行更改
-                                $(obj).attr('title', '处理')
+                                $(obj).attr('title', '停用')
                                 $(obj).find('i').removeClass('layui-icon-download-circle').html('&#xe601;');
 
                                 $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-                                layer.msg('已更改状态!', {
+                                layer.msg('已启用!', {
                                     icon: 5,
                                     time: 1000
                                 });
@@ -180,19 +154,20 @@
 
                 } else {
                     $.ajax({
-                        url: "/breakdown/updateStatus",
+                        url: "/student/updateStatus",
+                        type: 'post',
                         data: {
-                            id: id,
+                            no: no,
                             status: 1
                         },
                         success: function (result) {
                             if (result > 0) {
-                                $(obj).attr('title', '暂不处理');
+                                $(obj).attr('title', '启用');
                                 // $(obj).find('i').html('&#xe601;');
                                 $(obj).find('i').removeClass('layui-icon-download-circle').html('&#xe62f;');
 
                                 $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-                                layer.msg('已更改状态!', {
+                                layer.msg('已停用!', {
                                     icon: 5,
                                     time: 1000
                                 });
@@ -208,6 +183,38 @@
             });
         }
 
+
+        /*学生-删除*/
+        window.member_del_student = function (obj, no) {
+            layer.confirm('确认要删除吗？', function (index) {
+                //发异步删除数据
+                $.ajax({
+                    url: "/student/delete",
+                    data: {
+                        no: no
+                    },
+                    success: function (result) {
+                        if (result > 0) {
+                            $(obj).parents("tr").remove();
+                            layer.msg('已删除!', {
+                                icon: 1,
+                                time: 1000
+                            });
+                            location.replace(location.href);
+                        } else {
+                            alert("删除错误");
+                        }
+                    },
+                    error: function () {
+                        alert("请求错误");
+                    }
+                });
+
+            });
+        }
+    });
+
 </script>
+
 </body>
 </html>

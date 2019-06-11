@@ -21,9 +21,9 @@
 				<a href="javascript:;">首页</a> <a href="javascript:;">账号管理</a>
 				<a href="javascript:;"> <cite>维修人员列表</cite></a>
 			</span>
-			<a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right" href="javascript:location.replace(location.href);"
-			 title="刷新">
-				<i class="layui-icon layui-icon-refresh"></i>
+			<a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right" href="/serviceman/list/1"
+			   title="返回">
+				<i class="layui-icon layui-icon-return"></i>
 				<!-- <i class="layui-icon" style="line-height:30px">&#x1002;</i> -->
 			</a>
 		</div>
@@ -49,13 +49,11 @@
 			</div>
 			<div class="weadmin-block">
 				<!--<button class="layui-btn layui-btn-danger" data-type="getCheckData">-->
-					<!--<i class="layui-icon layui-icon-delete"></i>批量删除-->
+				<!--<i class="layui-icon layui-icon-delete"></i>批量删除-->
 				<!--</button>-->
 				<button class="layui-btn" onclick="WeAdminShow('添加维修人员','/pages/member/add_serviceman.html',600,400)">
 					<i class="layui-icon layui-icon-add-circle-fine"></i>添加
 				</button>
-				<span class="fr" style="line-height:40px" th:text="'共有数据:'+${page.totalCount}+'条 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'"></span>
-
 			</div>
 			<table lay-filter="demo" class="layui-table" >
 				<thead>
@@ -77,32 +75,32 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr data-id="2" th:each="manager,managerStat : ${list}" >
+					<tr data-id="2"  >
 						<!--<td>-->
 							<!--<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="1">-->
 								<!--<i class="layui-icon">&#xe605;</i>-->
 							<!--</div>-->
 						<!--</td>-->
-						<td th:text="${manager.id}">1</td>
-						<td th:text="${manager.name}">小张</td>
-						<td th:text="${manager.gender} == 0 ? '女' : '男'"></td>
-						<td th:text="${manager.iphone}">17600000000</td>
-						<td th:text="${manager.email}">admin@mail.com</td>
-						<td th:text="${#dates.format(manager.date, 'yyyy-MM-dd')}">2017-01-01 11:11:42</td>
+						<td th:text="${serviceman.id}">1</td>
+						<td th:text="${serviceman.name}">小张</td>
+						<td th:text="${serviceman.gender} == 0 ? '女' : '男'"></td>
+						<td th:text="${serviceman.iphone}">17600000000</td>
+						<td th:text="${serviceman.email}">admin@mail.com</td>
+						<td th:text="${#dates.format(serviceman.date, 'yyyy-MM-dd')}">2017-01-01 11:11:42</td>
 						<!--<td th:text="${manager.status}">1</td>-->
-						<td class="td-status" th:switch="${manager.status}">
+						<td class="td-status" th:switch="${serviceman.status}">
 							<span th:case="0" class="layui-btn layui-btn-normal layui-btn-xs">已启用</span>
 							<span th:case="1" class="layui-btn layui-btn-normal layui-btn-xs layui-btn-disabled">已禁用</span>
 						</td>
-						<td class="td-manage" th:switch="${manager.status}">
-							<a  th:case="0" th:onclick="'javascript:member_stop_serviceman(this, '+${manager.id}+');'" href="javascript:;" title="停用">
+						<td class="td-manage" th:switch="${serviceman.status}">
+							<a  th:case="0" th:onclick="'javascript:member_stop_serviceman(this, '+${serviceman.id}+');'" href="javascript:;" title="停用">
 								<i  class="layui-icon layui-icon-download-circle"></i>
 							</a>
-							<a  th:case="1" th:onclick="'javascript:member_stop_serviceman(this, '+${manager.id}+');'" href="javascript:;" title="启用">
+							<a  th:case="1" th:onclick="'javascript:member_stop_serviceman(this, '+${serviceman.id}+');'" href="javascript:;" title="启用">
 								<i class="layui-icon ">&#xe62f;</i>
 							</a>
 
-							<a title="编辑" th:onclick="'javascript:WeAdminEdit_serviceman(\''+'编辑'+'\',\'/pages/member/edit_serviceman.html\','+${manager.id}+',\'600\',\'400\')'" href="javascript:;">
+							<a title="编辑" th:onclick="'javascript:WeAdminEdit_serviceman(\''+'编辑'+'\',\'/pages/member/edit_serviceman.html\','+${serviceman.id}+',\'600\',\'400\')'" href="javascript:;">
 								<i class="layui-icon layui-icon-edit"></i>
 							</a>
 							<!--<a title="编辑" onclick="WeAdminEdit('编辑','/pages/member/edit.html','1514010439',600,400)" href="javascript:;">-->
@@ -111,10 +109,10 @@
 							<!--<a title="编辑"  lay-event="edit" th:onclick="'javascript:WeAdminEdit1(\''+${manager.id}+'\');'" href="javascript:;">-->
 								<!--<i class="layui-icon layui-icon-edit" ></i>-->
 							<!--</a>-->
-							<a th:onclick="'javascript:WeAdminPass(\''+'修改密码'+'\',\'/pages/member/password_serviceman.html\','+${manager.id}+',\'600\',\'400\')'" title="修改密码" href="javascript:;">
+							<a th:onclick="'javascript:WeAdminPass(\''+'修改密码'+'\',\'/pages/member/password_serviceman.html\','+${serviceman.id}+',\'600\',\'400\')'" title="修改密码" href="javascript:;">
 								<i class="layui-icon layui-icon-util"></i>
 							</a>
-							<a title="删除"  th:onclick="'javascript:member_del_serviceman(this, '+${manager.id}+');'" href="javascript:;">
+							<a title="删除"  th:onclick="'javascript:member_del_serviceman(this, '+${serviceman.id}+');'" href="javascript:;">
 								<i class="layui-icon layui-icon-delete"></i>
 							</a>
 						</td>
@@ -122,15 +120,6 @@
 
 				</tbody>
 			</table>
-			<div class="page">
-				<div>
-					<a class="prev" href="/serviceman/list/1" >首页</a>
-					<a class="prev" th:href="${page.pageIndex - 1} == 0 ? '/serviceman/list/1':('/serviceman/list/'+${page.pageIndex - 1})">&lt;&lt;</a>
-					<a class="num" th:each=" i : ${#numbers.sequence(start,end,1)}" onclick="replace_class(this,'7')"  th:href="'/serviceman/list/'+${i}" th:text="${i}">1</a>
-					<a class="next" th:href="${page.pageIndex + 1} > ${page.totalPage} ? ('/serviceman/list/'+${page.totalPage}) : ('/serviceman/list/'+${page.pageIndex + 1})">&gt;&gt;</a>
-					<a class="next" th:href="'/serviceman/list/'+${page.totalPage}">尾页</a>
-				</div>
-			</div>
 		</div>
 
 		<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->

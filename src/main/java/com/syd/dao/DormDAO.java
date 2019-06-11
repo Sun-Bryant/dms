@@ -46,4 +46,10 @@ public interface DormDAO {
 
     @Update({"update ", TABLE_NAME, " set capacity=capacity-1 where dorm=#{dorm}"})
     int updateCapacity(int dorm);
+
+    @Update({"update ", TABLE_NAME, " set capacity=capacity+1 where dorm=#{dorm}"})
+    int updateCapacity1(int dorm);
+
+    @Select({"select capacity from ", TABLE_NAME, " where dorm=#{dorm}"})
+    int getCapacity(int dorm);
 }

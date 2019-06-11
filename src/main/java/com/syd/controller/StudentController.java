@@ -7,6 +7,7 @@ import com.syd.model.Manager;
 import com.syd.model.Student;
 import com.syd.service.DormService;
 import com.syd.service.ManagerService;
+import com.syd.service.SensitiveService;
 import com.syd.service.StudentService;
 import com.syd.util.Page;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
@@ -28,6 +30,9 @@ public class StudentController {
     @Autowired
     private DormService dormService;
 
+    @Autowired
+    private SensitiveService sensitiveService;
+
     @RequestMapping(path = {"/student/list/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getManagerList_Page(Model model, @PathVariable("pageIndex") int pageIndex) {
 //        System.out.println(pageIndex);
@@ -38,6 +43,20 @@ public class StudentController {
         model.addAttribute("start", page.getStart());
         model.addAttribute("end", page.getEnd());
         return "pages/member/list_student";
+    }
+
+    @RequestMapping(path = {"/student/no"}, method = {RequestMethod.GET, RequestMethod.POST})
+    private String name(Model model,
+                        @RequestParam(value = "no") int no) {
+
+        System.out.println(no);
+        Student student = studentService.getStudentByNo(no);
+        if (student != null) {
+            model.addAttribute("student", student);
+            return "pages/member/list_name_student";
+        } else {
+            return "pages/member/list_name_student_not";
+        }
     }
 
     @RequestMapping(path = {"/student/dorm"}, method = {RequestMethod.GET, RequestMethod.POST})
@@ -63,22 +82,6 @@ public class StudentController {
         return "pages/member/list_student_class";
     }
 
-//    @RequestMapping(path = {"/student/dorm/{pageIndex}"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    private String getManagerList_Page_dorm(Model model, @PathVariable("pageIndex") int pageIndex) {
-//        System.out.println(pageIndex);
-////        System.out.println(dorm);
-//
-//        List<Student> list = studentService.getManagerList_Page_dorm(pageIndex, 2, dorm);
-//        System.out.println(list.size());
-//        Page<Student> page = studentService.findAllManagerWithPage_dorm(pageIndex, 2, dorm);
-//        model.addAttribute("list", list);
-//        model.addAttribute("page", page);
-//        model.addAttribute("start", page.getStart());
-//        model.addAttribute("end", page.getEnd());
-//        return "pages/member/list_student_dorm";
-//    }
-
-
     @RequestMapping(path = {"/student/person"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String person(Model model) {
         return "pages/member/person";
@@ -89,27 +92,6 @@ public class StudentController {
         return "pages/member/class1";
     }
 
-
-//    @RequestMapping(path = {"/manager/list/{pageIndex}/{startDate}/{endDate}"}, method = {RequestMethod.GET, RequestMethod.POST})
-//    private String getManagerList_time(Model model,
-//                                       @PathVariable("pageIndex") int pageIndex,
-//                                       @PathVariable("startDate") String startDate,
-//                                       @PathVariable("endDate") String endDate) {
-//        System.out.println(startDate);
-//        System.out.println(endDate);
-//
-//        List<Manager> list = managerService.getManagerList_time(pageIndex, 2, startDate, endDate);
-//        Page<Manager> page = managerService.findAllManagerWithPageTime(pageIndex, 2, startDate, endDate);
-//        model.addAttribute("list", list);
-//        model.addAttribute("page", page);
-//        System.out.println(page.getStart());
-//        System.out.println(page.getEnd());
-//
-//        model.addAttribute("start", page.getStart());
-//        model.addAttribute("end", page.getEnd());
-//        return "./pages/member/list1";
-//    }
-//
     @RequestMapping(path = {"/student/add"}, method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public String add(Model model,
@@ -122,9 +104,18 @@ public class StudentController {
                       @RequestParam(value = "email") String email,
                       @RequestParam(value = "dorm") int dorm) {
         System.out.println(dorm);
-        if (studentService.add(no,name, classname,password, gender, iphone, email,dorm) > 0 && dormService.updateCapacity(dorm)>0) {
-            return "1";
-        }else {
+        name = HtmlUtils.htmlEscape(name);//html过滤
+        name = sensitiveService.filter(name);//敏感词过滤
+
+        if (dormService.getCapacity(dorm) <= 0) {
+            return "0";
+        } else if (dormService.updateCapacity(dorm) > 0) {
+            if (studentService.add(no, name, classname, password, gender, iphone, email, dorm) > 0) {
+                return "1";
+            } else {
+                return "0";
+            }
+        } else {
             return "0";
         }
     }

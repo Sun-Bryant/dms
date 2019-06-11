@@ -21,37 +21,34 @@
 				<a href="javascript:;">首页</a> <a href="javascript:;">账号管理</a>
 				<a href="javascript:;"> <cite>维修人员列表</cite></a>
 			</span>
-			<a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right" href="javascript:location.replace(location.href);"
-			 title="刷新">
-				<i class="layui-icon layui-icon-refresh"></i>
+			<a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right" href="/manager/list/1"
+			   list_service.html	 title="返回">
+				<i class="layui-icon layui-icon-return"></i>
 				<!-- <i class="layui-icon" style="line-height:30px">&#x1002;</i> -->
 			</a>
-		</div>
 
 		<div class="weadmin-body">
 			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search" method="post" action="/serviceman/name">
-					<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜索：-->
+				<!--<form class="layui-form layui-col-md12 we-search" method="post" action="/manager/time">-->
+					<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜索：-->
 					<!--<div class="layui-inline">-->
-					<!--<input class="layui-input" placeholder="开始日" name="start" id="start" />-->
+						<!--<input class="layui-input" placeholder="开始日" name="start" id="start" />-->
 					<!--</div>-->
-					<!-- -&#45;&#45;-->
+                    <!-- -&#45;&#45;-->
 					<!--<div class="layui-inline">-->
-					<!--<input class="layui-input" placeholder="截止日" name="end" id="end" />-->
+						<!--<input class="layui-input" placeholder="截止日" name="end" id="end" />-->
 					<!--</div>-->
-					<div class="layui-inline">
-						<input type="text" name="name" placeholder="请输入用户名" autocomplete="" class="layui-input" />
-					</div>
-					<button class="layui-btn" lay-submit="" lay-filter="sreach">
-						<i class="layui-icon layui-icon-search"></i>
-					</button>
-				</form>
+
+					<!--<button class="layui-btn" lay-submit="" lay-filter="sreach">-->
+						<!--<i class="layui-icon layui-icon-search"></i>-->
+					<!--</button>-->
+				<!--</form>-->
 			</div>
 			<div class="weadmin-block">
 				<!--<button class="layui-btn layui-btn-danger" data-type="getCheckData">-->
 					<!--<i class="layui-icon layui-icon-delete"></i>批量删除-->
 				<!--</button>-->
-				<button class="layui-btn" onclick="WeAdminShow('添加维修人员','/pages/member/add_serviceman.html',600,400)">
+				<button class="layui-btn" onclick="WeAdminShow('添加用户','/pages/member/add_serviceman.html',600,400)">
 					<i class="layui-icon layui-icon-add-circle-fine"></i>添加
 				</button>
 				<span class="fr" style="line-height:40px" th:text="'共有数据:'+${page.totalCount}+'条 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'"></span>
